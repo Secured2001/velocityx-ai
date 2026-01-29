@@ -505,7 +505,7 @@
         drawSparkline(canvas);
       });
 
-      console.log('VelocityX Premium features initialized');
+      console.log('velocityx-ai Premium features initialized');
     } catch (error) {
       console.error('Error initializing premium features:', error);
     }

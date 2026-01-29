@@ -3,99 +3,684 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Trading Platform</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <title>Login - velocityx-ai Trading Platform</title>
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <div class="auth-container">
-    <div class="auth-box">
-      <div class="logo-container">
-        <img src="img/fortiv1.png" alt="VelocityX-AI Logo" class="auth-logo" style="width: 170px; height: 50px; border-radius: 25px; margin: 0 auto 20px; display: block;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);">
-      </div>
-      
-      <h2>Login to Your Account</h2>
-      
-      <% if (error) { %>
-        <div class="alert alert-error">
-          <%= error %>
-        </div>
-      <% } %>
-      
-      <% if (locals.message) { %>
-        <div class="alert alert-success">
-          <%= message %>
-        </div>
-      <% } %>
-      
-      <form action="/login" method="POST" class="animated-form">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
-            value="<%= locals.formData ? formData.email : '' %>" 
-            required
-            class="animated-input"
-          >
-        </div>
-        
-        <div class="form-group">
-          <label for="password">Password</label>
-          <div class="password-input-container">
-            <input 
-              type="password" 
-              id="password" 
-              name="password" 
-              required
-              class="animated-input"
-            >
-            <button type="button" class="toggle-password" onclick="togglePassword('password')">
-              <i class="fas fa-eye"></i>
-            </button>
-          </div>
-        </div>
-        
-        <button type="submit" class="btn btn-primary btn-block btn-animated">Login</button>
-      </form>
-      
-      <div class="auth-footer">
-        Don't have an account? <a href="/signup" class="animated-link">Sign Up</a>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-    function togglePassword(inputId) {
-      const input = document.getElementById(inputId);
-      const button = input.nextElementSibling;
-      
-      if (input.type === 'password') {
-        input.type = 'text';
-        button.innerHTML = '<i class="fas fa-eye-slash"></i>';
-      } else {
-        input.type = 'password';
-        button.innerHTML = '<i class="fas fa-eye"></i>';
-      }
-    }
-  </script>
-  <script>
-    function togglePassword(id) {
-  const input = document.getElementById(id);
-  const icon = input.nextElementSibling.querySelector('i');
-  if (input.type === "password") {
-    input.type = "text";
-    icon.classList.remove("fa-eye");
-    icon.classList.add("fa-eye-slash");
-  } else {
-    input.type = "password";
-    icon.classList.remove("fa-eye-slash");
-    icon.classList.add("fa-eye");
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 50%, #1b263b 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #e6eefc;
+  line-height: 1.6;
+}
+
+.vx_login_container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.vx_login_card {
+  background: rgba(15, 25, 42, 0.95);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px 36px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(66, 135, 245, 0.1);
+  backdrop-filter: blur(10px);
+  animation: vx_fadeIn 0.6s ease-out;
+}
+
+@keyframes vx_fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-  </script>
+.vx_login_header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.vx_login_logo {
+  height: 48px;
+  width: auto;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 4px 12px rgba(66, 135, 245, 0.3));
+  display: block;
+}
+
+.vx_login_title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.vx_login_subtitle {
+  background: linear-gradient(135deg, #4287f5 0%, #83d8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.vx_login_tagline {
+  font-size: 14px;
+  color: #8b9bb8;
+  margin-bottom: 24px;
+}
+
+.vx_features_grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.vx_feature_badge {
+  background: rgba(66, 135, 245, 0.08);
+  border: 1px solid rgba(66, 135, 245, 0.25);
+  border-radius: 10px;
+  padding: 12px 10px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.vx_feature_badge:hover {
+  background: rgba(66, 135, 245, 0.15);
+  border-color: rgba(66, 135, 245, 0.4);
+  transform: translateY(-2px);
+}
+
+.vx_feature_icon {
+  font-size: 20px;
+  color: #4287f5;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.vx_feature_text {
+  font-size: 11px;
+  font-weight: 600;
+  color: #e6eefc;
+  line-height: 1.3;
+}
+
+.vx_feature_subtext {
+  font-size: 10px;
+  color: #5a6a85;
+  margin-top: 2px;
+}
+
+.vx_alert {
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  display: none;
+}
+
+.vx_alert.vx_show {
+  display: block;
+}
+
+.vx_alert_error {
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  color: #f87171;
+}
+
+.vx_alert_success {
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  color: #10b981;
+}
+
+.vx_form_group {
+  margin-bottom: 18px;
+}
+
+.vx_form_label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6eefc;
+  margin-bottom: 8px;
+}
+
+.vx_input_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.vx_input_icon {
+  position: absolute;
+  left: 16px;
+  font-size: 16px;
+  color: #5a6a85;
+  pointer-events: none;
+  z-index: 2;
+  transition: color 0.3s;
+}
+
+.vx_login_input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 10px;
+  color: #e6eefc;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.vx_login_input::placeholder {
+  color: #5a6a85;
+}
+
+.vx_login_input:focus {
+  border-color: #4287f5;
+  background: rgba(22, 35, 56, 0.8);
+  box-shadow: 0 0 0 3px rgba(66, 135, 245, 0.15), 0 4px 12px rgba(66, 135, 245, 0.2);
+}
+
+.vx_login_input:focus + .vx_input_icon,
+.vx_input_wrapper:focus-within .vx_input_icon {
+  color: #4287f5;
+}
+
+.vx_password_container {
+  position: relative;
+}
+
+.vx_password_toggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #5a6a85;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px;
+  transition: color 0.3s;
+  z-index: 3;
+}
+
+.vx_password_toggle:hover {
+  color: #4287f5;
+}
+
+.vx_form_row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  font-size: 13px;
+}
+
+.vx_checkbox_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.vx_checkbox_wrapper input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #4287f5;
+}
+
+.vx_checkbox_wrapper label {
+  cursor: pointer;
+  color: #8b9bb8;
+  user-select: none;
+}
+
+.vx_forgot_link {
+  color: #83d8ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.vx_forgot_link:hover {
+  color: #4287f5;
+  text-decoration: underline;
+}
+
+.vx_login_btn {
+  width: 100%;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, #4287f5 0%, #5b9bf8 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(66, 135, 245, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.vx_login_btn:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(66, 135, 245, 0.6);
+  transform: translateY(-2px);
+}
+
+.vx_login_btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.vx_quick_access {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.vx_quick_title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6eefc;
+  margin-bottom: 12px;
+}
+
+.vx_quick_icons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.vx_quick_btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  color: #83d8ff;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vx_quick_btn:hover {
+  background: rgba(66, 135, 245, 0.15);
+  border-color: #4287f5;
+  color: #4287f5;
+  transform: translateY(-2px);
+}
+
+.vx_signup_prompt {
+  text-align: center;
+  font-size: 13px;
+  color: #8b9bb8;
+  margin-bottom: 24px;
+}
+
+.vx_signup_link {
+  color: #83d8ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.vx_signup_link:hover {
+  color: #4287f5;
+  text-decoration: underline;
+}
+
+.vx_security_badges {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid rgba(131, 216, 255, 0.1);
+}
+
+.vx_badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #5a6a85;
+}
+
+.vx_badge i {
+  font-size: 14px;
+  color: #10b981;
+}
+
+.vx_copyright {
+  text-align: center;
+  font-size: 11px;
+  color: #5a6a85;
+  margin-top: 16px;
+}
+
+@media (max-width: 640px) {
+  .vx_login_card {
+    padding: 32px 24px;
+  }
+
+  .vx_login_title {
+    font-size: 26px;
+  }
+
+  .vx_login_subtitle {
+    font-size: 14px;
+  }
+
+  .vx_features_grid {
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .vx_feature_badge {
+    padding: 10px 8px;
+  }
+
+  .vx_feature_icon {
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .vx_feature_text {
+    font-size: 10px;
+  }
+
+  .vx_feature_subtext {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .vx_login_card {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  .vx_login_title {
+    font-size: 24px;
+  }
+
+  .vx_form_row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .vx_quick_icons {
+    gap: 10px;
+  }
+
+  .vx_quick_btn {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(22, 35, 56, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(66, 135, 245, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(66, 135, 245, 0.7);
+}
+</style>
+
+<div class="vx_login_container">
+  <div class="vx_login_card">
+
+    <div class="vx_login_header">
+      <a href="/">
+        <img src="/img/fortiv1.png" alt="velocityx-ai" class="vx_login_logo">
+      </a>
+      <h1 class="vx_login_title">Welcome Back</h1>
+      <p class="vx_login_subtitle">velocityx-ai</p>
+      <p class="vx_login_tagline">Access your trading dashboard</p>
+
+      <div class="vx_features_grid">
+        <div class="vx_feature_badge">
+          <span class="vx_feature_icon"><i class="fas fa-chart-line"></i></span>
+          <div class="vx_feature_text">Live</div>
+          <div class="vx_feature_subtext">24/7 Markets</div>
+        </div>
+        <div class="vx_feature_badge">
+          <span class="vx_feature_icon"><i class="fas fa-bolt"></i></span>
+          <div class="vx_feature_text">Fast</div>
+          <div class="vx_feature_subtext">Execution</div>
+        </div>
+        <div class="vx_feature_badge">
+          <span class="vx_feature_icon"><i class="fas fa-shield-alt"></i></span>
+          <div class="vx_feature_text">Secure</div>
+          <div class="vx_feature_subtext">Platform</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="vx_login_alert" class="vx_alert"></div>
+
+    <form id="vx_login_form" class="vx_login_form">
+      <div class="vx_form_group">
+        <label for="vx_email" class="vx_form_label">Email Address or Username</label>
+        <div class="vx_input_wrapper">
+          <i class="vx_input_icon fas fa-envelope"></i>
+          <input
+            type="text"
+            id="vx_email"
+            name="email"
+            class="vx_login_input"
+            placeholder="babatunde@20_"
+            required
+          >
+        </div>
+      </div>
+
+      <div class="vx_form_group vx_password_container">
+        <label for="vx_password" class="vx_form_label">Password</label>
+        <div class="vx_input_wrapper">
+          <i class="vx_input_icon fas fa-lock"></i>
+          <input
+            type="password"
+            id="vx_password"
+            name="password"
+            class="vx_login_input"
+            placeholder="••••••••••"
+            required
+          >
+          <button
+            type="button"
+            class="vx_password_toggle"
+            id="vx_password_toggle"
+            aria-label="Toggle password visibility"
+          >
+            <i class="fas fa-eye"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="vx_form_row">
+        <div class="vx_checkbox_wrapper">
+          <input type="checkbox" id="vx_remember" name="remember">
+          <label for="vx_remember">Remember me</label>
+        </div>
+        <a href="/forgot-password" class="vx_forgot_link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="vx_login_btn" id="vx_login_btn">
+        <i class="fas fa-sign-in-alt"></i>
+        <span>Access Dashboard</span>
+        <i class="fas fa-arrow-right"></i>
+      </button>
+    </form>
+
+    <div class="vx_quick_access">
+      <div class="vx_quick_title">Quick Access</div>
+      <div class="vx_quick_icons">
+        <button class="vx_quick_btn" title="Biometric Login" onclick="alert('Biometric login coming soon!')">
+          <i class="fas fa-fingerprint"></i>
+        </button>
+        <button class="vx_quick_btn" title="Desktop App" onclick="alert('Download desktop app')">
+          <i class="fas fa-desktop"></i>
+        </button>
+        <button class="vx_quick_btn" title="Mobile App" onclick="alert('Download mobile app')">
+          <i class="fas fa-mobile-alt"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="vx_signup_prompt">
+      New to trading? <a href="/signup" class="vx_signup_link">Create your account</a>
+    </div>
+
+    <div class="vx_security_badges">
+      <div class="vx_badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>SSL Secured</span>
+      </div>
+      <div class="vx_badge">
+        <i class="fas fa-lock"></i>
+        <span>256-bit Encryption</span>
+      </div>
+      <div class="vx_badge">
+        <i class="fas fa-check-circle"></i>
+        <span>Regulated</span>
+      </div>
+    </div>
+
+    <div class="vx_copyright">
+      © 2025 velocityx-ai. All rights reserved.
+    </div>
+
+  </div>
+</div>
+
+<script>
+const vxLoginState = {
+  loading: false
+};
+
+function vxInitLogin() {
+  const passwordToggle = document.getElementById('vx_password_toggle');
+  const passwordInput = document.getElementById('vx_password');
+  const loginForm = document.getElementById('vx_login_form');
+
+  passwordToggle.addEventListener('click', () => vxTogglePassword());
+  loginForm.addEventListener('submit', (e) => vxHandleLogin(e));
+}
+
+function vxTogglePassword() {
+  const passwordInput = document.getElementById('vx_password');
+  const toggle = document.getElementById('vx_password_toggle');
+  const icon = toggle.querySelector('i');
+
+  if (passwordInput.type === 'password') {
+    passwordInput.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    passwordInput.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+}
+
+function vxShowAlert(message, type = 'error') {
+  const alertEl = document.getElementById('vx_login_alert');
+  alertEl.textContent = message;
+  alertEl.className = `vx_alert vx_show vx_alert_${type}`;
+  alertEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function vxHandleLogin(e) {
+  e.preventDefault();
+
+  if (vxLoginState.loading) return;
+
+  const email = document.getElementById('vx_email').value.trim();
+  const password = document.getElementById('vx_password').value;
+  const loginBtn = document.getElementById('vx_login_btn');
+
+  if (!email || !password) {
+    vxShowAlert('Please enter both email and password', 'error');
+    return;
+  }
+
+  vxLoginState.loading = true;
+  loginBtn.disabled = true;
+  loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Accessing...</span>';
+
+  setTimeout(() => {
+    document.getElementById('vx_login_form').action = '/login';
+    document.getElementById('vx_login_form').method = 'POST';
+    document.getElementById('vx_login_form').submit();
+  }, 500);
+}
+
+document.addEventListener('DOMContentLoaded', vxInitLogin);
+</script>
+
 </body>
 </html>

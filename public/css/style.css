@@ -2501,6 +2501,41 @@ body {
 	aspect-ratio: 7 / 8; /* keeps 350x400 ratio while responsive */
 }
 
+@media (max-width: 768px) {
+	.hero-buttons {
+		gap: 10px;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+	}
+
+	.hero-buttons a {
+		flex: 1 1 48%;
+		min-width: 0;
+		padding: 12px 14px;
+		font-size: 15px;
+		text-align: center;
+	}
+
+	.trading-chart-container {
+		max-width: 100%;
+		width: 100%;
+		box-shadow: none;
+	}
+
+	.chart-widget {
+		aspect-ratio: auto;
+		height: 220px;
+	}
+}
+
+@media (max-width: 480px) {
+	.hero-buttons a { padding: 10px 8px; font-size: 14px; }
+	.hero-buttons { gap: 8px; }
+	.hero-buttons a { flex: 1 1 48%; }
+	.chart-widget { height: 180px; }
+}
+
 /* Floating language control (single) */
 .floating-lang {
 	position: fixed;
@@ -2673,7 +2708,15 @@ body { background: linear-gradient(120deg, #0b1320 0%, #0e1a2a 50%, #071021 100%
 	}
 
 	.hero-buttons {
-		flex-direction: column;
+		flex-direction: row !important;
+		flex-wrap: nowrap !important;
+		justify-content: flex-start;
+		gap: 12px;
+	}
+
+	.hero-buttons a {
+		flex: 0 0 auto !important;
+		white-space: nowrap;
 	}
 
 	.btn-hero-primary,
@@ -2737,8 +2780,8 @@ body { background: linear-gradient(120deg, #0b1320 0%, #0e1a2a 50%, #071021 100%
 
 
 /* ===================================
-   PREMIUM FINTECH STYLING
-   VelocityX Trading Platform
+	PREMIUM FINTECH STYLING
+	velocityx-ai Trading Platform
    =================================== */
 
 :root {
@@ -3747,3 +3790,4 @@ body { background: linear-gradient(120deg, #0b1320 0%, #0e1a2a 50%, #071021 100%
 .counter {
   display: inline-block;
 }
+

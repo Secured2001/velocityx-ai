@@ -3,165 +3,1512 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Join VelocityX AI — Sign Up</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="stylesheet" href="/css/signup.css">
+  <title>Join velocityx-ai — Sign Up</title>
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
 </head>
 <body>
-  <div class="signup-wrap">
-    <div class="signup-card" role="main" aria-labelledby="joinTitle">
-      <div class="signup-header">
-        <img src="/img/fortiv1.png" alt="VelocityX AI" class="auth-logo">
-        <div>
-          <h1 id="joinTitle" class="signup-title">Join VelocityX AI</h1>
-          <p class="signup-sub">Start your professional trading journey</p>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 50%, #1b263b 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #e6eefc;
+  line-height: 1.6;
+}
+
+.vx_signup_container {
+  width: 100%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.vx_signup_card {
+  background: rgba(15, 25, 42, 0.95);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 24px;
+  padding: 40px 36px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(66, 135, 245, 0.1);
+  backdrop-filter: blur(10px);
+  animation: vx_fadeIn 0.6s ease-out;
+}
+
+@keyframes vx_fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vx_logo_section {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.vx_logo_img {
+  height: 48px;
+  width: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 12px rgba(66, 135, 245, 0.3));
+}
+
+.vx_main_title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.vx_main_title .vx_brand_name {
+  background: linear-gradient(135deg, #4287f5 0%, #83d8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vx_subtitle {
+  font-size: 15px;
+  color: #8b9bb8;
+  margin-bottom: 20px;
+}
+
+.vx_trust_badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(66, 135, 245, 0.15);
+  border: 1px solid rgba(66, 135, 245, 0.3);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #83d8ff;
+  margin-bottom: 32px;
+}
+
+.vx_trust_badge i {
+  font-size: 14px;
+}
+
+.vx_progress_stepper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  position: relative;
+  padding: 0 10px;
+}
+
+.vx_progress_stepper::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 15%;
+  right: 15%;
+  height: 2px;
+  background: rgba(131, 216, 255, 0.2);
+  z-index: 0;
+}
+
+.vx_step_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  flex: 1;
+}
+
+.vx_step_circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(22, 35, 56, 0.9);
+  border: 2px solid rgba(131, 216, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #8b9bb8;
+}
+
+.vx_step_item.vx_active .vx_step_circle {
+  background: linear-gradient(135deg, #4287f5 0%, #5b9bf8 100%);
+  border-color: #4287f5;
+  box-shadow: 0 0 20px rgba(66, 135, 245, 0.6), 0 4px 12px rgba(66, 135, 245, 0.4);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.vx_step_item.vx_completed .vx_step_circle {
+  background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  border-color: #10b981;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.5);
+  color: #ffffff;
+}
+
+.vx_step_circle i {
+  font-size: 18px;
+}
+
+.vx_step_label {
+  text-align: center;
+  min-width: 100px;
+}
+
+.vx_step_title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #8b9bb8;
+  margin-bottom: 2px;
+  transition: color 0.3s;
+}
+
+.vx_step_item.vx_active .vx_step_title {
+  color: #e6eefc;
+}
+
+.vx_step_subtitle {
+  font-size: 11px;
+  color: #5a6a85;
+}
+
+.vx_section_header {
+  background: rgba(66, 135, 245, 0.08);
+  border: 1px solid rgba(66, 135, 245, 0.25);
+  border-radius: 12px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.vx_section_icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #4287f5 0%, #5b9bf8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(66, 135, 245, 0.4);
+}
+
+.vx_section_content h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e6eefc;
+  margin-bottom: 4px;
+}
+
+.vx_section_content p {
+  font-size: 13px;
+  color: #8b9bb8;
+}
+
+.vx_form_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.vx_form_grid.vx_two_col {
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.vx_field_group {
+  position: relative;
+}
+
+.vx_field_label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #e6eefc;
+  margin-bottom: 8px;
+}
+
+.vx_field_label .vx_required {
+  color: #f87171;
+}
+
+.vx_input_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.vx_input_icon {
+  position: absolute;
+  left: 16px;
+  font-size: 16px;
+  color: #5a6a85;
+  pointer-events: none;
+  z-index: 2;
+  transition: color 0.3s;
+}
+
+.vx_input_field {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 10px;
+  color: #e6eefc;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.vx_input_field::placeholder {
+  color: #5a6a85;
+}
+
+.vx_input_field:focus {
+  border-color: #4287f5;
+  background: rgba(22, 35, 56, 0.8);
+  box-shadow: 0 0 0 3px rgba(66, 135, 245, 0.15), 0 4px 12px rgba(66, 135, 245, 0.2);
+}
+
+.vx_input_field:focus + .vx_input_icon,
+.vx_input_wrapper:focus-within .vx_input_icon {
+  color: #4287f5;
+}
+
+.vx_error_msg {
+  display: none;
+  font-size: 12px;
+  color: #f87171;
+  margin-top: 6px;
+  padding-left: 4px;
+}
+
+.vx_error_msg.vx_show {
+  display: block;
+}
+
+.vx_field_group.vx_error .vx_input_field {
+  border-color: #f87171;
+  background: rgba(248, 113, 113, 0.05);
+}
+
+.vx_country_selector {
+  position: relative;
+}
+
+.vx_country_display {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 10px;
+  color: #e6eefc;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.vx_country_display:hover,
+.vx_country_display:focus {
+  border-color: #4287f5;
+  background: rgba(22, 35, 56, 0.8);
+  box-shadow: 0 0 0 3px rgba(66, 135, 245, 0.15);
+}
+
+.vx_country_selected {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.vx_flag_icon {
+  font-size: 20px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.vx_chevron {
+  font-size: 12px;
+  color: #5a6a85;
+  transition: transform 0.3s;
+}
+
+.vx_country_display.vx_open .vx_chevron {
+  transform: rotate(180deg);
+}
+
+.vx_country_dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: rgba(15, 25, 42, 0.98);
+  border: 1px solid rgba(131, 216, 255, 0.3);
+  border-radius: 12px;
+  max-height: 280px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  display: none;
+  animation: vx_dropdownSlide 0.3s ease-out;
+}
+
+@keyframes vx_dropdownSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vx_country_dropdown.vx_open {
+  display: block;
+}
+
+.vx_country_search {
+  position: sticky;
+  top: 0;
+  padding: 12px;
+  background: rgba(15, 25, 42, 0.98);
+  border-bottom: 1px solid rgba(131, 216, 255, 0.2);
+}
+
+.vx_country_search input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 8px;
+  color: #e6eefc;
+  font-size: 13px;
+  outline: none;
+}
+
+.vx_country_search i {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #5a6a85;
+  font-size: 14px;
+}
+
+.vx_country_list {
+  padding: 6px;
+}
+
+.vx_country_option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.vx_country_option:hover {
+  background: rgba(66, 135, 245, 0.15);
+}
+
+.vx_info_box {
+  background: rgba(66, 135, 245, 0.08);
+  border: 1px solid rgba(66, 135, 245, 0.25);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.vx_info_box i {
+  font-size: 18px;
+  color: #83d8ff;
+  margin-top: 2px;
+}
+
+.vx_info_content strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #e6eefc;
+  margin-bottom: 4px;
+}
+
+.vx_info_content p {
+  font-size: 13px;
+  color: #8b9bb8;
+  line-height: 1.5;
+}
+
+.vx_captcha_box {
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.vx_captcha_display {
+  background: linear-gradient(135deg, #4287f5 0%, #5b9bf8 100%);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.vx_captcha_display::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.05) 10px,
+    rgba(255, 255, 255, 0.05) 20px
+  );
+}
+
+.vx_captcha_code {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 8px;
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  user-select: none;
+  position: relative;
+}
+
+.vx_captcha_input_row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.vx_captcha_input_row input {
+  flex: 1;
+  padding: 12px 14px;
+  background: rgba(15, 25, 42, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.2);
+  border-radius: 8px;
+  color: #e6eefc;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.vx_captcha_input_row input:focus {
+  border-color: #4287f5;
+  box-shadow: 0 0 0 3px rgba(66, 135, 245, 0.15);
+}
+
+.vx_captcha_refresh {
+  padding: 12px 16px;
+  background: rgba(66, 135, 245, 0.15);
+  border: 1px solid rgba(66, 135, 245, 0.3);
+  border-radius: 8px;
+  color: #83d8ff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.vx_captcha_refresh:hover {
+  background: rgba(66, 135, 245, 0.25);
+  transform: translateY(-1px);
+}
+
+.vx_captcha_label {
+  font-size: 12px;
+  color: #8b9bb8;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.vx_password_rules {
+  background: rgba(22, 35, 56, 0.4);
+  border: 1px solid rgba(131, 216, 255, 0.15);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 18px;
+}
+
+.vx_rule_item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: #8b9bb8;
+  transition: color 0.3s;
+}
+
+.vx_rule_item i {
+  font-size: 14px;
+  color: #5a6a85;
+  transition: color 0.3s;
+}
+
+.vx_rule_item.vx_valid {
+  color: #10b981;
+}
+
+.vx_rule_item.vx_valid i {
+  color: #10b981;
+}
+
+.vx_checkbox_field {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: #8b9bb8;
+}
+
+.vx_checkbox_field input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #4287f5;
+}
+
+.vx_checkbox_field a {
+  color: #83d8ff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.vx_checkbox_field a:hover {
+  color: #4287f5;
+  text-decoration: underline;
+}
+
+.vx_button_row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.vx_btn {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.vx_btn_secondary {
+  background: rgba(22, 35, 56, 0.6);
+  border: 1px solid rgba(131, 216, 255, 0.3);
+  color: #e6eefc;
+}
+
+.vx_btn_secondary:hover:not(:disabled) {
+  background: rgba(22, 35, 56, 0.9);
+  border-color: #4287f5;
+  transform: translateY(-1px);
+}
+
+.vx_btn_primary {
+  background: linear-gradient(135deg, #4287f5 0%, #5b9bf8 100%);
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(66, 135, 245, 0.4);
+}
+
+.vx_btn_primary:hover:not(:disabled) {
+  box-shadow: 0 6px 20px rgba(66, 135, 245, 0.6);
+  transform: translateY(-2px);
+}
+
+.vx_btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.vx_step_counter {
+  text-align: left;
+  font-size: 13px;
+  color: #8b9bb8;
+  margin-bottom: 16px;
+}
+
+.vx_footer_links {
+  text-align: center;
+  font-size: 14px;
+  color: #8b9bb8;
+  margin-bottom: 24px;
+}
+
+.vx_footer_links a {
+  color: #83d8ff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.vx_footer_links a:hover {
+  color: #4287f5;
+}
+
+.vx_security_badges {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 1px solid rgba(131, 216, 255, 0.1);
+}
+
+.vx_badge_item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #5a6a85;
+}
+
+.vx_badge_item i {
+  font-size: 14px;
+  color: #10b981;
+}
+
+.vx_panel {
+  display: none;
+}
+
+.vx_panel.vx_active {
+  display: block;
+  animation: vx_panelFade 0.4s ease-out;
+}
+
+@keyframes vx_panelFade {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.vx_global_error {
+  background: rgba(248, 113, 113, 0.15);
+  border: 1px solid rgba(248, 113, 113, 0.4);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  display: none;
+  font-size: 13px;
+  color: #f87171;
+}
+
+.vx_global_error.vx_show {
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .vx_signup_card {
+    padding: 32px 24px;
+  }
+
+  .vx_main_title {
+    font-size: 26px;
+  }
+
+  .vx_form_grid.vx_two_col {
+    grid-template-columns: 1fr;
+  }
+
+  .vx_progress_stepper {
+    padding: 0 5px;
+  }
+
+  .vx_step_label {
+    min-width: 80px;
+  }
+
+  .vx_step_title {
+    font-size: 11px;
+  }
+
+  .vx_step_subtitle {
+    font-size: 9px;
+  }
+
+  .vx_step_circle {
+    width: 38px;
+    height: 38px;
+    font-size: 14px;
+  }
+
+  .vx_button_row {
+    flex-direction: column;
+  }
+
+  .vx_btn_secondary {
+    order: 2;
+  }
+
+  .vx_btn_primary {
+    order: 1;
+  }
+
+  .vx_security_badges {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 10px;
+  }
+
+  .vx_signup_card {
+    padding: 24px 20px;
+    border-radius: 16px;
+  }
+
+  .vx_step_subtitle {
+    display: none;
+  }
+
+  .vx_country_dropdown {
+    max-height: 220px;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(22, 35, 56, 0.4);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(66, 135, 245, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(66, 135, 245, 0.7);
+}
+</style>
+
+<div class="vx_signup_container">
+  <div class="vx_signup_card">
+
+    <div class="vx_logo_section">
+      <a href="/">
+        <img src="/img/fortiv1.png" alt="velocityx-ai" class="vx_logo_img">
+      </a>
+      <h1 class="vx_main_title">Join <span class="vx_brand_name">velocityx-ai</span></h1>
+      <p class="vx_subtitle">Start your professional trading journey</p>
+      <div class="vx_trust_badge">
+        <i class="fas fa-users"></i>
+        <span>1M+ Traders Community</span>
+      </div>
+    </div>
+
+    <div class="vx_progress_stepper">
+      <div class="vx_step_item vx_active" data-step="1">
+        <div class="vx_step_circle">1</div>
+        <div class="vx_step_label">
+          <div class="vx_step_title">Personal Info</div>
+          <div class="vx_step_subtitle">Basic details</div>
         </div>
-        <div class="trust-badge" aria-hidden="true">1M+ Traders</div>
+      </div>
+      <div class="vx_step_item" data-step="2">
+        <div class="vx_step_circle">2</div>
+        <div class="vx_step_label">
+          <div class="vx_step_title">Location</div>
+          <div class="vx_step_subtitle">Regional settings</div>
+        </div>
+      </div>
+      <div class="vx_step_item" data-step="3">
+        <div class="vx_step_circle">3</div>
+        <div class="vx_step_label">
+          <div class="vx_step_title">Security</div>
+          <div class="vx_step_subtitle">Account protection</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="vx_global_error" class="vx_global_error"></div>
+
+    <div class="vx_panel vx_active" id="vx_panel_1">
+      <div class="vx_section_header">
+        <div class="vx_section_icon">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="vx_section_content">
+          <h3>Personal Information</h3>
+          <p>Create your trading profile</p>
+        </div>
       </div>
 
-      <!-- progress -->
-      <div class="progress-row" role="tablist" aria-label="Signup steps">
-        <div id="step-1" class="step" role="tab" aria-selected="true">
-          <div class="circle">1</div>
-          <div class="step-label"><div class="title">Personal Info</div><div class="sub">Basic details</div></div>
+      <div class="vx_form_grid vx_two_col">
+        <div class="vx_field_group">
+          <label class="vx_field_label">Trading Username <span class="vx_required">*</span></label>
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-user-circle"></i>
+            <input type="text" id="vx_username" class="vx_input_field" placeholder="babatunde@20_">
+          </div>
+          <div class="vx_error_msg" id="vx_username_error"></div>
         </div>
-        <div id="step-2" class="step" role="tab" aria-selected="false">
-          <div class="circle">2</div>
-          <div class="step-label"><div class="title">Location</div><div class="sub">Regional settings</div></div>
-        </div>
-        <div id="step-3" class="step" role="tab" aria-selected="false">
-          <div class="circle">3</div>
-          <div class="step-label"><div class="title">Security</div><div class="sub">Account protection</div></div>
+
+        <div class="vx_field_group">
+          <label class="vx_field_label">Full Name <span class="vx_required">*</span></label>
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-id-card"></i>
+            <input type="text" id="vx_fullname" class="vx_input_field" placeholder="Enter full name">
+          </div>
+          <div class="vx_error_msg" id="vx_fullname_error"></div>
         </div>
       </div>
 
-      <div id="signupGlobalErr" class="error" role="alert" aria-live="polite" style="margin-top:8px;display:none"></div>
-
-      <div class="form-grid">
-        <div class="panel" aria-hidden="false">
-          <!-- Step panels -->
-          <section id="panel-1" class="step-panel">
-            <h3>Personal Information</h3>
-            <p class="small-muted">Create your trading profile</p>
-            <div class="field float-field">
-              <input id="username" class="input" name="username" aria-describedby="usernameErr" autocomplete="username" />
-              <label for="username">Trading Username *</label>
-              <div id="usernameErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="field float-field">
-              <input id="fullName" class="input" name="fullName" autocomplete="name" />
-              <label for="fullName">Full Name *</label>
-              <div id="fullNameErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="field float-field">
-              <input id="email" class="input" name="email" type="email" autocomplete="email" />
-              <label for="email">Email Address *</label>
-              <div id="emailErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="field float-field">
-              <input id="phone" class="input" name="phone" placeholder="+1 555 555 5555" autocomplete="tel" />
-              <label for="phone">Phone Number *</label>
-              <div id="phoneErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="btn-row">
-              <div></div>
-              <button id="continue1" class="btn primary" aria-label="Continue to location" disabled>Continue →</button>
-            </div>
-            <div class="footer-note">Already have an account? <a href="/login">Sign in here</a></div>
-          </section>
-
-          <section id="panel-2" class="step-panel hidden" aria-hidden="true">
-            <h3>Location</h3>
-            <p class="small-muted">Set your regional trading preferences</p>
-            <div class="field country-select">
-              <div class="float-field">
-                <input id="countrySearch" class="input" placeholder="Search your country" aria-describedby="countryErr" autocomplete="country-name" aria-autocomplete="list" aria-controls="countryList" aria-expanded="false" />
-                <label for="countrySearch">Country *</label>
-              </div>
-              <div id="countryList" class="country-list" role="listbox" aria-label="Country results" tabindex="0"></div>
-              <div id="countryErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="info-box" role="region" aria-live="polite">
-              <div aria-hidden="true"><i class="fas fa-info-circle" style="font-size:18px;color:#83d8ff"></i></div>
-              <div><strong>Your location helps VelocityX AI</strong><div class="small-muted">Region-specific features, regulatory compliance, and optimal server connections for faster trading execution.</div></div>
-            </div>
-            <div class="btn-row">
-              <button id="back2" class="btn ghost">← Previous</button>
-              <button id="continue2" class="btn primary" disabled>Continue →</button>
-            </div>
-          </section>
-
-          <section id="panel-3" class="step-panel hidden" aria-hidden="true">
-            <h3>Account Security</h3>
-            <p class="small-muted">Secure your VelocityX AI account</p>
-            <div class="field float-field">
-              <input id="password" type="password" class="input" aria-describedby="passwordErr" autocomplete="new-password" />
-              <label for="password">Password *</label>
-              <div id="passwordErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="field float-field">
-              <input id="confirm" type="password" class="input" aria-describedby="confirmErr" autocomplete="new-password" />
-              <label for="confirm">Confirm Password *</label>
-              <div id="confirmErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-            <div class="rules-list" aria-hidden="false">
-              <div class="rule pw-rule" data-rule=".{8,}">Minimum 8 characters</div>
-              <div class="rule pw-rule" data-rule="(?=.*[A-Z])">One uppercase letter</div>
-              <div class="rule pw-rule" data-rule="(?=.*[a-z])">One lowercase letter</div>
-              <div class="rule pw-rule" data-rule="(?=.*[0-9\W])">One number or special character</div>
-            </div>
-
-            <div class="field">
-              <label for="captchaInput">Verification Code *</label>
-              <div class="captcha" role="group" aria-labelledby="captchaLabel">
-                <div id="captchaCode" class="captcha-code" aria-live="polite">XXXXXX</div>
-                <input id="captchaInput" class="input" placeholder="Type the code shown" aria-describedby="captchaErr" />
-                <button type="button" id="regenCaptcha" class="btn ghost" aria-label="Regenerate code">Regenerate</button>
-              </div>
-              <div id="captchaErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-
-            <div class="field">
-              <label class="small-muted"><input type="checkbox" id="agreeTos" /> I agree to VelocityX AI’s <a href="/terms" target="_blank">Terms and Conditions</a> and acknowledge the <a href="/privacy" target="_blank">Privacy Policy</a>.</label>
-              <div id="tosErr" class="error" role="alert" aria-live="polite"></div>
-            </div>
-
-            <div class="btn-row">
-              <button id="back3" class="btn ghost">← Previous</button>
-              <button id="createBtn" class="btn primary" disabled>Create Account</button>
-            </div>
-          </section>
-
+      <div class="vx_form_grid vx_two_col">
+        <div class="vx_field_group">
+          <label class="vx_field_label">Email Address <span class="vx_required">*</span></label>
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-envelope"></i>
+            <input type="email" id="vx_email" class="vx_input_field" placeholder="your.email@example.com">
+          </div>
+          <div class="vx_error_msg" id="vx_email_error"></div>
         </div>
 
-        <aside class="panel" aria-hidden="false">
-          <div id="sideInfo">
-            <h3>Why join VelocityX AI?</h3>
-            <p class="small-muted">Institutional-grade AI, fast execution, and regulatory compliance across supported regions.</p>
-            <div style="margin-top:12px">
-              <strong style="color:#e6eefc">Security first</strong>
-              <p class="small-muted">Two-factor ready, encrypted wallets, and audited strategies.</p>
+        <div class="vx_field_group">
+          <label class="vx_field_label">Phone Number <span class="vx_required">*</span></label>
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-phone"></i>
+            <input type="tel" id="vx_phone" class="vx_input_field" placeholder="+1 (555) 123-4567">
+          </div>
+          <div class="vx_error_msg" id="vx_phone_error"></div>
+        </div>
+      </div>
+
+      <div class="vx_step_counter">Step 1 of 3</div>
+
+      <div class="vx_button_row">
+        <button class="vx_btn vx_btn_primary" id="vx_continue_1" disabled>
+          <span>Continue</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="vx_footer_links">
+        Already have an account? <a href="/login">Sign in here</a>
+      </div>
+    </div>
+
+    <div class="vx_panel" id="vx_panel_2">
+      <div class="vx_section_header">
+        <div class="vx_section_icon">
+          <i class="fas fa-globe"></i>
+        </div>
+        <div class="vx_section_content">
+          <h3>Location</h3>
+          <p>Set your regional trading preferences</p>
+        </div>
+      </div>
+
+      <div class="vx_field_group">
+        <label class="vx_field_label">Country <span class="vx_required">*</span></label>
+        <div class="vx_country_selector">
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-flag"></i>
+            <div class="vx_country_display" id="vx_country_display" tabindex="0">
+              <div class="vx_country_selected">
+                <span class="fi fi-us vx_flag_icon" id="vx_selected_flag"></span>
+                <span id="vx_selected_country">United States</span>
+              </div>
+              <i class="fas fa-chevron-down vx_chevron"></i>
             </div>
           </div>
-        </aside>
+          <div class="vx_country_dropdown" id="vx_country_dropdown">
+            <div class="vx_country_search">
+              <i class="fas fa-search"></i>
+              <input type="text" id="vx_country_search" placeholder="Search country...">
+            </div>
+            <div class="vx_country_list" id="vx_country_list"></div>
+          </div>
+        </div>
+        <div class="vx_error_msg" id="vx_country_error"></div>
       </div>
 
-      <!-- hidden final form to POST when all client checks pass -->
-      <form id="finalForm" action="/signup" method="POST" class="sr-only">
-        <input name="username" />
-        <input name="fullName" />
-        <input name="email" />
-        <input name="phone" />
-        <input name="country" />
-        <input name="password" />
-      </form>
+      <div class="vx_info_box">
+        <i class="fas fa-info-circle"></i>
+        <div class="vx_info_content">
+          <strong>Regional Trading Information</strong>
+          <p>Your location helps us provide region-specific features, compliance, and optimal server connections for faster trading execution.</p>
+        </div>
+      </div>
 
+      <div class="vx_step_counter">Step 2 of 3</div>
+
+      <div class="vx_button_row">
+        <button class="vx_btn vx_btn_secondary" id="vx_back_2">
+          <i class="fas fa-arrow-left"></i>
+          <span>Previous Step</span>
+        </button>
+        <button class="vx_btn vx_btn_primary" id="vx_continue_2" disabled>
+          <span>Continue</span>
+          <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+
+      <div class="vx_footer_links">
+        Already have an account? <a href="/login">Sign in here</a>
+      </div>
     </div>
-  </div>
 
-  <script src="/js/countries.js"></script>
-  <script src="/js/signup.js"></script>
+    <div class="vx_panel" id="vx_panel_3">
+      <div class="vx_section_header">
+        <div class="vx_section_icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="vx_section_content">
+          <h3>Account Security</h3>
+          <p>Secure your trading account</p>
+        </div>
+      </div>
+
+      <div class="vx_form_grid vx_two_col">
+        <div class="vx_field_group">
+          <label class="vx_field_label">Password <span class="vx_required">*</span></label>
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-lock"></i>
+            <input type="password" id="vx_password" class="vx_input_field" placeholder="••••••••••">
+          </div>
+          <div class="vx_error_msg" id="vx_password_error"></div>
+        </div>
+
+        <div class="vx_field_group">
+          <label class="vx_field_label">Confirm Password <span class="vx_required">*</span></label>
+          <div class="vx_input_wrapper">
+            <i class="vx_input_icon fas fa-lock"></i>
+            <input type="password" id="vx_confirm" class="vx_input_field" placeholder="Confirm your password">
+          </div>
+          <div class="vx_error_msg" id="vx_confirm_error"></div>
+        </div>
+      </div>
+
+      <div class="vx_password_rules">
+        <div class="vx_rule_item" data-rule="length">
+          <i class="fas fa-circle"></i>
+          <span>At least 8 characters long</span>
+        </div>
+        <div class="vx_rule_item" data-rule="uppercase">
+          <i class="fas fa-circle"></i>
+          <span>Contains uppercase and lowercase letters</span>
+        </div>
+        <div class="vx_rule_item" data-rule="number">
+          <i class="fas fa-circle"></i>
+          <span>Includes at least one number or special character</span>
+        </div>
+      </div>
+
+      <div class="vx_field_group">
+        <label class="vx_field_label">Security Verification <span class="vx_required">*</span></label>
+        <div class="vx_captcha_box">
+          <div class="vx_captcha_display">
+            <div class="vx_captcha_code" id="vx_captcha_code">5DB0C3</div>
+          </div>
+          <div class="vx_captcha_input_row">
+            <input type="text" id="vx_captcha_input" placeholder="Enter the code above" maxlength="6">
+            <button type="button" class="vx_captcha_refresh" id="vx_captcha_refresh">
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          <div class="vx_captcha_label">ENTER THE CODE ABOVE</div>
+        </div>
+        <div class="vx_error_msg" id="vx_captcha_error"></div>
+      </div>
+
+      <div class="vx_checkbox_field">
+        <input type="checkbox" id="vx_agree_tos">
+        <label for="vx_agree_tos">
+          I agree to velocityx-ai's <a href="/terms" target="_blank">Terms and Conditions</a> and acknowledge that I have read and understood the <a href="/privacy" target="_blank">Privacy Policy</a> detailing how my data will be used and protected.
+        </label>
+      </div>
+      <div class="vx_error_msg" id="vx_tos_error"></div>
+
+      <div class="vx_step_counter">Step 3 of 3</div>
+
+      <div class="vx_button_row">
+        <button class="vx_btn vx_btn_secondary" id="vx_back_3">
+          <i class="fas fa-arrow-left"></i>
+          <span>Previous Step</span>
+        </button>
+        <button class="vx_btn vx_btn_primary" id="vx_create_btn" disabled>
+          <i class="fas fa-rocket"></i>
+          <span>Create Trading Account</span>
+        </button>
+      </div>
+
+      <div class="vx_footer_links">
+        Already have an account? <a href="/login">Sign in here</a>
+      </div>
+    </div>
+
+    <div class="vx_security_badges">
+      <div class="vx_badge_item">
+        <i class="fas fa-shield-alt"></i>
+        <span>SSL Secured</span>
+      </div>
+      <div class="vx_badge_item">
+        <i class="fas fa-lock"></i>
+        <span>256-bit Encryption</span>
+      </div>
+      <div class="vx_badge_item">
+        <i class="fas fa-check-circle"></i>
+        <span>Regulated Platform</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<form id="vx_final_form" action="/signup" method="POST" class="sr-only">
+  <input name="username" id="vx_final_username" />
+  <input name="fullName" id="vx_final_fullname" />
+  <input name="email" id="vx_final_email" />
+  <input name="phone" id="vx_final_phone" />
+  <input name="country" id="vx_final_country" />
+  <input name="password" id="vx_final_password" />
+</form>
+
+<script>
+const VX_COUNTRIES = [
+  { name: 'United States', code: 'us', dial: '+1' },
+  { name: 'United Kingdom', code: 'gb', dial: '+44' },
+  { name: 'Canada', code: 'ca', dial: '+1' },
+  { name: 'Australia', code: 'au', dial: '+61' },
+  { name: 'Germany', code: 'de', dial: '+49' },
+  { name: 'France', code: 'fr', dial: '+33' },
+  { name: 'Italy', code: 'it', dial: '+39' },
+  { name: 'Spain', code: 'es', dial: '+34' },
+  { name: 'Netherlands', code: 'nl', dial: '+31' },
+  { name: 'Belgium', code: 'be', dial: '+32' },
+  { name: 'Switzerland', code: 'ch', dial: '+41' },
+  { name: 'Austria', code: 'at', dial: '+43' },
+  { name: 'Sweden', code: 'se', dial: '+46' },
+  { name: 'Norway', code: 'no', dial: '+47' },
+  { name: 'Denmark', code: 'dk', dial: '+45' },
+  { name: 'Finland', code: 'fi', dial: '+358' },
+  { name: 'Poland', code: 'pl', dial: '+48' },
+  { name: 'Portugal', code: 'pt', dial: '+351' },
+  { name: 'Greece', code: 'gr', dial: '+30' },
+  { name: 'Ireland', code: 'ie', dial: '+353' },
+  { name: 'Japan', code: 'jp', dial: '+81' },
+  { name: 'South Korea', code: 'kr', dial: '+82' },
+  { name: 'China', code: 'cn', dial: '+86' },
+  { name: 'India', code: 'in', dial: '+91' },
+  { name: 'Singapore', code: 'sg', dial: '+65' },
+  { name: 'Hong Kong', code: 'hk', dial: '+852' },
+  { name: 'Malaysia', code: 'my', dial: '+60' },
+  { name: 'Thailand', code: 'th', dial: '+66' },
+  { name: 'Indonesia', code: 'id', dial: '+62' },
+  { name: 'Philippines', code: 'ph', dial: '+63' },
+  { name: 'Vietnam', code: 'vn', dial: '+84' },
+  { name: 'Brazil', code: 'br', dial: '+55' },
+  { name: 'Mexico', code: 'mx', dial: '+52' },
+  { name: 'Argentina', code: 'ar', dial: '+54' },
+  { name: 'Chile', code: 'cl', dial: '+56' },
+  { name: 'Colombia', code: 'co', dial: '+57' },
+  { name: 'Peru', code: 'pe', dial: '+51' },
+  { name: 'South Africa', code: 'za', dial: '+27' },
+  { name: 'Nigeria', code: 'ng', dial: '+234' },
+  { name: 'Kenya', code: 'ke', dial: '+254' },
+  { name: 'Egypt', code: 'eg', dial: '+20' },
+  { name: 'Turkey', code: 'tr', dial: '+90' },
+  { name: 'United Arab Emirates', code: 'ae', dial: '+971' },
+  { name: 'Saudi Arabia', code: 'sa', dial: '+966' },
+  { name: 'Israel', code: 'il', dial: '+972' },
+  { name: 'Russia', code: 'ru', dial: '+7' },
+  { name: 'Ukraine', code: 'ua', dial: '+380' },
+  { name: 'Czech Republic', code: 'cz', dial: '+420' },
+  { name: 'Hungary', code: 'hu', dial: '+36' },
+  { name: 'Romania', code: 'ro', dial: '+40' },
+  { name: 'New Zealand', code: 'nz', dial: '+64' }
+].sort((a, b) => a.name.localeCompare(b.name));
+
+let vxCurrentStep = 1;
+let vxFormData = {
+  username: '',
+  fullName: '',
+  email: '',
+  phone: '',
+  country: 'United States',
+  countryCode: 'us',
+  password: '',
+  confirm: '',
+  captcha: '',
+  agreedToTerms: false
+};
+
+let vxCurrentCaptcha = '';
+
+function vxInit() {
+  vxGenerateCaptcha();
+  vxPopulateCountries();
+  vxAttachEventListeners();
+  vxValidateStep1();
+}
+
+function vxGenerateCaptcha() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  vxCurrentCaptcha = code;
+  document.getElementById('vx_captcha_code').textContent = code;
+  document.getElementById('vx_captcha_input').value = '';
+}
+
+function vxPopulateCountries() {
+  const listEl = document.getElementById('vx_country_list');
+  listEl.innerHTML = '';
+
+  VX_COUNTRIES.forEach(country => {
+    const option = document.createElement('div');
+    option.className = 'vx_country_option';
+    option.innerHTML = `
+      <span class="fi fi-${country.code} vx_flag_icon"></span>
+      <span>${country.name}</span>
+    `;
+    option.addEventListener('click', () => vxSelectCountry(country));
+    listEl.appendChild(option);
+  });
+}
+
+function vxSelectCountry(country) {
+  vxFormData.country = country.name;
+  vxFormData.countryCode = country.code;
+  document.getElementById('vx_selected_country').textContent = country.name;
+  document.getElementById('vx_selected_flag').className = `fi fi-${country.code} vx_flag_icon`;
+  vxCloseCountryDropdown();
+  vxValidateStep2();
+}
+
+function vxToggleCountryDropdown() {
+  const dropdown = document.getElementById('vx_country_dropdown');
+  const display = document.getElementById('vx_country_display');
+  const isOpen = dropdown.classList.contains('vx_open');
+
+  if (isOpen) {
+    vxCloseCountryDropdown();
+  } else {
+    dropdown.classList.add('vx_open');
+    display.classList.add('vx_open');
+    document.getElementById('vx_country_search').focus();
+  }
+}
+
+function vxCloseCountryDropdown() {
+  const dropdown = document.getElementById('vx_country_dropdown');
+  const display = document.getElementById('vx_country_display');
+  dropdown.classList.remove('vx_open');
+  display.classList.remove('vx_open');
+  document.getElementById('vx_country_search').value = '';
+  vxPopulateCountries();
+}
+
+function vxSearchCountries(query) {
+  const listEl = document.getElementById('vx_country_list');
+  listEl.innerHTML = '';
+
+  const filtered = VX_COUNTRIES.filter(c =>
+    c.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  filtered.forEach(country => {
+    const option = document.createElement('div');
+    option.className = 'vx_country_option';
+    option.innerHTML = `
+      <span class="fi fi-${country.code} vx_flag_icon"></span>
+      <span>${country.name}</span>
+    `;
+    option.addEventListener('click', () => vxSelectCountry(country));
+    listEl.appendChild(option);
+  });
+}
+
+function vxAttachEventListeners() {
+  document.getElementById('vx_username').addEventListener('input', vxValidateStep1);
+  document.getElementById('vx_fullname').addEventListener('input', vxValidateStep1);
+  document.getElementById('vx_email').addEventListener('input', vxValidateStep1);
+  document.getElementById('vx_phone').addEventListener('input', vxValidateStep1);
+
+  document.getElementById('vx_continue_1').addEventListener('click', () => vxGoToStep(2));
+
+  document.getElementById('vx_country_display').addEventListener('click', vxToggleCountryDropdown);
+  document.getElementById('vx_country_search').addEventListener('input', (e) => vxSearchCountries(e.target.value));
+
+  document.getElementById('vx_back_2').addEventListener('click', () => vxGoToStep(1));
+  document.getElementById('vx_continue_2').addEventListener('click', () => vxGoToStep(3));
+
+  document.getElementById('vx_password').addEventListener('input', vxValidateStep3);
+  document.getElementById('vx_confirm').addEventListener('input', vxValidateStep3);
+  document.getElementById('vx_captcha_input').addEventListener('input', vxValidateStep3);
+  document.getElementById('vx_agree_tos').addEventListener('change', vxValidateStep3);
+
+  document.getElementById('vx_captcha_refresh').addEventListener('click', vxGenerateCaptcha);
+
+  document.getElementById('vx_back_3').addEventListener('click', () => vxGoToStep(2));
+  document.getElementById('vx_create_btn').addEventListener('click', vxSubmitForm);
+
+  document.addEventListener('click', (e) => {
+    const dropdown = document.getElementById('vx_country_dropdown');
+    const display = document.getElementById('vx_country_display');
+    if (!dropdown.contains(e.target) && !display.contains(e.target)) {
+      vxCloseCountryDropdown();
+    }
+  });
+}
+
+function vxGoToStep(step) {
+  document.querySelectorAll('.vx_panel').forEach(p => {
+    p.classList.remove('vx_active');
+  });
+  document.getElementById(`vx_panel_${step}`).classList.add('vx_active');
+
+  document.querySelectorAll('.vx_step_item').forEach((item, idx) => {
+    item.classList.remove('vx_active', 'vx_completed');
+    const circle = item.querySelector('.vx_step_circle');
+
+    if (idx + 1 < step) {
+      item.classList.add('vx_completed');
+      circle.innerHTML = '<i class="fas fa-check"></i>';
+    } else if (idx + 1 === step) {
+      item.classList.add('vx_active');
+      circle.textContent = step;
+    } else {
+      circle.textContent = idx + 1;
+    }
+  });
+
+  vxCurrentStep = step;
+
+  if (step === 2) vxValidateStep2();
+  if (step === 3) vxValidateStep3();
+}
+
+function vxValidateStep1() {
+  const username = document.getElementById('vx_username').value.trim();
+  const fullName = document.getElementById('vx_fullname').value.trim();
+  const email = document.getElementById('vx_email').value.trim();
+  const phone = document.getElementById('vx_phone').value.trim();
+
+  vxClearError('vx_username_error');
+  vxClearError('vx_fullname_error');
+  vxClearError('vx_email_error');
+  vxClearError('vx_phone_error');
+
+  let isValid = true;
+
+  if (!username || username.length < 3) {
+    isValid = false;
+  }
+
+  if (!fullName || fullName.length < 2) {
+    isValid = false;
+  }
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRegex.test(email)) {
+    isValid = false;
+  }
+
+  if (!phone || phone.length < 10) {
+    isValid = false;
+  }
+
+  document.getElementById('vx_continue_1').disabled = !isValid;
+
+  if (isValid) {
+    vxFormData.username = username;
+    vxFormData.fullName = fullName;
+    vxFormData.email = email;
+    vxFormData.phone = phone;
+  }
+
+  return isValid;
+}
+
+function vxValidateStep2() {
+  const isValid = vxFormData.country !== '';
+  document.getElementById('vx_continue_2').disabled = !isValid;
+  return isValid;
+}
+
+function vxValidateStep3() {
+  const password = document.getElementById('vx_password').value;
+  const confirm = document.getElementById('vx_confirm').value;
+  const captchaInput = document.getElementById('vx_captcha_input').value.trim().toUpperCase();
+  const agreedToTerms = document.getElementById('vx_agree_tos').checked;
+
+  vxClearError('vx_password_error');
+  vxClearError('vx_confirm_error');
+  vxClearError('vx_captcha_error');
+  vxClearError('vx_tos_error');
+
+  let isValid = true;
+
+  const hasLength = password.length >= 8;
+  const hasUpperAndLower = /(?=.*[a-z])(?=.*[A-Z])/.test(password);
+  const hasNumberOrSpecial = /[0-9\W]/.test(password);
+
+  const rules = document.querySelectorAll('.vx_rule_item');
+  rules[0].classList.toggle('vx_valid', hasLength);
+  rules[1].classList.toggle('vx_valid', hasUpperAndLower);
+  rules[2].classList.toggle('vx_valid', hasNumberOrSpecial);
+
+  if (!hasLength || !hasUpperAndLower || !hasNumberOrSpecial) {
+    isValid = false;
+  }
+
+  if (password !== confirm || !confirm) {
+    isValid = false;
+  }
+
+  if (captchaInput !== vxCurrentCaptcha) {
+    isValid = false;
+  }
+
+  if (!agreedToTerms) {
+    isValid = false;
+  }
+
+  document.getElementById('vx_create_btn').disabled = !isValid;
+
+  if (isValid) {
+    vxFormData.password = password;
+    vxFormData.confirm = confirm;
+    vxFormData.captcha = captchaInput;
+    vxFormData.agreedToTerms = agreedToTerms;
+  }
+
+  return isValid;
+}
+
+function vxShowError(fieldId, message) {
+  const errorEl = document.getElementById(fieldId);
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.classList.add('vx_show');
+    const fieldGroup = errorEl.closest('.vx_field_group');
+    if (fieldGroup) fieldGroup.classList.add('vx_error');
+  }
+}
+
+function vxClearError(fieldId) {
+  const errorEl = document.getElementById(fieldId);
+  if (errorEl) {
+    errorEl.textContent = '';
+    errorEl.classList.remove('vx_show');
+    const fieldGroup = errorEl.closest('.vx_field_group');
+    if (fieldGroup) fieldGroup.classList.remove('vx_error');
+  }
+}
+
+function vxShowGlobalError(message) {
+  const errorEl = document.getElementById('vx_global_error');
+  errorEl.textContent = message;
+  errorEl.classList.add('vx_show');
+  errorEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function vxSubmitForm() {
+  if (!vxValidateStep3()) {
+    vxShowGlobalError('Please complete all required fields correctly.');
+    return;
+  }
+
+  document.getElementById('vx_final_username').value = vxFormData.username;
+  document.getElementById('vx_final_fullname').value = vxFormData.fullName;
+  document.getElementById('vx_final_email').value = vxFormData.email;
+  document.getElementById('vx_final_phone').value = vxFormData.phone;
+  document.getElementById('vx_final_country').value = vxFormData.country;
+  document.getElementById('vx_final_password').value = vxFormData.password;
+
+  document.getElementById('vx_create_btn').disabled = true;
+  document.getElementById('vx_create_btn').innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Creating Account...</span>';
+
+  document.getElementById('vx_final_form').submit();
+}
+
+document.addEventListener('DOMContentLoaded', vxInit);
+</script>
+
 </body>
 </html>
