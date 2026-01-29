@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details - Admin Dashboard</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+</head>
+<body>
+  <div class="admin-container">
+    <header class="admin-header">
+      <h1>User Details</h1>
+      <div class="admin-actions">
+        <a href="/admin/dashboard" class="btn btn-sm">Back to Dashboard</a>
+        <a href="/logout" class="btn btn-sm btn-outline">Logout</a>
+      </div>
+    </header>
+    
+    <main class="admin-content">
+      <% if (success) { %>
+        <div class="alert alert-success">
+          User balance updated successfully
+        </div>
+      <% } %>
+      
+      <div class="user-details-container">
+        <div class="user-info-card">
+          <h2>User Information</h2>
+          
+          <div class="user-info">
+            <div class="info-item">
+              <span class="info-label">User ID:</span>
+              <span class="info-value"><%= user.id %></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Full Name:</span>
+              <span class="info-value"><%= user.fullName %></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Email:</span>
+              <span class="info-value"><%= user.email %></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Country:</span>
+              <span class="info-value"><%= user.country %></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Created:</span>
+              <span class="info-value"><%= new Date(user.createdAt).toLocaleString() %></span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="balance-card">
+          <h3>Account Balance</h3>
+          <div class="current-balance">$<%= user.balance.toFixed(2) %></div>
+          
+          <form action="/admin/user/<%= user.id %>/update-balance" method="POST" class="balance-form">
+            <div class="form-group">
+              <label for="balance">Update Balance</label>
+              <div class="input-group">
+                <span class="input-prefix">$</span>
+                <input 
+                  type="number" 
+                  id="balance" 
+                  name="balance" 
+                  min="0" 
+                  step="0.01" 
+                  value="<%= user.balance.toFixed(2) %>" 
+                  required
+                >
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Balance</button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="withdrawals-section">
+        <h3>Withdrawal History</h3>
+        
+        <% if (withdrawals.length === 0) { %>
+          <p class="no-withdrawals">No withdrawal requests found</p>
+        <% } else { %>
+          <table class="withdrawals-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Bitcoin Address</th>
+                <th>Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% withdrawals.forEach(withdrawal => { %>
+                <tr>
+                  <td><%= new Date(withdrawal.createdAt).toLocaleString() %></td>
+                  <td><%= withdrawal.bitcoinAddress %></td>
+                  <td>$<%= withdrawal.amount.toFixed(2) %></td>
+                  <td><span class="status-<%= withdrawal.status %>"><%= withdrawal.status %></span></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        <% } %>
+      </div>
+    </main>
+  </div>
+  
+  <script src="/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Withdraw - Trading Platform</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+  <style>
+    .vx_withdraw_wrapper {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628 0%, #162a47 100%);
+      padding: 0;
+      margin: 0;
+    }
+
+    .vx_withdraw_hero {
+      background: linear-gradient(180deg, rgba(15, 32, 56, 0.95) 0%, rgba(10, 22, 40, 0.98) 100%);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+      padding: 3rem 2rem 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .vx_hero_wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .vx_breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    .vx_breadcrumb_link {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .vx_breadcrumb_link:hover {
+      color: #3b82f6;
+    }
+
+    .vx_breadcrumb_separator {
+      color: #475569;
+    }
+
+    .vx_breadcrumb_current {
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .vx_hero_content {
+      text-align: center;
+    }
+
+    .vx_hero_icon_box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_hero_heading {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .vx_hero_text {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .vx_balance_display {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .vx_balance_card {
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 14px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .vx_balance_card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.3);
+      box-shadow: 0 12px 28px rgba(59, 130, 246, 0.15);
+    }
+
+    .vx_balance_label {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .vx_balance_value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    .vx_main_content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+
+    .vx_form_section_header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+    }
+
+    .vx_form_section_icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 10px;
+    }
+
+    .vx_form_section_title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .vx_withdrawal_card {
+      background: rgba(15, 32, 56, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_alert {
+      padding: 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: start;
+      gap: 1rem;
+    }
+
+    .vx_alert_icon {
+      flex-shrink: 0;
+    }
+
+    .vx_alert_error {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+    }
+
+    .vx_alert_success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #6ee7b7;
+    }
+
+    .vx_form_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .vx_form_group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .vx_form_label {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .vx_required {
+      color: #ef4444;
+    }
+
+    .vx_input_wrapper {
+      position: relative;
+    }
+
+    .vx_form_input,
+    .vx_form_select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .vx_form_input.vx_has_prefix {
+      padding-left: 2.75rem;
+    }
+
+    .vx_input_prefix {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .vx_form_input:focus,
+    .vx_form_select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_form_input::placeholder {
+      color: #64748b;
+    }
+
+    .vx_form_hint {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+
+    .vx_crypto_selector {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .vx_crypto_badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .vx_info_box {
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .vx_info_box_content {
+      flex: 1;
+    }
+
+    .vx_info_box_title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin: 0 0 0.5rem;
+    }
+
+    .vx_info_box_text {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .vx_estimate_box {
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .vx_estimate_item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .vx_estimate_label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .vx_estimate_value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .vx_submit_button {
+      width: 100%;
+      padding: 1.125rem 2rem;
+      background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      opacity: 0.6;
+    }
+
+    .vx_submit_button.vx_active {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      cursor: pointer;
+      opacity: 1;
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+
+    .vx_submit_button.vx_active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(16, 185, 129, 0.4);
+    }
+
+    .vx_faq_section {
+      background: rgba(15, 32, 56, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 2.5rem;
+      overflow: hidden;
+    }
+
+    .vx_faq_title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .vx_faq_item {
+      border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vx_faq_item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .vx_faq_item:hover {
+      transform: translateX(8px);
+    }
+
+    .vx_faq_question {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin: 0 0 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .vx_faq_icon {
+      width: 20px;
+      height: 20px;
+      transition: transform 0.3s;
+    }
+
+    .vx_faq_item.vx_expanded .vx_faq_icon {
+      transform: rotate(180deg);
+    }
+
+    .vx_faq_answer {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s;
+    }
+
+    .vx_faq_item.vx_expanded .vx_faq_answer {
+      max-height: 200px;
+    }
+
+    .vx_security_footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: rgba(10, 22, 40, 0.4);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .vx_security_text {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .vx_withdraw_hero {
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      .vx_hero_heading {
+        font-size: 1.75rem;
+      }
+
+      .vx_balance_display {
+        grid-template-columns: 1fr;
+      }
+
+      .vx_withdrawal_card {
+        padding: 1.5rem;
+      }
+
+      .vx_form_grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .vx_estimate_box {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_hero_heading {
+        font-size: 1.5rem;
+      }
+
+      .vx_hero_text {
+        font-size: 0.95rem;
+      }
+
+      .vx_form_section_title {
+        font-size: 1.25rem;
+      }
+
+      .vx_faq_section {
+        padding: 1.5rem;
+      }
+    }
+
+    @keyframes vx_slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .vx_animate_in {
+      animation: vx_slideIn 0.6s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+
+    <main class="dashboard-content vx_withdraw_wrapper">
+
+      <!-- Hero Section -->
+      <div class="vx_withdraw_hero">
+        <div class="vx_hero_wrapper">
+          <div class="vx_breadcrumb">
+            <a href="/dashboard" class="vx_breadcrumb_link">
+              <i data-lucide="home" style="width: 14px; height: 14px;"></i>
+              Dashboard
+            </a>
+            <span class="vx_breadcrumb_separator">›</span>
+            <span class="vx_breadcrumb_current">Withdraw Funds</span>
+          </div>
+
+          <div class="vx_hero_content">
+            <div class="vx_hero_icon_box">
+              <i data-lucide="send" style="width: 32px; height: 32px; color: white;"></i>
+            </div>
+            <h1 class="vx_hero_heading">Withdraw Funds</h1>
+            <p class="vx_hero_text">Securely withdraw your funds to your cryptocurrency wallet</p>
+          </div>
+
+          <!-- Balance Display -->
+          <div class="vx_balance_display">
+            <div class="vx_balance_card vx_animate_in" style="animation-delay: 0.1s;">
+              <div class="vx_balance_label">
+                <i data-lucide="wallet" style="width: 16px; height: 16px;"></i>
+                Available Balance
+              </div>
+              <div class="vx_balance_value">$<%= user.balance.toFixed(2) %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="vx_main_content">
+
+        <!-- Withdrawal Form Card -->
+        <div class="vx_withdrawal_card vx_animate_in" style="animation-delay: 0.2s;">
+          <div class="vx_form_section_header">
+            <div class="vx_form_section_icon">
+              <i data-lucide="arrow-down" style="width: 24px; height: 24px; color: white;"></i>
+            </div>
+            <h2 class="vx_form_section_title">Withdrawal Details</h2>
+          </div>
+
+          <% if (error) { %>
+            <div class="vx_alert vx_alert_error">
+              <span class="vx_alert_icon">
+                <i data-lucide="alert-circle" style="width: 20px; height: 20px;"></i>
+              </span>
+              <span><%= error %></span>
+            </div>
+          <% } %>
+
+          <% if (success) { %>
+            <div class="vx_alert vx_alert_success">
+              <span class="vx_alert_icon">
+                <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
+              </span>
+              <span><%= success %></span>
+            </div>
+          <% } %>
+
+          <form action="/user/withdraw" method="POST" id="vx_withdrawForm">
+
+            <!-- Cryptocurrency Selection -->
+            <div class="vx_form_group" style="margin-bottom: 1.5rem;">
+              <label class="vx_form_label">
+                Select Cryptocurrency <span class="vx_required">*</span>
+              </label>
+              <select id="vx_cryptoCurrency" name="cryptoCurrency" class="vx_form_select" required>
+                <option value="">Choose a cryptocurrency...</option>
+                <option value="BTC">Bitcoin (BTC)</option>
+                <option value="ETH">Ethereum (ETH)</option>
+                <option value="USDT">Tether (USDT)</option>
+                <option value="USDC">USD Coin (USDC)</option>
+                <option value="BNB">Binance Coin (BNB)</option>
+                <option value="SOL">Solana (SOL)</option>
+                <option value="ADA">Cardano (ADA)</option>
+                <option value="XRP">Ripple (XRP)</option>
+                <option value="DOGE">Dogecoin (DOGE)</option>
+                <option value="MATIC">Polygon (MATIC)</option>
+              </select>
+              <span class="vx_form_hint">Select the cryptocurrency you want to withdraw</span>
+            </div>
+
+            <!-- Crypto Address & UID Grid -->
+            <div class="vx_form_grid">
+              <div class="vx_form_group">
+                <label class="vx_form_label">
+                  Crypto Wallet Address <span class="vx_required">*</span>
+                </label>
+                <input
+                  type="text"
+                  id="vx_cryptoAddress"
+                  name="cryptoAddress"
+                  class="vx_form_input"
+                  value="<%= locals.formData ? formData.cryptoAddress : '' %>"
+                  placeholder="Enter your wallet address"
+                  required
+                >
+                <span class="vx_form_hint">Your cryptocurrency wallet address for receiving funds</span>
+              </div>
+
+              <div class="vx_form_group">
+                <label class="vx_form_label">
+                  Wallet UID / Memo (optional)
+                </label>
+                <input
+                  type="text"
+                  id="vx_walletUid"
+                  name="walletUid"
+                  class="vx_form_input"
+                  value="<%= locals.formData ? formData.walletUid : '' %>"
+                  placeholder="Enter if required by your wallet"
+                >
+                <span class="vx_form_hint">Some wallets require a UID or memo for identification</span>
+              </div>
+            </div>
+
+            <!-- Withdrawal Amount -->
+            <div class="vx_form_group" style="margin-bottom: 1.5rem;">
+              <label class="vx_form_label">
+                Withdrawal Amount <span class="vx_required">*</span>
+              </label>
+              <div class="vx_input_wrapper">
+                <span class="vx_input_prefix">$</span>
+                <input
+                  type="number"
+                  id="vx_amount"
+                  name="amount"
+                  class="vx_form_input vx_has_prefix"
+                  min="10"
+                  step="0.01"
+                  max="<%= user.balance %>"
+                  value="<%= locals.formData ? formData.amount : '' %>"
+                  placeholder="0.00"
+                  required
+                >
+              </div>
+              <span class="vx_form_hint">Minimum: $10.00 | Maximum: $<%= user.balance.toFixed(2) %></span>
+            </div>
+
+            <!-- Fee Estimate -->
+            <div class="vx_estimate_box">
+              <div class="vx_estimate_item">
+                <span class="vx_estimate_label">Withdrawal Amount</span>
+                <span class="vx_estimate_value" id="vx_estimateAmount">$0.00</span>
+              </div>
+              <div class="vx_estimate_item">
+                <span class="vx_estimate_label">Network Fee</span>
+                <span class="vx_estimate_value" id="vx_estimateFee">$2.00</span>
+              </div>
+              <div class="vx_estimate_item">
+                <span class="vx_estimate_label">You Will Receive</span>
+                <span class="vx_estimate_value" id="vx_estimateTotal">$0.00</span>
+              </div>
+            </div>
+
+            <!-- Information Box -->
+            <div class="vx_info_box">
+              <i data-lucide="info" style="width: 20px; height: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></i>
+              <div class="vx_info_box_content">
+                <p class="vx_info_box_title">Processing Time</p>
+                <p class="vx_info_box_text">
+                  Withdrawal requests are typically processed within 24 hours. You will receive an email confirmation when your funds are on their way.
+                </p>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="vx_submit_button" id="vx_submitBtn" disabled>
+              <i data-lucide="arrow-up-circle" style="width: 20px; height: 20px;"></i>
+              Submit Withdrawal Request
+            </button>
+
+            <!-- Security Notice -->
+            <div class="vx_security_footer">
+              <i data-lucide="shield" style="width: 16px; height: 16px; color: #64748b;"></i>
+              <span class="vx_security_text">
+                All withdrawals are encrypted and secure. Double-check your wallet address before submitting.
+              </span>
+            </div>
+
+          </form>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="vx_faq_section vx_animate_in" style="animation-delay: 0.3s; margin-top: 2rem;">
+          <h3 class="vx_faq_title">
+            <i data-lucide="help-circle" style="width: 24px; height: 24px; color: #3b82f6;"></i>
+            Withdrawal FAQ
+          </h3>
+
+          <div class="vx_faq_item">
+            <div class="vx_faq_question">
+              <span>How long do withdrawals take?</span>
+              <i data-lucide="chevron-down" class="vx_faq_icon" style="width: 20px; height: 20px; color: #3b82f6;"></i>
+            </div>
+            <p class="vx_faq_answer">
+              Withdrawal requests are typically processed within 24 hours. However, blockchain network confirmation times may vary depending on network congestion. Most withdrawals are completed within 2-4 hours.
+            </p>
+          </div>
+
+          <div class="vx_faq_item">
+            <div class="vx_faq_question">
+              <span>Is there a minimum withdrawal amount?</span>
+              <i data-lucide="chevron-down" class="vx_faq_icon" style="width: 20px; height: 20px; color: #3b82f6;"></i>
+            </div>
+            <p class="vx_faq_answer">
+              Yes, the minimum withdrawal amount is $10.00. This ensures that the transaction fee doesn't exceed a reasonable percentage of your withdrawal.
+            </p>
+          </div>
+
+          <div class="vx_faq_item">
+            <div class="vx_faq_question">
+              <span>Are there withdrawal fees?</span>
+              <i data-lucide="chevron-down" class="vx_faq_icon" style="width: 20px; height: 20px; color: #3b82f6;"></i>
+            </div>
+            <p class="vx_faq_answer">
+              There is a small network fee charged to cover blockchain transaction costs. The fee varies depending on the cryptocurrency and network congestion, typically ranging from $1 to $5 per transaction.
+            </p>
+          </div>
+
+          <div class="vx_faq_item">
+            <div class="vx_faq_question">
+              <span>What is a Wallet UID or Memo?</span>
+              <i data-lucide="chevron-down" class="vx_faq_icon" style="width: 20px; height: 20px; color: #3b82f6;"></i>
+            </div>
+            <p class="vx_faq_answer">
+              Some cryptocurrencies like XRP, Cosmos, and others require a unique identifier (UID) or memo field in addition to the wallet address. This ensures your funds are routed correctly. Check your wallet provider's documentation if unsure.
+            </p>
+          </div>
+
+          <div class="vx_faq_item">
+            <div class="vx_faq_question">
+              <span>Can I cancel a withdrawal request?</span>
+              <i data-lucide="chevron-down" class="vx_faq_icon" style="width: 20px; height: 20px; color: #3b82f6;"></i>
+            </div>
+            <p class="vx_faq_answer">
+              You can cancel a withdrawal request before it's processed. Once it's been confirmed on the blockchain, it cannot be reversed. Contact support immediately if you need to cancel an in-progress withdrawal.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <div id="logoutModal" class="modal">
+    <div class="modal-content">
+      <h3>Confirm Logout</h3>
+      <p>Are you sure you want to log out?</p>
+      <div class="modal-buttons">
+        <button id="confirmLogout" class="btn btn-danger">Yes</button>
+        <button id="cancelLogout" class="btn btn-secondary">No</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const cryptoSelect = document.getElementById('vx_cryptoCurrency');
+      const amountInput = document.getElementById('vx_amount');
+      const cryptoAddressInput = document.getElementById('vx_cryptoAddress');
+      const submitBtn = document.getElementById('vx_submitBtn');
+      const estimateAmount = document.getElementById('vx_estimateAmount');
+      const estimateFee = document.getElementById('vx_estimateFee');
+      const estimateTotal = document.getElementById('vx_estimateTotal');
+      const withdrawForm = document.getElementById('vx_withdrawForm');
+      const faqItems = document.querySelectorAll('.vx_faq_item');
+
+      const feesByCrypto = {
+        'BTC': 5.00,
+        'ETH': 3.50,
+        'USDT': 2.00,
+        'USDC': 2.00,
+        'BNB': 2.50,
+        'SOL': 1.50,
+        'ADA': 1.50,
+        'XRP': 3.00,
+        'DOGE': 2.50,
+        'MATIC': 1.00
+      };
+
+      function updateEstimates() {
+        const amount = parseFloat(amountInput.value) || 0;
+        const selectedCrypto = cryptoSelect.value;
+        const fee = feesByCrypto[selectedCrypto] || 2.00;
+
+        estimateAmount.textContent = '$' + amount.toFixed(2);
+        estimateFee.textContent = '$' + fee.toFixed(2);
+        estimateTotal.textContent = '$' + (amount - fee).toFixed(2);
+      }
+
+      function validateForm() {
+        const hasAmount = amountInput.value && parseFloat(amountInput.value) >= 10;
+        const hasCrypto = cryptoSelect.value !== '';
+        const hasAddress = cryptoAddressInput.value.trim().length > 0;
+
+        if (hasAmount && hasCrypto && hasAddress) {
+          submitBtn.classList.add('vx_active');
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.classList.remove('vx_active');
+          submitBtn.disabled = true;
+        }
+      }
+
+      amountInput.addEventListener('input', function() {
+        updateEstimates();
+        validateForm();
+      });
+
+      cryptoSelect.addEventListener('change', function() {
+        updateEstimates();
+        validateForm();
+      });
+
+      cryptoAddressInput.addEventListener('input', validateForm);
+
+      // FAQ Accordion
+      faqItems.forEach(item => {
+        item.querySelector('.vx_faq_question').addEventListener('click', function() {
+          item.classList.toggle('vx_expanded');
+        });
+      });
+
+      withdrawForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (!submitBtn.classList.contains('vx_active')) {
+          return;
+        }
+
+        submitBtn.innerHTML = '<i data-lucide="loader" style="width: 20px; height: 20px; animation: spin 1s linear infinite;"></i> Processing...';
+        submitBtn.disabled = true;
+
+        setTimeout(function() {
+          withdrawForm.submit();
+        }, 1500);
+      });
+
+      const style = document.createElement('style');
+      style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+      document.head.appendChild(style);
+    });
+  </script>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

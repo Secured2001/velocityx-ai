@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expert Traders - Copy Trading</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+  <style>
+    .vx_experts_wrapper {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628 0%, #162a47 100%);
+      padding: 0;
+      margin: 0;
+    }
+
+    .vx_experts_hero {
+      background: linear-gradient(180deg, rgba(15, 32, 56, 0.95) 0%, rgba(10, 22, 40, 0.98) 100%);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+      padding: 3rem 2rem 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .vx_hero_wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .vx_breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    .vx_breadcrumb_link {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .vx_breadcrumb_link:hover {
+      color: #3b82f6;
+    }
+
+    .vx_breadcrumb_separator {
+      color: #475569;
+    }
+
+    .vx_breadcrumb_current {
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .vx_hero_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .vx_hero_content {
+      flex: 1;
+    }
+
+    .vx_hero_icon_box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 14px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_hero_heading {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .vx_hero_text {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .vx_hero_actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .vx_how_btn {
+      background: transparent;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #3b82f6;
+      padding: 0.875rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .vx_how_btn:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .vx_experts_count {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .vx_experts_count_number {
+      color: #3b82f6;
+      font-weight: 700;
+    }
+
+    .vx_main_content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+
+    .vx_experts_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+    }
+
+    .vx_expert_card {
+      background: rgba(15, 32, 56, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_expert_card:hover {
+      transform: translateY(-12px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+    }
+
+    .vx_expert_image_wrapper {
+      position: relative;
+      width: 100%;
+      height: 240px;
+      overflow: hidden;
+    }
+
+    .vx_expert_image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .vx_expert_card:hover .vx_expert_image {
+      transform: scale(1.05);
+    }
+
+    .vx_expert_status_badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(16, 185, 129, 0.9);
+      color: #ffffff;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .vx_status_dot {
+      width: 6px;
+      height: 6px;
+      background: #ffffff;
+      border-radius: 50%;
+      animation: vx_pulse 2s infinite;
+    }
+
+    .vx_expert_view_btn {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+
+    .vx_expert_card:hover .vx_expert_view_btn {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .vx_expert_view_btn:hover {
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    .vx_expert_content {
+      padding: 1.75rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .vx_expert_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .vx_expert_info {
+      flex: 1;
+    }
+
+    .vx_expert_name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 0.5rem;
+    }
+
+    .vx_expert_title {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .vx_expert_followers {
+      text-align: right;
+    }
+
+    .vx_followers_count {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    .vx_followers_label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .vx_expert_rating {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: rgba(59, 130, 246, 0.05);
+      border-radius: 10px;
+    }
+
+    .vx_stars {
+      display: flex;
+      gap: 0.25rem;
+      color: #fbbf24;
+    }
+
+    .vx_rating_count {
+      color: #94a3b8;
+      font-size: 0.85rem;
+      margin-left: auto;
+    }
+
+    .vx_expert_stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .vx_stat_item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .vx_stat_label {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .vx_stat_value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+
+    .vx_stat_value.vx_positive {
+      color: #10b981;
+    }
+
+    .vx_progress_wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .vx_progress_bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(10, 22, 40, 0.6);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .vx_progress_fill {
+      height: 100%;
+      background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+      border-radius: 10px;
+      transition: width 0.6s ease;
+    }
+
+    .vx_expert_actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .vx_min_investment {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .vx_min_label {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .vx_min_value {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #3b82f6;
+    }
+
+    .vx_join_input {
+      flex: 1;
+      min-width: 0;
+      padding: 0.75rem;
+      border-radius: 8px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      background: rgba(10, 22, 40, 0.6);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      outline: none;
+    }
+
+    .vx_join_input:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_start_copy_btn {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .vx_start_copy_btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .vx_start_copy_btn:active {
+      transform: translateY(0);
+    }
+
+    /* Modal Styles */
+    .vx_modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+      backdrop-filter: blur(4px);
+    }
+
+    .vx_modal.show {
+      display: flex;
+    }
+
+    .vx_modal_card {
+      background: linear-gradient(135deg, rgba(15, 32, 56, 0.95) 0%, rgba(10, 22, 40, 0.98) 100%);
+      padding: 2.5rem;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 520px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      animation: vx_slideInUp 0.3s ease-out;
+    }
+
+    .vx_modal_title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 1rem;
+    }
+
+    .vx_modal_body {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin: 0 0 2rem;
+    }
+
+    .vx_modal_body p {
+      margin: 0.75rem 0;
+    }
+
+    .vx_modal_body strong {
+      color: #e2e8f0;
+    }
+
+    .vx_modal_actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .vx_btn_secondary {
+      background: transparent;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #e2e8f0;
+      padding: 0.875rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .vx_btn_secondary:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .vx_btn_primary {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #ffffff;
+      border: none;
+      padding: 0.875rem 1.5rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .vx_btn_primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    .vx_btn_primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Toast Styles */
+    .vx_toast {
+      position: fixed;
+      right: 2rem;
+      top: 2rem;
+      z-index: 1300;
+      min-width: 280px;
+      max-width: 400px;
+      border-radius: 12px;
+      padding: 1.25rem;
+      color: #ffffff;
+      display: none;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      animation: vx_slideInRight 0.3s ease-out;
+    }
+
+    .vx_toast.show {
+      display: block;
+    }
+
+    .vx_toast.success {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .vx_toast.warn {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .vx_toast_title {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .vx_toast_body {
+      font-size: 0.9rem;
+      opacity: 0.95;
+    }
+
+    /* Animations */
+    @keyframes vx_pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes vx_slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes vx_slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes vx_fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .vx_animate_in {
+      animation: vx_fadeIn 0.6s ease-out forwards;
+    }
+
+    @media (max-width: 768px) {
+      .vx_experts_grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .vx_expert_content {
+        padding: 1.25rem;
+      }
+
+      .vx_expert_actions {
+        flex-direction: column;
+      }
+
+      .vx_join_input {
+        width: 100%;
+      }
+
+      .vx_hero_header {
+        flex-direction: column;
+      }
+
+      .vx_hero_heading {
+        font-size: 1.75rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_experts_hero {
+        padding: 1.5rem 1rem;
+      }
+
+      .vx_expert_card {
+        border-radius: 12px;
+      }
+
+      .vx_modal_card {
+        padding: 1.5rem;
+        width: 95%;
+      }
+
+      .vx_toast {
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+      }
+
+      .vx_expert_image_wrapper {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page: 'experts' }) %>
+
+    <main class="dashboard-content vx_experts_wrapper">
+
+      <!-- Hero Section -->
+      <div class="vx_experts_hero">
+        <div class="vx_hero_wrapper">
+          <div class="vx_breadcrumb">
+            <a href="/dashboard" class="vx_breadcrumb_link">
+              <i data-lucide="home" style="width: 14px; height: 14px;"></i>
+              Dashboard
+            </a>
+            <span class="vx_breadcrumb_separator">›</span>
+            <span class="vx_breadcrumb_current">Expert Traders</span>
+          </div>
+
+          <div class="vx_hero_header">
+            <div class="vx_hero_content">
+              <div class="vx_hero_icon_box">
+                <i data-lucide="users" style="width: 32px; height: 32px; color: white;"></i>
+              </div>
+              <h1 class="vx_hero_heading">Expert Traders</h1>
+              <p class="vx_hero_text">Choose from our top-performing traders and automatically copy their trading strategies to your portfolio.</p>
+            </div>
+
+            <div class="vx_hero_actions">
+              <div class="vx_experts_count">
+                <i data-lucide="check-circle" style="width: 16px; height: 16px; color: #10b981;"></i>
+                <span><span class="vx_experts_count_number">12</span> Verified Experts</span>
+              </div>
+              <button class="vx_how_btn" id="openHow">
+                <i data-lucide="help-circle" style="width: 18px; height: 18px;"></i>
+                How It Works
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experts Grid -->
+      <div class="vx_main_content">
+        <div class="vx_experts_grid" id="vx_experts_grid">
+          <% const experts = [
+            {
+              id:'james',
+              name:'James Wynn',
+              title:'Crypto Trader, Expert on Leveraging',
+              followers:3205,
+              rating:5,
+              reviews:120,
+              winRate:98,
+              totalReturn:'+435,810%',
+              equity:265000,
+              trades:3123,
+              minInvestment:1150,
+              image:'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=400&h=300&fit=crop'
+            },
+            {
+              id:'michael',
+              name:'MichaelXBT',
+              title:'Crypto Trader, Chart Expert, Bitcoin Investor',
+              followers:3404,
+              rating:5,
+              reviews:95,
+              winRate:97,
+              totalReturn:'+325,810%',
+              equity:91000,
+              trades:0,
+              minInvestment:2500,
+              image:'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=400&h=300&fit=crop'
+            },
+            {
+              id:'drprofit',
+              name:'Dr. Profit',
+              title:'Elite Trader, 100X BTC and Stock Trader',
+              followers:6779,
+              rating:5,
+              reviews:185,
+              winRate:97,
+              totalReturn:'+92,360%',
+              equity:524362,
+              trades:1889,
+              minInvestment:25000,
+              image:'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?w=400&h=300&fit=crop'
+            },
+            {
+              id:'cryptohayes',
+              name:'CryptoHayes',
+              title:'BitMEX Expert, Digital Asset Specialist',
+              followers:11203,
+              rating:5,
+              reviews:210,
+              winRate:96,
+              totalReturn:'+750,430%',
+              equity:656000,
+              trades:1678,
+              minInvestment:1950,
+              image:'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?w=400&h=300&fit=crop'
+            },
+            {
+              id:'crypto_alex',
+              name:'Crypto Alex',
+              title:'Bitcoin & Altcoin Specialist',
+              followers:5420,
+              rating:4,
+              reviews:78,
+              winRate:94,
+              totalReturn:'+285,120%',
+              equity:380500,
+              trades:1245,
+              minInvestment:5000,
+              image:'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?w=400&h=300&fit=crop'
+            },
+            {
+              id:'trader_sam',
+              name:'Trader Sam',
+              title:'Day Trader & Market Analyst',
+              followers:2890,
+              rating:5,
+              reviews:145,
+              winRate:95,
+              totalReturn:'+512,640%',
+              equity:445800,
+              trades:2567,
+              minInvestment:3200,
+              image:'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?w=400&h=300&fit=crop'
+            }
+          ]; %>
+
+          <% experts.forEach(function(expert, idx) { %>
+            <div class="vx_expert_card vx_animate_in" style="animation-delay: <%= idx * 0.1 %>s;" data-expert-id="<%= expert.id %>">
+              <div class="vx_expert_image_wrapper">
+                <img src="<%= expert.image %>" alt="<%= expert.name %>" class="vx_expert_image">
+                <div class="vx_expert_status_badge">
+                  <span class="vx_status_dot"></span>
+                  Active
+                </div>
+                <button class="vx_expert_view_btn" data-expert-id="<%= expert.id %>">
+                  <i data-lucide="user" style="width: 16px; height: 16px;"></i>
+                  View Profile
+                </button>
+              </div>
+
+              <div class="vx_expert_content">
+                <div class="vx_expert_header">
+                  <div class="vx_expert_info">
+                    <h3 class="vx_expert_name"><%= expert.name %></h3>
+                    <p class="vx_expert_title"><%= expert.title %></p>
+                  </div>
+                  <div class="vx_expert_followers">
+                    <div class="vx_followers_count"><%= (expert.followers / 1000).toFixed(1) %>k</div>
+                    <div class="vx_followers_label">Followers</div>
+                  </div>
+                </div>
+
+                <div class="vx_expert_rating">
+                  <div class="vx_stars">
+                    <% for(let i = 0; i < expert.rating; i++) { %>
+                      <i data-lucide="star" style="width: 16px; height: 16px;"></i>
+                    <% } %>
+                  </div>
+                  <span class="vx_rating_count">(<%= expert.reviews %> reviews)</span>
+                </div>
+
+                <div class="vx_expert_stats">
+                  <div class="vx_stat_item">
+                    <span class="vx_stat_label">Win Rate</span>
+                    <div class="vx_progress_wrapper">
+                      <span class="vx_stat_value vx_positive"><%= expert.winRate %>%</span>
+                      <div class="vx_progress_bar">
+                        <div class="vx_progress_fill" style="width: <%= expert.winRate %>%"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="vx_stat_item">
+                    <span class="vx_stat_label">Total Return</span>
+                    <span class="vx_stat_value vx_positive"><%= expert.totalReturn %></span>
+                  </div>
+                  <div class="vx_stat_item">
+                    <span class="vx_stat_label">Equity</span>
+                    <span class="vx_stat_value">$<%= expert.equity.toLocaleString() %></span>
+                  </div>
+                  <div class="vx_stat_item">
+                    <span class="vx_stat_label">Trades</span>
+                    <span class="vx_stat_value"><%= expert.trades.toLocaleString() %></span>
+                  </div>
+                </div>
+
+                <div class="vx_expert_actions">
+                  <div class="vx_min_investment">
+                    <span class="vx_min_label">Min. Investment</span>
+                    <span class="vx_min_value">$<%= expert.minInvestment.toLocaleString() %></span>
+                  </div>
+                  <input type="number" class="vx_join_input" value="<%= expert.minInvestment %>" min="<%= expert.minInvestment %>">
+                  <button class="vx_start_copy_btn" data-expert-id="<%= expert.id %>">Start Copying</button>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- How It Works Modal -->
+  <div id="howModal" class="vx_modal" aria-hidden="true">
+    <div class="vx_modal_card">
+      <h3 class="vx_modal_title">How Copy Trading Works</h3>
+      <div class="vx_modal_body">
+        <p><strong>1. Choose an Expert</strong> — Browse verified expert traders and select one based on their performance.</p>
+        <p><strong>2. Set Your Investment</strong> — Choose how much to allocate to copy their trades (minimum varies by expert).</p>
+        <p><strong>3. Auto-Copy Trades</strong> — Trades are automatically copied to your portfolio in real-time, proportional to your investment.</p>
+        <p><strong>4. Monitor & Profit</strong> — Track performance, manage your risk, and adjust allocations as needed.</p>
+        <p><strong>5. Withdraw Anytime</strong> — Stop copying and withdraw your funds at any time, no lock-in period.</p>
+      </div>
+      <div class="vx_modal_actions">
+        <button class="vx_btn_secondary" id="closeHow">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="vx_modal" aria-hidden="true">
+    <div class="vx_modal_card">
+      <h3 class="vx_modal_title" id="confirmTitle">Confirm Copy</h3>
+      <div class="vx_modal_body" id="confirmBody">
+        Are you sure you want to start copying?
+      </div>
+      <div class="vx_modal_actions">
+        <button class="vx_btn_secondary" id="confirmCancel">Cancel</button>
+        <button class="vx_btn_primary" id="confirmProceed">Start Copying</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="vx_toast" class="vx_toast"></div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    (function() {
+      function showToast(type, title, msg, timeout = 3000) {
+        const toast = document.getElementById('vx_toast');
+        toast.className = 'vx_toast ' + (type || '') + ' show';
+        toast.innerHTML = '<div class="vx_toast_title">' + title + '</div><div class="vx_toast_body">' + msg + '</div>';
+        if (timeout > 0) {
+          setTimeout(() => toast.className = 'vx_toast', timeout);
+        }
+      }
+
+      // How It Works Modal
+      const openHow = document.getElementById('openHow');
+      const howModal = document.getElementById('howModal');
+      const closeHow = document.getElementById('closeHow');
+
+      openHow.addEventListener('click', () => howModal.classList.add('show'));
+      closeHow.addEventListener('click', () => howModal.classList.remove('show'));
+
+      // Confirmation Flow
+      let pending = null;
+      const confirmModal = document.getElementById('confirmModal');
+      const confirmTitle = document.getElementById('confirmTitle');
+      const confirmBody = document.getElementById('confirmBody');
+      const confirmCancel = document.getElementById('confirmCancel');
+      const confirmProceed = document.getElementById('confirmProceed');
+
+      document.querySelectorAll('.vx_start_copy_btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const card = this.closest('.vx_expert_card');
+          const expertId = card.getAttribute('data-expert-id');
+          const name = card.querySelector('.vx_expert_name').textContent.trim();
+          const input = card.querySelector('.vx_join_input');
+          const amount = Number(input.value) || Number(input.getAttribute('min'));
+
+          pending = { expertId, name, amount };
+          confirmTitle.textContent = 'Copy ' + name;
+          confirmBody.innerHTML = 'Start copying <strong>' + name + '</strong> with <strong>$' + amount.toLocaleString() + '</strong>?';
+          confirmModal.classList.add('show');
+        });
+      });
+
+      confirmCancel.addEventListener('click', function() {
+        pending = null;
+        confirmModal.classList.remove('show');
+      });
+
+      confirmProceed.addEventListener('click', function() {
+        if (!pending) return;
+
+        confirmProceed.disabled = true;
+        confirmProceed.textContent = 'Processing...';
+
+        fetch('/user/join-copy', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: pending.amount,
+            expertId: pending.expertId,
+            expertName: pending.name
+          })
+        })
+          .then(r => r.json())
+          .then(function(data) {
+            confirmProceed.disabled = false;
+            confirmProceed.textContent = 'Start Copying';
+            confirmModal.classList.remove('show');
+
+            if (!data || !data.success) {
+              showToast('warn', 'Unable to Copy', data && data.message ? data.message : 'Failed');
+              if (data && data.redirect) {
+                setTimeout(() => window.location.href = data.redirect, 800);
+              }
+              return;
+            }
+
+            showToast('success', 'Copy Started', 'You are now copying ' + pending.name + ' with $' + pending.amount.toLocaleString());
+            setTimeout(() => window.location.reload(), 1200);
+          })
+          .catch(function(err) {
+            console.error(err);
+            confirmProceed.disabled = false;
+            confirmProceed.textContent = 'Start Copying';
+            confirmModal.classList.remove('show');
+            showToast('warn', 'Error', 'Network error, try again');
+          });
+      });
+
+      // View Profile Buttons
+      document.querySelectorAll('.vx_expert_view_btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const expertId = this.getAttribute('data-expert-id');
+          window.location.href = '/expert/' + expertId;
+        });
+      });
+
+    })();
+  </script>
+
+  <script src="/js/dashboard.js"></script>
+</body>
+</html>

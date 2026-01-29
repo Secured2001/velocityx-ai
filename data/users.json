@@ -1,0 +1,46 @@
+[
+  {
+    "id": "f62a6653-b1d2-4c2d-afbe-f4e574ee3455",
+    "fullName": "Ajibola Anthony",
+    "email": "webberaxel4@gmail.com",
+    "password": "$2a$10$K0F9uipqOGhQwZvzolNse.clerpo/h9uTssIABAzKINa/Z/ytCn7i",
+    "country": "Nigeria",
+    "balance": 3.119999999999891,
+    "canTrade": true,
+    "createdAt": "2025-05-03T08:07:33.049Z"
+  },
+  {
+    "id": "823d0ac3-7637-4f1c-b046-3fb4d4b1e8fb",
+    "fullName": "Ajibola Anthony",
+    "email": "anthonyajibola65@gmail.com",
+    "password": "$2a$10$thnrzwdGRGh.99UPoICto.a8owcZFE9xP5wCiZw.xgYCZh4y8r9Li",
+    "country": "Nigeria",
+    "balance": 0,
+    "canTrade": false,
+    "createdAt": "2025-05-14T21:13:45.214Z"
+  },
+  {
+    "id": "1b1c8cb0-5a3b-4782-9d2b-ddde43c5c394",
+    "fullName": "Ifeanyi chukwu",
+    "email": "ifeanyichukwulawrence30@gmail.com",
+    "password": "$2a$10$pDbILQ5z9nZoXIRGHStZI.KSodo3nPXAW/gDpCejEQ45rNUOIz/wu",
+    "country": "Nigeria",
+    "balance": 1234,
+    "canTrade": true,
+    "createdAt": "2025-05-16T15:05:56.900Z"
+  },
+  {
+    "id": "d302ecc2-fd7e-419b-938a-38df3a9baa97",
+    "username": "anthony31",
+    "fullName": "Ajibola Anthony",
+    "email": "anthonyajibola5@gmail.com",
+    "phone": "+2348088645311",
+    "password": "$2a$10$YyBNbA8/aUtPW1MQtyf2/OaeqznuCGIcZgVhBwhSxbi6mAeAbcPky",
+    "country": "Algeria",
+    "role": "user",
+    "status": "active",
+    "balance": 0,
+    "canTrade": false,
+    "createdAt": "2026-01-28T03:56:24.861Z"
+  }
+]

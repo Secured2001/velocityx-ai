@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referral Program</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    /* Scoped styles for vx_referral_section */
+    .vx_referral_section {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628 0%, #0f1f3a 100%);
+    }
+
+    /* Header Area */
+    .vx_ref_header {
+      padding: 32px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 31, 58, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .vx_ref_header_content {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .vx_ref_header_left {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .vx_ref_title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_ref_subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .vx_ref_actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .vx_ref_btn {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_ref_btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_ref_btn.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .vx_ref_btn.secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_ref_btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Stats Grid */
+    .vx_ref_stats_area {
+      padding: 32px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .vx_ref_stats_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .vx_ref_stat_card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .vx_ref_stat_card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_ref_stat_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent-color);
+    }
+
+    .vx_ref_stat_card.blue { --accent-color: #3b82f6; }
+    .vx_ref_stat_card.green { --accent-color: #10b981; }
+    .vx_ref_stat_card.purple { --accent-color: #8b5cf6; }
+    .vx_ref_stat_card.orange { --accent-color: #f59e0b; }
+
+    .vx_ref_stat_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .vx_ref_stat_label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_ref_stat_icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent-color);
+      opacity: 0.15;
+    }
+
+    .vx_ref_stat_icon svg {
+      width: 22px;
+      height: 22px;
+      color: var(--accent-color);
+    }
+
+    .vx_ref_stat_value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 4px 0;
+      line-height: 1;
+    }
+
+    .vx_ref_stat_change {
+      font-size: 12px;
+      color: #10b981;
+      font-weight: 500;
+    }
+
+    /* Content Area */
+    .vx_ref_content {
+      padding: 0 40px 40px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Referral Tools Section */
+    .vx_ref_tools {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px;
+      backdrop-filter: blur(10px);
+      margin-bottom: 32px;
+    }
+
+    .vx_ref_tools_title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 24px 0;
+    }
+
+    .vx_ref_tool_row {
+      margin-bottom: 28px;
+    }
+
+    .vx_ref_tool_row:last-child {
+      margin-bottom: 0;
+    }
+
+    .vx_ref_tool_label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+
+    .vx_ref_input_group {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .vx_ref_input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Monaco', 'Menlo', monospace;
+      transition: all 0.3s ease;
+    }
+
+    .vx_ref_input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_ref_input:read-only {
+      cursor: not-allowed;
+      opacity: 0.8;
+    }
+
+    .vx_ref_copy_btn {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .vx_ref_copy_btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_ref_copy_btn.copied {
+      background: #10b981;
+    }
+
+    /* Tabs */
+    .vx_ref_tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .vx_ref_tab {
+      background: none;
+      border: none;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 16px 0;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .vx_ref_tab:hover {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .vx_ref_tab.active {
+      color: #3b82f6;
+    }
+
+    .vx_ref_tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #3b82f6;
+    }
+
+    /* How It Works */
+    .vx_ref_how_section {
+      margin-bottom: 40px;
+    }
+
+    .vx_ref_section_title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 24px 0;
+    }
+
+    .vx_ref_steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .vx_ref_step {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .vx_ref_step:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_ref_step_number {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 auto 16px;
+    }
+
+    .vx_ref_step_title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+    }
+
+    .vx_ref_step_desc {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* Referral Levels */
+    .vx_ref_levels {
+      margin-top: 40px;
+    }
+
+    .vx_ref_level_item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .vx_ref_level_item:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .vx_ref_level_left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .vx_ref_level_icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 20px;
+      color: white;
+    }
+
+    .vx_ref_level_icon.starter {
+      background: rgba(107, 114, 128, 0.2);
+      color: #d1d5db;
+    }
+
+    .vx_ref_level_icon.bronze {
+      background: rgba(217, 119, 6, 0.2);
+      color: #f59e0b;
+    }
+
+    .vx_ref_level_icon.silver {
+      background: rgba(148, 163, 184, 0.2);
+      color: #cbd5e1;
+    }
+
+    .vx_ref_level_icon.gold {
+      background: rgba(217, 119, 6, 0.3);
+      color: #fbbf24;
+    }
+
+    .vx_ref_level_icon.elite {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+    }
+
+    .vx_ref_level_info h3 {
+      margin: 0 0 4px 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .vx_ref_level_info p {
+      margin: 0;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .vx_ref_level_commission {
+      font-size: 16px;
+      font-weight: 700;
+      color: #3b82f6;
+      text-align: right;
+    }
+
+    .vx_ref_level_commission.bronze {
+      color: #f59e0b;
+    }
+
+    .vx_ref_level_commission.silver {
+      color: #cbd5e1;
+    }
+
+    .vx_ref_level_commission.gold {
+      color: #fbbf24;
+    }
+
+    .vx_ref_level_commission.elite {
+      color: #a78bfa;
+    }
+
+    /* Activity Table */
+    .vx_ref_activity {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px;
+      backdrop-filter: blur(10px);
+    }
+
+    .vx_ref_activity_title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 24px 0;
+    }
+
+    .vx_ref_table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .vx_ref_table thead tr {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .vx_ref_table th {
+      padding: 16px;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_ref_table th:first-child {
+      border-top-left-radius: 8px;
+    }
+
+    .vx_ref_table th:last-child {
+      border-top-right-radius: 8px;
+    }
+
+    .vx_ref_table tbody tr {
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .vx_ref_table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .vx_ref_table td {
+      padding: 20px 16px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+    }
+
+    .vx_ref_table td strong {
+      color: #ffffff;
+    }
+
+    /* Animations */
+    @keyframes vx_ref_fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .vx_ref_fade_in {
+      animation: vx_ref_fadeInUp 0.5s ease-out forwards;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .vx_ref_header,
+      .vx_ref_stats_area,
+      .vx_ref_content {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .vx_ref_stats_grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vx_ref_header_content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .vx_ref_title {
+        font-size: 24px;
+      }
+
+      .vx_ref_actions {
+        width: 100%;
+      }
+
+      .vx_ref_actions .vx_ref_btn {
+        flex: 1;
+        justify-content: center;
+      }
+
+      .vx_ref_stats_grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vx_ref_tools,
+      .vx_ref_activity {
+        padding: 20px;
+      }
+
+      .vx_ref_input_group {
+        flex-direction: column;
+      }
+
+      .vx_ref_copy_btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .vx_ref_level_item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .vx_ref_level_commission {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_ref_header,
+      .vx_ref_stats_area,
+      .vx_ref_content {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .vx_ref_stat_value {
+        font-size: 24px;
+      }
+
+      .vx_ref_section_title {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page: 'referral' }) %>
+    <main class="dashboard-content">
+      <div class="vx_referral_section" id="vx_referral_main">
+
+        <!-- Header -->
+        <div class="vx_ref_header">
+          <div class="vx_ref_header_content">
+            <div class="vx_ref_header_left">
+              <h2 class="vx_ref_title">Referral Program</h2>
+              <p class="vx_ref_subtitle">Grow your network and earn rewards with velocityx-ai</p>
+            </div>
+            <div class="vx_ref_actions">
+              <button class="vx_ref_btn" id="vx_share_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C9.589 12.937 10 12.074 10 11.25c0-1.657-1.343-3-3-3s-3 1.343-3 3 1.343 3 3 3c.825 0 1.689-.411 2.684-.658m0 0a3.002 3.002 0 019.632-1.874c.07.054.147.105.23.155M9 9h.008v.008H9V9m11 11v-5.694m0 0a2.997 2.997 0 00-1.313-5.12" />
+                </svg>
+                Share Program
+              </button>
+              <button class="vx_ref_btn secondary" id="vx_qr_btn">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                QR Code
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="vx_ref_stats_area">
+          <div class="vx_ref_stats_grid">
+            <div class="vx_ref_stat_card blue vx_ref_fade_in" style="animation-delay: 0.1s">
+              <div class="vx_ref_stat_header">
+                <div>
+                  <div class="vx_ref_stat_label">Total Referrals</div>
+                  <h3 class="vx_ref_stat_value" data-target="<%= user && user.referralsCount ? user.referralsCount : 0 %>"><%= user && user.referralsCount ? user.referralsCount : 0 %></h3>
+                </div>
+                <div class="vx_ref_stat_icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM4.318 20H3c-1.105 0-2-1.343-2-3v-2a6 6 0 0112 0v2c0 1.657-.895 3-2 3H4.318z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vx_ref_stat_change">+12% this month</div>
+            </div>
+
+            <div class="vx_ref_stat_card green vx_ref_fade_in" style="animation-delay: 0.2s">
+              <div class="vx_ref_stat_header">
+                <div>
+                  <div class="vx_ref_stat_label">Total Earnings</div>
+                  <h3 class="vx_ref_stat_value" data-target="<%= user && user.referralEarnings ? Math.round(user.referralEarnings) : 0 %>" data-prefix="$">$<%= user && user.referralEarnings ? user.referralEarnings.toFixed(2) : '0.00' %></h3>
+                </div>
+                <div class="vx_ref_stat_icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vx_ref_stat_change">+8.3% this month</div>
+            </div>
+
+            <div class="vx_ref_stat_card purple vx_ref_fade_in" style="animation-delay: 0.3s">
+              <div class="vx_ref_stat_header">
+                <div>
+                  <div class="vx_ref_stat_label">Your Level</div>
+                  <h3 class="vx_ref_stat_value" style="font-size: 20px;">Starter</h3>
+                </div>
+                <div class="vx_ref_stat_icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vx_ref_stat_change">0-9 referrals</div>
+            </div>
+
+            <div class="vx_ref_stat_card orange vx_ref_fade_in" style="animation-delay: 0.4s">
+              <div class="vx_ref_stat_header">
+                <div>
+                  <div class="vx_ref_stat_label">Referred By</div>
+                  <h3 class="vx_ref_stat_value" style="font-size: 18px;"><%= user && user.referredBy ? user.referredBy : 'None' %></h3>
+                </div>
+                <div class="vx_ref_stat_icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+              </div>
+              <div class="vx_ref_stat_change">Your referrer</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="vx_ref_content">
+
+          <!-- Referral Tools -->
+          <div class="vx_ref_tools">
+            <h3 class="vx_ref_tools_title">Referral Tools</h3>
+
+            <div class="vx_ref_tool_row">
+              <div class="vx_ref_tool_label">Your Referral Link</div>
+              <div class="vx_ref_input_group">
+                <input
+                  type="text"
+                  class="vx_ref_input"
+                  id="refLink"
+                  value="<%= (user && user.id) ? ('https://velocityx-ai.com/ref/' + user.id) : 'https://velocityx-ai.com/signup' %>"
+                  readonly
+                >
+                <button class="vx_ref_copy_btn" id="copyRef">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width: 16px; height: 16px;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+            </div>
+
+            <div class="vx_ref_tool_row">
+              <div class="vx_ref_tool_label">Your Referral ID</div>
+              <div class="vx_ref_input_group">
+                <input
+                  type="text"
+                  class="vx_ref_input"
+                  id="refId"
+                  value="<%= (user && user.id) ? user.id : 'N/A' %>"
+                  readonly
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Tabs -->
+          <div class="vx_ref_tabs">
+            <button class="vx_ref_tab active" data-tab="overview">Overview</button>
+            <button class="vx_ref_tab" data-tab="referrals">My Referrals</button>
+          </div>
+
+          <!-- Overview Tab -->
+          <div id="overview-tab" class="vx_ref_tab_content">
+
+            <!-- How It Works -->
+            <div class="vx_ref_how_section">
+              <h3 class="vx_ref_section_title">How It Works</h3>
+              <div class="vx_ref_steps">
+                <div class="vx_ref_step vx_ref_fade_in" style="animation-delay: 0.1s">
+                  <div class="vx_ref_step_number">1</div>
+                  <h4 class="vx_ref_step_title">Share Your Link</h4>
+                  <p class="vx_ref_step_desc">Share your unique referral link with friends and family</p>
+                </div>
+                <div class="vx_ref_step vx_ref_fade_in" style="animation-delay: 0.2s">
+                  <div class="vx_ref_step_number">2</div>
+                  <h4 class="vx_ref_step_title">They Join</h4>
+                  <p class="vx_ref_step_desc">When someone signs up using your link, they become your referral</p>
+                </div>
+                <div class="vx_ref_step vx_ref_fade_in" style="animation-delay: 0.3s">
+                  <div class="vx_ref_step_number">3</div>
+                  <h4 class="vx_ref_step_title">Earn Rewards</h4>
+                  <p class="vx_ref_step_desc">Get commission from their trading activities and transactions</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Referral Levels -->
+            <div class="vx_ref_levels">
+              <h3 class="vx_ref_section_title">Referral Levels</h3>
+
+              <div class="vx_ref_level_item vx_ref_fade_in" style="animation-delay: 0.1s">
+                <div class="vx_ref_level_left">
+                  <div class="vx_ref_level_icon starter">S</div>
+                  <div class="vx_ref_level_info">
+                    <h3>Starter</h3>
+                    <p>0-9 referrals</p>
+                  </div>
+                </div>
+                <div class="vx_ref_level_commission">5% commission</div>
+              </div>
+
+              <div class="vx_ref_level_item vx_ref_fade_in" style="animation-delay: 0.15s">
+                <div class="vx_ref_level_left">
+                  <div class="vx_ref_level_icon bronze">B</div>
+                  <div class="vx_ref_level_info">
+                    <h3>Bronze</h3>
+                    <p>10-24 referrals</p>
+                  </div>
+                </div>
+                <div class="vx_ref_level_commission bronze">7% commission</div>
+              </div>
+
+              <div class="vx_ref_level_item vx_ref_fade_in" style="animation-delay: 0.2s">
+                <div class="vx_ref_level_left">
+                  <div class="vx_ref_level_icon silver">Ag</div>
+                  <div class="vx_ref_level_info">
+                    <h3>Silver</h3>
+                    <p>25-49 referrals</p>
+                  </div>
+                </div>
+                <div class="vx_ref_level_commission silver">10% commission</div>
+              </div>
+
+              <div class="vx_ref_level_item vx_ref_fade_in" style="animation-delay: 0.25s">
+                <div class="vx_ref_level_left">
+                  <div class="vx_ref_level_icon gold">Au</div>
+                  <div class="vx_ref_level_info">
+                    <h3>Gold</h3>
+                    <p>50-99 referrals</p>
+                  </div>
+                </div>
+                <div class="vx_ref_level_commission gold">12% commission</div>
+              </div>
+
+              <div class="vx_ref_level_item vx_ref_fade_in" style="animation-delay: 0.3s">
+                <div class="vx_ref_level_left">
+                  <div class="vx_ref_level_icon elite">E</div>
+                  <div class="vx_ref_level_info">
+                    <h3>Elite</h3>
+                    <p>100+ referrals</p>
+                  </div>
+                </div>
+                <div class="vx_ref_level_commission elite">15% commission</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Referrals Tab (Hidden by default) -->
+          <div id="referrals-tab" class="vx_ref_tab_content" style="display: none;">
+            <div class="vx_ref_activity">
+              <h3 class="vx_ref_activity_title">Recent Referral Activity</h3>
+              <table class="vx_ref_table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Reward</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="vx_ref_fade_in" style="animation-delay: 0.1s">
+                    <td>2026-01-20</td>
+                    <td><strong>alice@example.com</strong></td>
+                    <td>First Deposit</td>
+                    <td style="color: #10b981; font-weight: 600;">+$12.00</td>
+                  </tr>
+                  <tr class="vx_ref_fade_in" style="animation-delay: 0.15s">
+                    <td>2026-01-18</td>
+                    <td><strong>bob@example.com</strong></td>
+                    <td>Completed Trade</td>
+                    <td style="color: #10b981; font-weight: 600;">+$4.50</td>
+                  </tr>
+                  <tr class="vx_ref_fade_in" style="animation-delay: 0.2s">
+                    <td>2026-01-15</td>
+                    <td><strong>carol@example.com</strong></td>
+                    <td>Signup</td>
+                    <td style="color: rgba(255, 255, 255, 0.5);">$0.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Counter Animation
+    function vx_ref_animateCounter(element) {
+      const target = parseInt(element.getAttribute('data-target'));
+      const prefix = element.getAttribute('data-prefix') || '';
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let current = 0;
+
+      const timer = setInterval(() => {
+        current += step;
+        if (current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        element.textContent = prefix + Math.floor(current).toLocaleString();
+      }, 16);
+    }
+
+    // Initialize counters on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const counters = document.querySelectorAll('.vx_ref_stat_value[data-target]');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            vx_ref_animateCounter(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      counters.forEach(counter => observer.observe(counter));
+    });
+
+    // Copy to clipboard
+    const copyRefBtn = document.getElementById('copyRef');
+    if (copyRefBtn) {
+      copyRefBtn.addEventListener('click', function() {
+        const refLink = document.getElementById('refLink');
+        refLink.select();
+        document.execCommand('copy');
+
+        this.textContent = 'Copied';
+        this.classList.add('copied');
+        setTimeout(() => {
+          this.textContent = 'Copy';
+          this.classList.remove('copied');
+        }, 1200);
+      });
+    }
+
+    // Tab switching
+    const tabs = document.querySelectorAll('.vx_ref_tab');
+    const tabContents = document.querySelectorAll('.vx_ref_tab_content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        tabContents.forEach(content => content.style.display = 'none');
+        document.getElementById(tabName + '-tab').style.display = 'block';
+      });
+    });
+
+    // Share button
+    const shareBtn = document.getElementById('vx_share_btn');
+    if (shareBtn) {
+      shareBtn.addEventListener('click', () => {
+        const refLink = document.getElementById('refLink').value;
+        if (navigator.share) {
+          navigator.share({
+            title: 'velocityx-ai Referral Program',
+            text: 'Join me on velocityx-ai and start earning together!',
+            url: refLink
+          });
+        } else {
+          alert('Share this link: ' + refLink);
+        }
+      });
+    }
+
+    // QR Code button
+    const qrBtn = document.getElementById('vx_qr_btn');
+    if (qrBtn) {
+      qrBtn.addEventListener('click', () => {
+        alert('QR Code modal would open here');
+      });
+    }
+
+    // Initialize lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

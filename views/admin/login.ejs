@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login - Trading Platform</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+</head>
+<body>
+  <div class="auth-container">
+    
+    <div class="auth-box admin-auth">
+      <div class="logo-container">
+        <img src="https://i.imgur.com/kwx84Ys.jpeg" style="width: 150px; height: 40px; border-radius: 25px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);"alt="Logo" class="logo-img" />
+      </div>
+      <h2>Admin Login</h2>
+      
+      <% if (error) { %>
+        <div class="alert alert-error">
+          <%= error %>
+        </div>
+      <% } %>
+      
+      <form action="/admin/login" method="POST">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            value="<%= locals.formData ? formData.email : '' %>" 
+            required
+          >
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      
+      <div class="auth-footer">
+        <a href="/login">Back to User Login</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apply for Credit</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    .vx_credit_application_wrapper {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628 0%, #162a47 100%);
+      padding: 0;
+      margin: 0;
+    }
+
+    .vx_credit_hero_section {
+      background: linear-gradient(180deg, rgba(15, 32, 56, 0.95) 0%, rgba(10, 22, 40, 0.98) 100%);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+      padding: 3rem 2rem 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .vx_breadcrumb_nav {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    .vx_breadcrumb_link {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .vx_breadcrumb_link:hover {
+      color: #3b82f6;
+    }
+
+    .vx_breadcrumb_separator {
+      color: #475569;
+    }
+
+    .vx_breadcrumb_current {
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    .vx_hero_title_wrapper {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .vx_hero_icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_hero_title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .vx_hero_subtitle {
+      font-size: 1.125rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .vx_features_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 3rem auto 0;
+      padding: 0 1rem;
+    }
+
+    .vx_feature_card {
+      background: rgba(15, 32, 56, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_feature_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(147, 51, 234, 0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .vx_feature_card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_feature_card:hover::before {
+      opacity: 1;
+    }
+
+    .vx_feature_icon_wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      margin-bottom: 1.5rem;
+      transition: transform 0.4s;
+    }
+
+    .vx_feature_card:hover .vx_feature_icon_wrapper {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .vx_feature_icon_green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+    }
+
+    .vx_feature_icon_blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_feature_icon_purple {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.3);
+    }
+
+    .vx_feature_title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 0.75rem;
+    }
+
+    .vx_feature_description {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .vx_form_container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+
+    .vx_form_header {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 16px 16px 0 0;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+    }
+
+    .vx_form_header_icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vx_form_header_title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .vx_form_content {
+      background: rgba(15, 32, 56, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-top: none;
+      border-radius: 0 0 16px 16px;
+      padding: 2.5rem;
+    }
+
+    .vx_form_section {
+      margin-bottom: 2.5rem;
+    }
+
+    .vx_form_section:last-child {
+      margin-bottom: 0;
+    }
+
+    .vx_section_header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_section_icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 8px;
+    }
+
+    .vx_section_title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .vx_form_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .vx_form_group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .vx_form_label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .vx_required_mark {
+      color: #ef4444;
+    }
+
+    .vx_input_wrapper {
+      position: relative;
+    }
+
+    .vx_input_icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+    }
+
+    .vx_form_input,
+    .vx_form_select {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      outline: none;
+    }
+
+    .vx_form_input.vx_has_icon {
+      padding-left: 2.75rem;
+    }
+
+    .vx_form_input:focus,
+    .vx_form_select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_form_input::placeholder {
+      color: #64748b;
+    }
+
+    .vx_form_hint {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 0.25rem;
+    }
+
+    .vx_form_textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 1rem;
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 0.95rem;
+      transition: all 0.3s;
+      outline: none;
+      resize: vertical;
+      font-family: inherit;
+    }
+
+    .vx_form_textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_form_textarea::placeholder {
+      color: #64748b;
+    }
+
+    .vx_estimate_display {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+
+    .vx_estimate_label {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .vx_estimate_value {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #3b82f6;
+    }
+
+    .vx_terms_box {
+      background: rgba(10, 22, 40, 0.6);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .vx_terms_list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+    }
+
+    .vx_terms_item {
+      display: flex;
+      align-items: start;
+      gap: 0.75rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 0.875rem;
+    }
+
+    .vx_terms_item:last-child {
+      margin-bottom: 0;
+    }
+
+    .vx_terms_check {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      background: rgba(16, 185, 129, 0.15);
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .vx_checkbox_wrapper {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .vx_custom_checkbox {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      accent-color: #3b82f6;
+    }
+
+    .vx_checkbox_label {
+      color: #e2e8f0;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .vx_checkbox_label a {
+      color: #3b82f6;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .vx_checkbox_label a:hover {
+      color: #60a5fa;
+    }
+
+    .vx_submit_button {
+      width: 100%;
+      padding: 1.125rem 2rem;
+      background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      cursor: not-allowed;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      opacity: 0.6;
+    }
+
+    .vx_submit_button.vx_active {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      cursor: pointer;
+      opacity: 1;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_submit_button.vx_active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_security_notice {
+      text-align: center;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: rgba(10, 22, 40, 0.4);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .vx_security_icon {
+      color: #64748b;
+    }
+
+    .vx_security_text {
+      color: #64748b;
+      font-size: 0.85rem;
+    }
+
+    .vx_history_section {
+      max-width: 900px;
+      margin: 2rem auto 0;
+      padding: 0 1rem 2rem;
+    }
+
+    .vx_history_card {
+      background: rgba(15, 32, 56, 0.8);
+      border: 1px solid rgba(59, 130, 246, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .vx_history_title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .vx_history_table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+    }
+
+    .vx_history_table thead {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_history_table th {
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .vx_history_table td {
+      padding: 1rem;
+      color: #94a3b8;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_history_table tbody tr {
+      transition: background 0.3s;
+    }
+
+    .vx_history_table tbody tr:hover {
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .vx_status_badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.375rem 0.875rem;
+      background: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .vx_hero_title {
+        font-size: 1.875rem;
+      }
+
+      .vx_features_grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .vx_form_content {
+        padding: 1.5rem;
+      }
+
+      .vx_form_grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .vx_history_table {
+        font-size: 0.8rem;
+      }
+
+      .vx_history_table th,
+      .vx_history_table td {
+        padding: 0.75rem 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_credit_hero_section {
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      .vx_hero_title {
+        font-size: 1.5rem;
+      }
+
+      .vx_hero_subtitle {
+        font-size: 1rem;
+      }
+
+      .vx_form_header {
+        padding: 1rem 1.25rem;
+      }
+
+      .vx_form_header_title {
+        font-size: 1.25rem;
+      }
+
+      .vx_history_table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @keyframes vx_fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .vx_animate_in {
+      animation: vx_fadeInUp 0.6s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content vx_credit_application_wrapper">
+
+      <!-- Hero Section -->
+      <div class="vx_credit_hero_section">
+        <div class="vx_breadcrumb_nav">
+          <a href="/dashboard" class="vx_breadcrumb_link">
+            <i data-lucide="home" style="width: 14px; height: 14px;"></i>
+            Dashboard
+          </a>
+          <span class="vx_breadcrumb_separator">›</span>
+          <span class="vx_breadcrumb_current">Loan Application</span>
+        </div>
+
+        <div class="vx_hero_title_wrapper">
+          <div class="vx_hero_icon">
+            <i data-lucide="credit-card" style="width: 32px; height: 32px; color: white;"></i>
+          </div>
+          <h1 class="vx_hero_title">Loan Application</h1>
+          <p class="vx_hero_subtitle">Apply for various credit facilities with competitive rates and flexible terms</p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="vx_features_grid">
+          <div class="vx_feature_card vx_animate_in" style="animation-delay: 0.1s;">
+            <div class="vx_feature_icon_wrapper vx_feature_icon_green">
+              <i data-lucide="percent" style="width: 32px; height: 32px; color: white;"></i>
+            </div>
+            <h3 class="vx_feature_title">Competitive Rates</h3>
+            <p class="vx_feature_description">Low interest rates starting from 5.5% APR</p>
+          </div>
+
+          <div class="vx_feature_card vx_animate_in" style="animation-delay: 0.2s;">
+            <div class="vx_feature_icon_wrapper vx_feature_icon_blue">
+              <i data-lucide="clock" style="width: 32px; height: 32px; color: white;"></i>
+            </div>
+            <h3 class="vx_feature_title">Quick Approval</h3>
+            <p class="vx_feature_description">Get approved within 24-48 hours</p>
+          </div>
+
+          <div class="vx_feature_card vx_animate_in" style="animation-delay: 0.3s;">
+            <div class="vx_feature_icon_wrapper vx_feature_icon_purple">
+              <i data-lucide="shield-check" style="width: 32px; height: 32px; color: white;"></i>
+            </div>
+            <h3 class="vx_feature_title">Secure Process</h3>
+            <p class="vx_feature_description">Bank-level security and encryption</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Application Form -->
+      <div class="vx_form_container vx_animate_in" style="animation-delay: 0.4s;">
+        <form id="vx_creditApplicationForm">
+          <div class="vx_form_header">
+            <div class="vx_form_header_icon">
+              <i data-lucide="file-text" style="width: 24px; height: 24px; color: white;"></i>
+            </div>
+            <h2 class="vx_form_header_title">Loan Application Form</h2>
+          </div>
+
+          <div class="vx_form_content">
+            <!-- Loan Details Section -->
+            <div class="vx_form_section">
+              <div class="vx_section_header">
+                <div class="vx_section_icon">
+                  <i data-lucide="dollar-sign" style="width: 18px; height: 18px; color: white;"></i>
+                </div>
+                <h3 class="vx_section_title">Loan Details</h3>
+              </div>
+
+              <div class="vx_form_grid">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">
+                    Loan Amount ($) <span class="vx_required_mark">*</span>
+                  </label>
+                  <div class="vx_input_wrapper">
+                    <span class="vx_input_icon">$</span>
+                    <input
+                      type="number"
+                      id="vx_creditAmount"
+                      class="vx_form_input vx_has_icon"
+                      placeholder="0"
+                      min="1000"
+                      required
+                    >
+                  </div>
+                  <span class="vx_form_hint">Minimum amount: $1,000</span>
+                </div>
+
+                <div class="vx_form_group">
+                  <label class="vx_form_label">
+                    Loan Duration <span class="vx_required_mark">*</span>
+                  </label>
+                  <select id="vx_creditTerm" class="vx_form_select" required>
+                    <option value="">Select Duration</option>
+                    <option value="3">3 months</option>
+                    <option value="6">6 months</option>
+                    <option value="12">12 months</option>
+                    <option value="24">24 months</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="vx_form_group" style="margin-top: 1.5rem;">
+                <label class="vx_form_label">
+                  Credit Facility Type <span class="vx_required_mark">*</span>
+                </label>
+                <select id="vx_creditFacility" class="vx_form_select" required>
+                  <option value="">Select Loan/Credit Facility</option>
+                  <option value="trading">Trading Capital</option>
+                  <option value="withdrawal">Withdrawal</option>
+                  <option value="investment">Investment</option>
+                  <option value="personal">Personal Loan</option>
+                  <option value="business">Business Loan</option>
+                </select>
+              </div>
+
+              <div class="vx_estimate_display" id="vx_estimateDisplay" style="display: none;">
+                <span class="vx_estimate_label">Estimated monthly payment:</span>
+                <span class="vx_estimate_value" id="vx_estimateValue">—</span>
+              </div>
+            </div>
+
+            <!-- Financial Information Section -->
+            <div class="vx_form_section">
+              <div class="vx_section_header">
+                <div class="vx_section_icon">
+                  <i data-lucide="user" style="width: 18px; height: 18px; color: white;"></i>
+                </div>
+                <h3 class="vx_section_title">Financial Information</h3>
+              </div>
+
+              <div class="vx_form_group">
+                <label class="vx_form_label">
+                  Monthly Net Income <span class="vx_required_mark">*</span>
+                </label>
+                <select id="vx_monthlyIncome" class="vx_form_select" required>
+                  <option value="">Select Income Range</option>
+                  <option value="0-2500">$0 - $2,500</option>
+                  <option value="2500-5000">$2,500 - $5,000</option>
+                  <option value="5000-10000">$5,000 - $10,000</option>
+                  <option value="10000-25000">$10,000 - $25,000</option>
+                  <option value="25000+">$25,000+</option>
+                </select>
+              </div>
+
+              <div class="vx_form_group" style="margin-top: 1.5rem;">
+                <label class="vx_form_label">
+                  Purpose of Loan <span class="vx_required_mark">*</span>
+                </label>
+                <textarea
+                  id="vx_loanPurpose"
+                  class="vx_form_textarea"
+                  placeholder="Please provide detailed information about the purpose of this loan..."
+                  minlength="50"
+                  required
+                ></textarea>
+                <span class="vx_form_hint" id="vx_charCount">Minimum 50 characters required</span>
+              </div>
+            </div>
+
+            <!-- Terms & Conditions Section -->
+            <div class="vx_form_section">
+              <div class="vx_section_header">
+                <div class="vx_section_icon">
+                  <i data-lucide="file-check" style="width: 18px; height: 18px; color: white;"></i>
+                </div>
+                <h3 class="vx_section_title">Terms & Conditions</h3>
+              </div>
+
+              <div class="vx_terms_box">
+                <ul class="vx_terms_list">
+                  <li class="vx_terms_item">
+                    <span class="vx_terms_check">
+                      <i data-lucide="check" style="width: 14px; height: 14px; color: #10b981;"></i>
+                    </span>
+                    <span>Interest rates are subject to credit assessment and may vary based on loan type and duration.</span>
+                  </li>
+                  <li class="vx_terms_item">
+                    <span class="vx_terms_check">
+                      <i data-lucide="check" style="width: 14px; height: 14px; color: #10b981;"></i>
+                    </span>
+                    <span>All loan applications are subject to approval and verification of provided information.</span>
+                  </li>
+                  <li class="vx_terms_item">
+                    <span class="vx_terms_check">
+                      <i data-lucide="check" style="width: 14px; height: 14px; color: #10b981;"></i>
+                    </span>
+                    <span>Early repayment options are available with potential fee reductions.</span>
+                  </li>
+                </ul>
+
+                <label class="vx_checkbox_wrapper">
+                  <input type="checkbox" id="vx_acceptTerms" class="vx_custom_checkbox">
+                  <span class="vx_checkbox_label">
+                    I accept the <a href="/terms" target="_blank">terms and conditions</a> <span class="vx_required_mark">*</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="vx_submit_button" id="vx_submitBtn" disabled>
+              <i data-lucide="send" style="width: 20px; height: 20px;"></i>
+              Submit Loan Application
+            </button>
+
+            <!-- Security Notice -->
+            <div class="vx_security_notice">
+              <span class="vx_security_icon">
+                <i data-lucide="shield" style="width: 16px; height: 16px;"></i>
+              </span>
+              <span class="vx_security_text">
+                Your information is encrypted and secure. We'll review your application within 24-48 hours.
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Previous Applications History -->
+      <div class="vx_history_section vx_animate_in" style="animation-delay: 0.5s;">
+        <div class="vx_history_card">
+          <h3 class="vx_history_title">
+            <i data-lucide="history" style="width: 24px; height: 24px; color: #3b82f6;"></i>
+            Previous Applications
+          </h3>
+          <table class="vx_history_table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Term</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-11-12</td>
+                <td>$2,000</td>
+                <td>6 months</td>
+                <td>Trading Capital</td>
+                <td><span class="vx_status_badge">Repaid</span></td>
+              </tr>
+              <tr>
+                <td>2025-09-05</td>
+                <td>$5,000</td>
+                <td>12 months</td>
+                <td>Investment</td>
+                <td><span class="vx_status_badge">Repaid</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const amountInput = document.getElementById('vx_creditAmount');
+      const termSelect = document.getElementById('vx_creditTerm');
+      const facilitySelect = document.getElementById('vx_creditFacility');
+      const incomeSelect = document.getElementById('vx_monthlyIncome');
+      const purposeTextarea = document.getElementById('vx_loanPurpose');
+      const acceptTermsCheckbox = document.getElementById('vx_acceptTerms');
+      const submitBtn = document.getElementById('vx_submitBtn');
+      const estimateDisplay = document.getElementById('vx_estimateDisplay');
+      const estimateValue = document.getElementById('vx_estimateValue');
+      const charCount = document.getElementById('vx_charCount');
+      const creditForm = document.getElementById('vx_creditApplicationForm');
+
+      function calculateEstimate() {
+        const amount = parseFloat(amountInput.value) || 0;
+        const term = parseInt(termSelect.value) || 0;
+
+        if (!amount || !term) {
+          estimateDisplay.style.display = 'none';
+          return;
+        }
+
+        const annualRate = 0.055;
+        const monthlyRate = annualRate / 12;
+        const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -term));
+
+        estimateValue.textContent = '$' + monthlyPayment.toFixed(2);
+        estimateDisplay.style.display = 'flex';
+      }
+
+      function updateCharCount() {
+        const currentLength = purposeTextarea.value.length;
+        if (currentLength < 50) {
+          charCount.textContent = `Minimum 50 characters required (${currentLength}/50)`;
+          charCount.style.color = '#ef4444';
+        } else {
+          charCount.textContent = `${currentLength} characters`;
+          charCount.style.color = '#10b981';
+        }
+      }
+
+      function validateForm() {
+        const isAmountValid = amountInput.value && parseFloat(amountInput.value) >= 1000;
+        const isTermValid = termSelect.value !== '';
+        const isFacilityValid = facilitySelect.value !== '';
+        const isIncomeValid = incomeSelect.value !== '';
+        const isPurposeValid = purposeTextarea.value.length >= 50;
+        const isTermsAccepted = acceptTermsCheckbox.checked;
+
+        const isValid = isAmountValid && isTermValid && isFacilityValid && isIncomeValid && isPurposeValid && isTermsAccepted;
+
+        if (isValid) {
+          submitBtn.classList.add('vx_active');
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.classList.remove('vx_active');
+          submitBtn.disabled = true;
+        }
+      }
+
+      amountInput.addEventListener('input', function() {
+        calculateEstimate();
+        validateForm();
+      });
+
+      termSelect.addEventListener('change', function() {
+        calculateEstimate();
+        validateForm();
+      });
+
+      facilitySelect.addEventListener('change', validateForm);
+      incomeSelect.addEventListener('change', validateForm);
+
+      purposeTextarea.addEventListener('input', function() {
+        updateCharCount();
+        validateForm();
+      });
+
+      acceptTermsCheckbox.addEventListener('change', validateForm);
+
+      creditForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        if (!submitBtn.classList.contains('vx_active')) {
+          return;
+        }
+
+        const formData = {
+          amount: amountInput.value,
+          term: termSelect.value,
+          facility: facilitySelect.value,
+          income: incomeSelect.value,
+          purpose: purposeTextarea.value,
+          estimatedPayment: estimateValue.textContent
+        };
+
+        console.log('Loan Application Submitted:', formData);
+
+        submitBtn.innerHTML = '<i data-lucide="loader" style="width: 20px; height: 20px; animation: spin 1s linear infinite;"></i> Processing...';
+        submitBtn.disabled = true;
+
+        setTimeout(function() {
+          alert('Application submitted successfully! We will review your application within 24-48 hours and notify you via email.');
+
+          creditForm.reset();
+          estimateDisplay.style.display = 'none';
+          submitBtn.innerHTML = '<i data-lucide="send" style="width: 20px; height: 20px;"></i> Submit Loan Application';
+          submitBtn.classList.remove('vx_active');
+          submitBtn.disabled = true;
+          charCount.textContent = 'Minimum 50 characters required';
+          charCount.style.color = '#64748b';
+
+          lucide.createIcons();
+        }, 2000);
+      });
+
+      const style = document.createElement('style');
+      style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+      document.head.appendChild(style);
+    });
+  </script>
+</body>
+</html>

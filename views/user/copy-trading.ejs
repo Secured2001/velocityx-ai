@@ -1,0 +1,1415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy Trading</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-bg: #0a0e1a;
+  --dark-surface: #121827;
+  --dark-card: #1e293b;
+  --border-color: #475569;
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --color-blue: #3b82f6;
+  --color-green: #22c55e;
+  --color-yellow: #fbbf24;
+  --color-orange: #f97316;
+  --color-red: #ef4444;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-surface) 50%, #0f1419 100%);
+  color: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.vx_ct_main_section {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.vx_ct_header_block {
+  margin-bottom: 2.5rem;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.vx_ct_header_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.vx_ct_header_text_area {
+  flex: 1;
+  min-width: 300px;
+}
+
+.vx_ct_main_title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vx_ct_main_subtitle {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin: 0;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.vx_ct_header_actions_group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.vx_ct_btn_primary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.vx_ct_btn_primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.vx_ct_btn_primary:hover::before {
+  left: 100%;
+}
+
+.vx_ct_btn_primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+}
+
+.vx_ct_btn_secondary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
+}
+
+.vx_ct_btn_secondary:hover {
+  background: rgba(30, 41, 59, 1);
+  border-color: rgba(71, 85, 105, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.vx_ct_stats_container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.vx_ct_stat_box {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.vx_ct_stat_box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.vx_ct_stat_box:hover {
+  transform: translateY(-4px);
+  border-color: rgba(71, 85, 105, 0.6);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.vx_ct_stat_box:hover::before {
+  opacity: 1;
+}
+
+.vx_ct_stat_top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.vx_ct_stat_label {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vx_ct_stat_icon_wrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  transition: transform 0.3s ease;
+  color: inherit;
+}
+
+.vx_ct_stat_box:hover .vx_ct_stat_icon_wrapper {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.vx_ct_icon_blue {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+  color: var(--color-blue);
+}
+
+.vx_ct_icon_green {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.1) 100%);
+  color: var(--color-green);
+}
+
+.vx_ct_icon_orange {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(234, 88, 12, 0.1) 100%);
+  color: var(--color-orange);
+}
+
+.vx_ct_icon_emerald {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.1) 100%);
+  color: #10b981;
+}
+
+.vx_ct_stat_main_value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0.5rem 0;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.vx_ct_positive {
+  color: var(--color-green);
+}
+
+.vx_ct_stat_desc {
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.vx_ct_empty_state_section {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 1.5rem;
+  padding: 4rem 2rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  backdrop-filter: blur(20px);
+  position: relative;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+  overflow: hidden;
+}
+
+.vx_ct_empty_state_section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+.vx_ct_empty_icon_circle {
+  width: 96px;
+  height: 96px;
+  margin: 0 auto 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+  border-radius: 50%;
+  color: var(--color-blue);
+  animation: pulse 3s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
+}
+
+.vx_ct_empty_title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 1rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.vx_ct_empty_text {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+.vx_ct_features_row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.vx_ct_feature_item {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+}
+
+.vx_ct_feature_item:hover {
+  transform: translateY(-8px);
+  border-color: rgba(71, 85, 105, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.vx_ct_feature_icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  transition: transform 0.4s ease;
+}
+
+.vx_ct_feature_item:hover .vx_ct_feature_icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.vx_ct_feature_blue .vx_ct_feature_icon {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+  color: var(--color-blue);
+}
+
+.vx_ct_feature_green .vx_ct_feature_icon {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.1) 100%);
+  color: var(--color-green);
+}
+
+.vx_ct_feature_orange .vx_ct_feature_icon {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(234, 88, 12, 0.1) 100%);
+  color: var(--color-orange);
+}
+
+.vx_ct_feature_title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.75rem 0;
+}
+
+.vx_ct_feature_text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.vx_ct_traders_section {
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.vx_ct_section_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.vx_ct_section_title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem 0;
+}
+
+.vx_ct_section_subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.vx_ct_btn_filter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.625rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vx_ct_btn_filter:hover {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(71, 85, 105, 0.6);
+  color: var(--text-secondary);
+}
+
+.vx_ct_traders_list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.vx_ct_trader_card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.vx_ct_trader_card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+
+.vx_ct_trader_card:hover::before {
+  left: 100%;
+}
+
+.vx_ct_trader_card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.vx_ct_trader_card_header {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.vx_ct_trader_avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-blue);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.vx_ct_trader_card:hover .vx_ct_trader_avatar {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.vx_ct_trader_details {
+  flex: 1;
+  min-width: 0;
+}
+
+.vx_ct_trader_name_row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.vx_ct_trader_name {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.vx_ct_star {
+  color: var(--color-yellow);
+  flex-shrink: 0;
+}
+
+.vx_ct_trader_meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+}
+
+.vx_ct_meta_item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--text-muted);
+}
+
+.vx_ct_risk_badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.vx_ct_risk_low {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-green);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.vx_ct_risk_medium {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--color-yellow);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+}
+
+.vx_ct_risk_high {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--color-red);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.vx_ct_trader_stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+  padding: 1.25rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(71, 85, 105, 0.2);
+}
+
+.vx_ct_stat_item {
+  text-align: center;
+}
+
+.vx_ct_stat_item .vx_ct_stat_label {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-bottom: 0.375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+.vx_ct_stat_item .vx_ct_stat_value {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.vx_ct_trader_actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.vx_ct_btn_view {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  border-radius: 0.625rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vx_ct_btn_view:hover {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(71, 85, 105, 0.8);
+  color: var(--text-secondary);
+  transform: translateY(-2px);
+}
+
+.vx_ct_btn_follow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 0.625rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.vx_ct_btn_follow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+.vx_ct_settings_section {
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.6s ease-out 0.3s both;
+}
+
+.vx_ct_btn_toggle-settings {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 0.625rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vx_ct_btn_toggle-settings:hover {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(71, 85, 105, 0.6);
+  color: var(--text-secondary);
+}
+
+.vx_ct_chevron {
+  transition: transform 0.3s ease;
+}
+
+.vx_ct_settings_panel {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.7) 100%);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  backdrop-filter: blur(20px);
+  margin-top: 1rem;
+  animation: slideDown 0.3s ease-out;
+}
+
+.vx_ct_settings_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.vx_ct_form_group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vx_ct_form_label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.vx_ct_input_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.vx_ct_form_input {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(71, 85, 105, 0.4);
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.vx_ct_form_input:focus {
+  outline: none;
+  border-color: var(--color-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: rgba(15, 23, 42, 0.8);
+}
+
+.vx_ct_input_suffix {
+  position: absolute;
+  right: 1rem;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  font-weight: 600;
+  pointer-events: none;
+}
+
+.vx_ct_form_helper {
+  font-size: 0.875rem;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.vx_ct_settings_actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(71, 85, 105, 0.3);
+}
+
+.vx_ct_btn_reset {
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  border-radius: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.vx_ct_btn_reset:hover {
+  background: rgba(30, 41, 59, 0.5);
+  border-color: rgba(71, 85, 105, 0.8);
+}
+
+.vx_ct_btn_save {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.vx_ct_btn_save:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    max-height: 2000px;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .vx_ct_header_wrapper {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vx_ct_main_title {
+    font-size: 2rem;
+  }
+
+  .vx_ct_stats_container {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+
+  .vx_ct_traders_list {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .vx_ct_main_section {
+    padding: 2rem 1rem;
+  }
+
+  .vx_ct_header_wrapper {
+    flex-direction: column;
+  }
+
+  .vx_ct_main_title {
+    font-size: 1.75rem;
+  }
+
+  .vx_ct_main_subtitle {
+    font-size: 0.9rem;
+  }
+
+  .vx_ct_header_actions_group {
+    width: 100%;
+  }
+
+  .vx_ct_btn_primary,
+  .vx_ct_btn_secondary {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .vx_ct_stats_container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .vx_ct_stat_box {
+    padding: 1.25rem;
+  }
+
+  .vx_ct_empty_state_section {
+    padding: 3rem 1.5rem;
+  }
+
+  .vx_ct_empty_title {
+    font-size: 1.5rem;
+  }
+
+  .vx_ct_empty_text {
+    font-size: 1rem;
+  }
+
+  .vx_ct_features_row {
+    grid-template-columns: 1fr;
+  }
+
+  .vx_ct_section_header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vx_ct_section_title {
+    font-size: 1.5rem;
+  }
+
+  .vx_ct_traders_list {
+    grid-template-columns: 1fr;
+  }
+
+  .vx_ct_trader_stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .vx_ct_settings_grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .vx_ct_settings_actions {
+    flex-direction: column;
+  }
+
+  .vx_ct_settings_actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .vx_ct_main_title {
+    font-size: 1.5rem;
+  }
+
+  .vx_ct_trader_actions {
+    grid-template-columns: 1fr;
+  }
+
+  .vx_ct_btn_view,
+  .vx_ct_btn_follow {
+    width: 100%;
+  }
+
+  .vx_ct_trader_stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+      <h2>Copy Trading (Pro)</h2>
+      <p>Follow top traders and copy their strategies automatically. Review performance, risk and allocation before following.</p>
+
+    <!-- Header Section -->
+    <div class="vx_ct_header_block">
+      <div class="vx_ct_header_wrapper">
+        <div class="vx_ct_header_text_area">
+          <h2 class="vx_ct_main_title">Copy Trading Dashboard</h2>
+          <p class="vx_ct_main_subtitle">Manage your copy trading portfolio and track performance</p>
+        </div>
+        <div class="vx_ct_header_actions_group">
+          <a href="/user/experts" class="vx_ct_btn_primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            Browse Experts
+          </a>
+          <button class="vx_ct_btn_secondary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <path d="M20.49 15a9 9 0 1 1-2-8.12"></path>
+            </svg>
+            Refresh
+          </button>
+        </div>
+      </div>
+    </div>
+
+      
+    <!-- Statistics Grid -->
+    <div class="vx_ct_stats_container">
+      <div class="vx_ct_stat_box">
+        <div class="vx_ct_stat_top">
+          <span class="vx_ct_stat_label">Active Copies</span>
+          <div class="vx_ct_stat_icon_wrapper vx_ct_icon_blue">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="vx_ct_stat_main_value">0</div>
+        <div class="vx_ct_stat_desc">Experts being copied</div>
+      </div>
+
+      <div class="vx_ct_stat_box">
+        <div class="vx_ct_stat_top">
+          <span class="vx_ct_stat_label">Total Invested</span>
+          <div class="vx_ct_stat_icon_wrapper vx_ct_icon_green">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="vx_ct_stat_main_value">$0.00</div>
+        <div class="vx_ct_stat_desc">Capital deployed</div>
+      </div>
+
+      <div class="vx_ct_stat_box">
+        <div class="vx_ct_stat_top">
+          <span class="vx_ct_stat_label">Current Value</span>
+          <div class="vx_ct_stat_icon_wrapper vx_ct_icon_orange">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="1"></circle>
+              <circle cx="19" cy="12" r="1"></circle>
+              <circle cx="5" cy="12" r="1"></circle>
+            </svg>
+          </div>
+        </div>
+        <div class="vx_ct_stat_main_value">$0.00</div>
+        <div class="vx_ct_stat_desc">Portfolio value</div>
+      </div>
+
+      <div class="vx_ct_stat_box">
+        <div class="vx_ct_stat_top">
+          <span class="vx_ct_stat_label">Total P&L</span>
+          <div class="vx_ct_stat_icon_wrapper vx_ct_icon_emerald">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 17"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </div>
+        </div>
+        <div class="vx_ct_stat_main_value vx_ct_positive">+$0.00</div>
+        <div class="vx_ct_stat_desc">0% ROI</div>
+      </div>
+    </div>
+
+    <!-- Empty State Section -->
+    <div class="vx_ct_empty_state_section">
+      <div class="vx_ct_empty_icon_circle">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 19H5c-1 0-2-1-2-2V7c0-1 1-2 2-2h14c1 0 2 1 2 2v5"></path>
+          <path d="M12 12h.01"></path>
+          <path d="M16 6v6"></path>
+          <path d="M19 9v6"></path>
+          <path d="M22 12v3"></path>
+        </svg>
+      </div>
+      <h3 class="vx_ct_empty_title">Start Copy Trading</h3>
+      <p class="vx_ct_empty_text">
+        Browse expert traders and start copying their winning strategies to earn profits automatically.
+      </p>
+
+      <!-- Features Grid -->
+      <div class="vx_ct_features_row">
+        <div class="vx_ct_feature_item vx_ct_feature_blue">
+          <div class="vx_ct_feature_icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h4 class="vx_ct_feature_title">Expert Traders</h4>
+          <p class="vx_ct_feature_text">Copy from verified professional traders with proven track records</p>
+        </div>
+
+        <div class="vx_ct_feature_item vx_ct_feature_green">
+          <div class="vx_ct_feature_icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 17"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </div>
+          <h4 class="vx_ct_feature_title">Auto Trading</h4>
+          <p class="vx_ct_feature_text">Trades executed automatically when experts make moves</p>
+        </div>
+
+        <div class="vx_ct_feature_item vx_ct_feature_orange">
+          <div class="vx_ct_feature_icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+            </svg>
+          </div>
+          <h4 class="vx_ct_feature_title">Risk Management</h4>
+          <p class="vx_ct_feature_text">Set your own risk limits and stop-loss parameters</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Traders Section -->
+    <div class="vx_ct_traders_section">
+      <div class="vx_ct_section_header">
+        <div>
+          <h3 class="vx_ct_section_title">Top Performing Traders</h3>
+          <p class="vx_ct_section_subtitle">Browse and follow expert traders with proven performance</p>
+        </div>
+        <button class="vx_ct_btn_filter">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+          </svg>
+          Filter
+        </button>
+      </div>
+
+      <div class="vx_ct_traders_list">
+        <div class="vx_ct_trader_card">
+          <div class="vx_ct_trader_card_header">
+            <div class="vx_ct_trader_avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <div class="vx_ct_trader_details">
+              <div class="vx_ct_trader_name_row">
+                <h4 class="vx_ct_trader_name">Alpha Wolf</h4>
+                <svg class="vx_ct_star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 10.26 23.77 10.36 17.13 16.01 19.09 24.29 12 18.54 4.91 24.29 6.87 16.01 0.23 10.36 8.91 10.26"></polygon>
+                </svg>
+              </div>
+              <div class="vx_ct_trader_meta">
+                <span class="vx_ct_meta_item">420 followers</span>
+                <span class="vx_ct_risk_badge vx_ct_risk_medium">Medium Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_stats">
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">ROI</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+12.4%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Win Rate</span>
+              <span class="vx_ct_stat_value">68%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Trades</span>
+              <span class="vx_ct_stat_value">245</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Avg Profit</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+3.2%</span>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_actions">
+            <button class="vx_ct_btn_view">View Stats</button>
+            <button class="vx_ct_btn_follow">Follow</button>
+          </div>
+        </div>
+
+        <div class="vx_ct_trader_card">
+          <div class="vx_ct_trader_card_header">
+            <div class="vx_ct_trader_avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <div class="vx_ct_trader_details">
+              <div class="vx_ct_trader_name_row">
+                <h4 class="vx_ct_trader_name">Beta Shark</h4>
+                <svg class="vx_ct_star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 10.26 23.77 10.36 17.13 16.01 19.09 24.29 12 18.54 4.91 24.29 6.87 16.01 0.23 10.36 8.91 10.26"></polygon>
+                </svg>
+              </div>
+              <div class="vx_ct_trader_meta">
+                <span class="vx_ct_meta_item">310 followers</span>
+                <span class="vx_ct_risk_badge vx_ct_risk_low">Low Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_stats">
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">ROI</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+9.8%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Win Rate</span>
+              <span class="vx_ct_stat_value">71%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Trades</span>
+              <span class="vx_ct_stat_value">189</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Avg Profit</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+2.8%</span>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_actions">
+            <button class="vx_ct_btn_view">View Stats</button>
+            <button class="vx_ct_btn_follow">Follow</button>
+          </div>
+        </div>
+
+        <div class="vx_ct_trader_card">
+          <div class="vx_ct_trader_card_header">
+            <div class="vx_ct_trader_avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <div class="vx_ct_trader_details">
+              <div class="vx_ct_trader_name_row">
+                <h4 class="vx_ct_trader_name">Gamma Eagle</h4>
+                <svg class="vx_ct_star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 10.26 23.77 10.36 17.13 16.01 19.09 24.29 12 18.54 4.91 24.29 6.87 16.01 0.23 10.36 8.91 10.26"></polygon>
+                </svg>
+              </div>
+              <div class="vx_ct_trader_meta">
+                <span class="vx_ct_meta_item">567 followers</span>
+                <span class="vx_ct_risk_badge vx_ct_risk_high">High Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_stats">
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">ROI</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+15.2%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Win Rate</span>
+              <span class="vx_ct_stat_value">64%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Trades</span>
+              <span class="vx_ct_stat_value">312</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Avg Profit</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+4.1%</span>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_actions">
+            <button class="vx_ct_btn_view">View Stats</button>
+            <button class="vx_ct_btn_follow">Follow</button>
+          </div>
+        </div>
+
+        <div class="vx_ct_trader_card">
+          <div class="vx_ct_trader_card_header">
+            <div class="vx_ct_trader_avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+            <div class="vx_ct_trader_details">
+              <div class="vx_ct_trader_name_row">
+                <h4 class="vx_ct_trader_name">Delta Phoenix</h4>
+                <svg class="vx_ct_star" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <polygon points="12 2 15.09 10.26 23.77 10.36 17.13 16.01 19.09 24.29 12 18.54 4.91 24.29 6.87 16.01 0.23 10.36 8.91 10.26"></polygon>
+                </svg>
+              </div>
+              <div class="vx_ct_trader_meta">
+                <span class="vx_ct_meta_item">398 followers</span>
+                <span class="vx_ct_risk_badge vx_ct_risk_medium">Medium Risk</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_stats">
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">ROI</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+11.1%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Win Rate</span>
+              <span class="vx_ct_stat_value">69%</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Trades</span>
+              <span class="vx_ct_stat_value">221</span>
+            </div>
+            <div class="vx_ct_stat_item">
+              <span class="vx_ct_stat_label">Avg Profit</span>
+              <span class="vx_ct_stat_value vx_ct_positive">+3.5%</span>
+            </div>
+          </div>
+
+          <div class="vx_ct_trader_actions">
+            <button class="vx_ct_btn_view">View Stats</button>
+            <button class="vx_ct_btn_follow">Follow</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="vx_ct_settings_section">
+      <div class="vx_ct_section_header">
+        <div>
+          <h3 class="vx_ct_section_title">Copy Trading Settings</h3>
+          <p class="vx_ct_section_subtitle">Configure your risk management and allocation preferences</p>
+        </div>
+        <button class="vx_ct_btn_toggle-settings" id="toggleSettings">
+          <svg class="vx_ct_chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+          <span>Expand</span>
+        </button>
+      </div>
+
+      <div class="vx_ct_settings_panel" id="settingsPanel" style="display: none;">
+        <div class="vx_ct_settings_grid">
+          <div class="vx_ct_form_group">
+            <label class="vx_ct_form_label">Max Allocation per Trader</label>
+            <div class="vx_ct_input_wrapper">
+              <input type="number" class="vx_ct_form_input" value="250" min="0" step="10">
+              <span class="vx_ct_input_suffix">USD</span>
+            </div>
+            <p class="vx_ct_form_helper">Maximum amount to allocate to each trader</p>
+          </div>
+
+          <div class="vx_ct_form_group">
+            <label class="vx_ct_form_label">Stop Loss Percentage</label>
+            <div class="vx_ct_input_wrapper">
+              <input type="number" class="vx_ct_form_input" value="5" min="0" max="100" step="0.5">
+              <span class="vx_ct_input_suffix">%</span>
+            </div>
+            <p class="vx_ct_form_helper">Automatically stop copying if loss exceeds this percentage</p>
+          </div>
+
+          <div class="vx_ct_form_group">
+            <label class="vx_ct_form_label">Copy Delay</label>
+            <select class="vx_ct_form_input">
+              <option>Instant</option>
+              <option>5 seconds</option>
+              <option>10 seconds</option>
+              <option>30 seconds</option>
+            </select>
+            <p class="vx_ct_form_helper">Delay before copying trader's actions</p>
+          </div>
+
+          <div class="vx_ct_form_group">
+            <label class="vx_ct_form_label">Max Concurrent Trades</label>
+            <div class="vx_ct_input_wrapper">
+              <input type="number" class="vx_ct_form_input" value="5" min="1" max="20" step="1">
+              <span class="vx_ct_input_suffix">trades</span>
+            </div>
+            <p class="vx_ct_form_helper">Maximum number of simultaneous trades</p>
+          </div>
+        </div>
+
+        <div class="vx_ct_settings_actions">
+          <button class="vx_ct_btn_reset">Reset to Default</button>
+          <button class="vx_ct_btn_save">Save Settings</button>
+        </div>
+      </div>
+    </div>
+
+    </main>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

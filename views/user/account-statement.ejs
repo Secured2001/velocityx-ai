@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account Statement</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    /* Scoped styles for vx_transaction_history_section */
+    .vx_transaction_history_section {
+      background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 100%);
+      border-radius: 16px;
+      padding: 0;
+      margin: 0;
+      min-height: 600px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_transaction_history_section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+    }
+
+    .vx_trans_header_area {
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, transparent 100%);
+    }
+
+    .vx_trans_header_content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .vx_trans_icon_wrapper {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      animation: vx_pulse_glow 3s ease-in-out infinite;
+    }
+
+    @keyframes vx_pulse_glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+    }
+
+    .vx_trans_icon_wrapper svg {
+      width: 24px;
+      height: 24px;
+      color: #3b82f6;
+    }
+
+    .vx_trans_title_group h2 {
+      color: #f1f5f9;
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_trans_subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .vx_trans_main_content {
+      padding: 32px;
+    }
+
+    .vx_trans_tabs_container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .vx_trans_tab_button {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 24px;
+      color: #94a3b8;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_trans_tab_button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .vx_trans_tab_button:hover::before {
+      left: 100%;
+    }
+
+    .vx_trans_tab_button:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+
+    .vx_trans_tab_button.vx_active_tab {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(147, 51, 234, 0.15));
+      border-color: #3b82f6;
+      color: #3b82f6;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_trans_tab_button svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .vx_trans_content_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 28px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .vx_trans_section_title h3 {
+      color: #f1f5f9;
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 6px 0;
+    }
+
+    .vx_trans_section_subtitle {
+      color: #64748b;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .vx_trans_search_wrapper {
+      position: relative;
+      min-width: 280px;
+    }
+
+    .vx_trans_search_icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      width: 18px;
+      height: 18px;
+      pointer-events: none;
+    }
+
+    .vx_trans_search_input {
+      width: 100%;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 12px 16px 12px 44px;
+      color: #f1f5f9;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .vx_trans_search_input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: rgba(30, 41, 59, 0.8);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_trans_search_input::placeholder {
+      color: #64748b;
+    }
+
+    .vx_trans_table_container {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      animation: vx_fadeIn 0.5s ease;
+    }
+
+    @keyframes vx_fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .vx_trans_table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .vx_trans_table thead {
+      background: rgba(30, 41, 59, 0.6);
+    }
+
+    .vx_trans_table thead tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_trans_table th {
+      padding: 16px 20px;
+      text-align: left;
+      color: #94a3b8;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_trans_table tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .vx_trans_table tbody tr:hover {
+      background: rgba(59, 130, 246, 0.08);
+      transform: scale(1.01);
+    }
+
+    .vx_trans_table td {
+      padding: 18px 20px;
+      color: #e2e8f0;
+      font-size: 14px;
+    }
+
+    .vx_trans_type_cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .vx_trans_type_icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .vx_trans_type_icon.vx_deposit {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .vx_trans_type_icon.vx_withdrawal {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .vx_trans_type_icon.vx_trade {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_trans_amount_positive {
+      color: #22c55e;
+      font-weight: 600;
+    }
+
+    .vx_trans_amount_negative {
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    .vx_trans_status_badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .vx_trans_status_badge.vx_completed {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .vx_trans_status_badge.vx_pending {
+      background: rgba(234, 179, 8, 0.15);
+      color: #eab308;
+      border: 1px solid rgba(234, 179, 8, 0.3);
+    }
+
+    .vx_trans_status_badge.vx_closed {
+      background: rgba(100, 116, 139, 0.15);
+      color: #94a3b8;
+      border: 1px solid rgba(100, 116, 139, 0.3);
+    }
+
+    .vx_trans_empty_state {
+      padding: 80px 20px;
+      text-align: center;
+      animation: vx_fadeIn 0.5s ease;
+    }
+
+    .vx_trans_empty_icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_trans_empty_icon svg {
+      width: 40px;
+      height: 40px;
+      color: #64748b;
+    }
+
+    .vx_trans_empty_title {
+      color: #f1f5f9;
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    .vx_trans_empty_subtitle {
+      color: #64748b;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .vx_trans_cta_area {
+      padding: 24px 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .vx_trans_stats_group {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .vx_trans_stat_item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vx_trans_stat_label {
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_trans_stat_value {
+      color: #f1f5f9;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .vx_trans_cta_buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .vx_trans_btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+    }
+
+    .vx_trans_btn_primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_trans_btn_primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_trans_btn_secondary {
+      background: rgba(30, 41, 59, 0.6);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_trans_btn_secondary:hover {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_trans_btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .vx_trans_header_area {
+        padding: 24px 24px 20px;
+      }
+
+      .vx_trans_main_content {
+        padding: 24px;
+      }
+
+      .vx_trans_cta_area {
+        padding: 20px 24px;
+      }
+
+      .vx_trans_content_header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .vx_trans_search_wrapper {
+        min-width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vx_trans_header_area {
+        padding: 20px 16px 16px;
+      }
+
+      .vx_trans_title_group h2 {
+        font-size: 22px;
+      }
+
+      .vx_trans_icon_wrapper {
+        width: 40px;
+        height: 40px;
+      }
+
+      .vx_trans_main_content {
+        padding: 20px 16px;
+      }
+
+      .vx_trans_table_container {
+        overflow-x: auto;
+      }
+
+      .vx_trans_table {
+        min-width: 600px;
+      }
+
+      .vx_trans_cta_area {
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .vx_trans_stats_group {
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .vx_trans_cta_buttons {
+        width: 100%;
+      }
+
+      .vx_trans_btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_trans_tabs_container {
+        gap: 8px;
+      }
+
+      .vx_trans_tab_button {
+        flex: 1;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 13px;
+      }
+
+      .vx_trans_section_title h3 {
+        font-size: 18px;
+      }
+
+      .vx_trans_stats_group {
+        gap: 16px;
+      }
+
+      .vx_trans_stat_value {
+        font-size: 16px;
+      }
+    }
+
+    /* Loading Animation */
+    .vx_trans_loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-top-color: #3b82f6;
+      border-radius: 50%;
+      animation: vx_spin 0.8s linear infinite;
+    }
+
+    @keyframes vx_spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+
+      <!-- Ultra Premium Transaction History Section -->
+      <div class="vx_transaction_history_section" id="vx_transaction_history_section">
+
+        <!-- Header Area -->
+        <div class="vx_trans_header_area">
+          <div class="vx_trans_header_content">
+            <div class="vx_trans_icon_wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="M7 15h0M2 9.5h20"/>
+              </svg>
+            </div>
+            <div class="vx_trans_title_group">
+              <h2>Transaction History</h2>
+              <p class="vx_trans_subtitle">Monitor all your financial activities</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="vx_trans_main_content">
+
+          <!-- Tab Navigation -->
+          <div class="vx_trans_tabs_container">
+            <button class="vx_trans_tab_button vx_active_tab" data-tab="deposits">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 8v8m-4-4h8"/>
+              </svg>
+              Deposits
+            </button>
+            <button class="vx_trans_tab_button" data-tab="withdrawals">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M8 12h8"/>
+              </svg>
+              Withdrawals
+            </button>
+            <button class="vx_trans_tab_button" data-tab="others">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12h18M3 6h18M3 18h18"/>
+              </svg>
+              Others
+            </button>
+          </div>
+
+          <!-- Content Header with Search -->
+          <div class="vx_trans_content_header">
+            <div class="vx_trans_section_title">
+              <h3 id="vx_section_title">Deposit History</h3>
+              <p class="vx_trans_section_subtitle" id="vx_section_subtitle">Track your deposit transactions</p>
+            </div>
+            <div class="vx_trans_search_wrapper">
+              <svg class="vx_trans_search_icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35"/>
+              </svg>
+              <input type="text" class="vx_trans_search_input" id="vx_search_input" placeholder="Search deposits...">
+            </div>
+          </div>
+
+          <!-- Transaction Table -->
+          <div class="vx_trans_table_container" id="vx_table_container">
+            <table class="vx_trans_table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="vx_table_body">
+                <tr>
+                  <td>2026-01-20</td>
+                  <td>
+                    <div class="vx_trans_type_cell">
+                      <div class="vx_trans_type_icon vx_deposit">💰</div>
+                      <span>Deposit</span>
+                    </div>
+                  </td>
+                  <td><span class="vx_trans_amount_positive">+$1,000.00</span></td>
+                  <td><span class="vx_trans_status_badge vx_completed">Completed</span></td>
+                </tr>
+                <tr>
+                  <td>2026-01-22</td>
+                  <td>
+                    <div class="vx_trans_type_cell">
+                      <div class="vx_trans_type_icon vx_trade">📊</div>
+                      <span>Trade</span>
+                    </div>
+                  </td>
+                  <td><span class="vx_trans_amount_negative">-$150.00</span></td>
+                  <td><span class="vx_trans_status_badge vx_closed">Closed</span></td>
+                </tr>
+                <tr>
+                  <td>2026-01-25</td>
+                  <td>
+                    <div class="vx_trans_type_cell">
+                      <div class="vx_trans_type_icon vx_withdrawal">💸</div>
+                      <span>Withdrawal</span>
+                    </div>
+                  </td>
+                  <td><span class="vx_trans_amount_negative">-$200.00</span></td>
+                  <td><span class="vx_trans_status_badge vx_pending">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State (Hidden by default, shown when no data) -->
+          <div class="vx_trans_empty_state" id="vx_empty_state" style="display: none;">
+            <div class="vx_trans_empty_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+            </div>
+            <p class="vx_trans_empty_title">No deposits yet</p>
+            <p class="vx_trans_empty_subtitle">Your deposit history will appear here</p>
+          </div>
+
+        </div>
+
+        <!-- CTA Area -->
+        <div class="vx_trans_cta_area">
+          <div class="vx_trans_stats_group">
+            <div class="vx_trans_stat_item">
+              <span class="vx_trans_stat_label">Total Transactions</span>
+              <span class="vx_trans_stat_value" id="vx_total_count">3</span>
+            </div>
+            <div class="vx_trans_stat_item">
+              <span class="vx_trans_stat_label">Net Balance</span>
+              <span class="vx_trans_stat_value" id="vx_net_balance">+$650.00</span>
+            </div>
+          </div>
+          <div class="vx_trans_cta_buttons">
+            <button class="vx_trans_btn vx_trans_btn_secondary" id="vx_export_btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Export
+            </button>
+            <button class="vx_trans_btn vx_trans_btn_primary" id="vx_refresh_btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 2v6h-6"/>
+                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                <path d="M3 22v-6h6"/>
+                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+              </svg>
+              Refresh
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Ultra Premium Transaction History Section -->
+
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+
+  <script>
+    // Scoped JavaScript for vx_transaction_history_section
+    (function() {
+      'use strict';
+
+      // Tab switching functionality
+      const tabButtons = document.querySelectorAll('.vx_trans_tab_button');
+      const sectionTitle = document.getElementById('vx_section_title');
+      const sectionSubtitle = document.getElementById('vx_section_subtitle');
+      const searchInput = document.getElementById('vx_search_input');
+      const tableContainer = document.getElementById('vx_table_container');
+      const emptyState = document.getElementById('vx_empty_state');
+      const tableBody = document.getElementById('vx_table_body');
+
+      const tabContent = {
+        deposits: {
+          title: 'Deposit History',
+          subtitle: 'Track your deposit transactions',
+          placeholder: 'Search deposits...',
+          data: [
+            { date: '2026-01-20', type: 'Deposit', icon: '💰', iconClass: 'vx_deposit', amount: 1000, status: 'Completed' },
+            { date: '2026-01-18', type: 'Deposit', icon: '💰', iconClass: 'vx_deposit', amount: 500, status: 'Completed' },
+            { date: '2026-01-15', type: 'Deposit', icon: '💰', iconClass: 'vx_deposit', amount: 2000, status: 'Completed' }
+          ]
+        },
+        withdrawals: {
+          title: 'Withdrawal History',
+          subtitle: 'Track your withdrawal transactions',
+          placeholder: 'Search withdrawals...',
+          data: [
+            { date: '2026-01-25', type: 'Withdrawal', icon: '💸', iconClass: 'vx_withdrawal', amount: -200, status: 'Pending' },
+            { date: '2026-01-23', type: 'Withdrawal', icon: '💸', iconClass: 'vx_withdrawal', amount: -300, status: 'Completed' }
+          ]
+        },
+        others: {
+          title: 'Other Transactions',
+          subtitle: 'Track trades and other activities',
+          placeholder: 'Search transactions...',
+          data: [
+            { date: '2026-01-22', type: 'Trade', icon: '📊', iconClass: 'vx_trade', amount: -150, status: 'Closed' },
+            { date: '2026-01-21', type: 'Trade', icon: '📊', iconClass: 'vx_trade', amount: 75, status: 'Completed' },
+            { date: '2026-01-19', type: 'Trade', icon: '📊', iconClass: 'vx_trade', amount: -50, status: 'Closed' }
+          ]
+        }
+      };
+
+      let currentTab = 'deposits';
+      let allTransactions = [];
+
+      function renderTable(transactions) {
+        if (transactions.length === 0) {
+          tableContainer.style.display = 'none';
+          emptyState.style.display = 'block';
+          return;
+        }
+
+        tableContainer.style.display = 'block';
+        emptyState.style.display = 'none';
+
+        tableBody.innerHTML = transactions.map(trans => `
+          <tr>
+            <td>${trans.date}</td>
+            <td>
+              <div class="vx_trans_type_cell">
+                <div class="vx_trans_type_icon ${trans.iconClass}">${trans.icon}</div>
+                <span>${trans.type}</span>
+              </div>
+            </td>
+            <td>
+              <span class="${trans.amount >= 0 ? 'vx_trans_amount_positive' : 'vx_trans_amount_negative'}">
+                ${trans.amount >= 0 ? '+' : ''}$${Math.abs(trans.amount).toFixed(2)}
+              </span>
+            </td>
+            <td>
+              <span class="vx_trans_status_badge vx_${trans.status.toLowerCase()}">${trans.status}</span>
+            </td>
+          </tr>
+        `).join('');
+
+        updateStats(transactions);
+      }
+
+      function updateStats(transactions) {
+        const totalCount = document.getElementById('vx_total_count');
+        const netBalance = document.getElementById('vx_net_balance');
+
+        totalCount.textContent = transactions.length;
+
+        const total = transactions.reduce((sum, trans) => sum + trans.amount, 0);
+        netBalance.textContent = (total >= 0 ? '+' : '') + '$' + Math.abs(total).toFixed(2);
+        netBalance.style.color = total >= 0 ? '#22c55e' : '#ef4444';
+      }
+
+      function switchTab(tabName) {
+        currentTab = tabName;
+        const content = tabContent[tabName];
+
+        tabButtons.forEach(btn => {
+          if (btn.dataset.tab === tabName) {
+            btn.classList.add('vx_active_tab');
+          } else {
+            btn.classList.remove('vx_active_tab');
+          }
+        });
+
+        sectionTitle.textContent = content.title;
+        sectionSubtitle.textContent = content.subtitle;
+        searchInput.placeholder = content.placeholder;
+        searchInput.value = '';
+
+        allTransactions = content.data;
+        renderTable(allTransactions);
+      }
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const tabName = this.dataset.tab;
+          switchTab(tabName);
+        });
+      });
+
+      // Search functionality
+      searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const filtered = allTransactions.filter(trans => {
+          return trans.date.toLowerCase().includes(searchTerm) ||
+                 trans.type.toLowerCase().includes(searchTerm) ||
+                 trans.status.toLowerCase().includes(searchTerm) ||
+                 trans.amount.toString().includes(searchTerm);
+        });
+        renderTable(filtered);
+      });
+
+      // Refresh button
+      const refreshBtn = document.getElementById('vx_refresh_btn');
+      refreshBtn.addEventListener('click', function() {
+        const icon = this.querySelector('svg');
+        icon.style.animation = 'vx_spin 0.8s linear';
+
+        setTimeout(() => {
+          icon.style.animation = '';
+          switchTab(currentTab);
+        }, 800);
+      });
+
+      // Export button
+      const exportBtn = document.getElementById('vx_export_btn');
+      exportBtn.addEventListener('click', function() {
+        console.log('Exporting transactions for:', currentTab);
+        alert('Export functionality would download a CSV file here');
+      });
+
+      // Initialize with default tab
+      switchTab('deposits');
+
+      // Animate counters on load
+      function animateCounter(element, target) {
+        const duration = 1000;
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          element.textContent = Math.floor(current);
+        }, 16);
+      }
+
+      setTimeout(() => {
+        const totalCount = document.getElementById('vx_total_count');
+        const targetCount = parseInt(totalCount.textContent);
+        totalCount.textContent = '0';
+        animateCounter(totalCount, targetCount);
+      }, 300);
+
+    })();
+  </script>
+</body>
+</html>

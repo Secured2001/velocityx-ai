@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Center</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    /* Scoped styles for vx_support_section */
+    .vx_support_section {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a1628 0%, #0f1f3a 100%);
+    }
+
+    /* Header Area */
+    .vx_sup_header {
+      padding: 48px 40px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 31, 58, 0.5);
+      backdrop-filter: blur(10px);
+    }
+
+    .vx_sup_header_icon {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      animation: vx_sup_pulse 3s ease-in-out infinite;
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_sup_header_icon svg {
+      width: 40px;
+      height: 40px;
+      color: white;
+    }
+
+    .vx_sup_title {
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_sup_subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Content Area */
+    .vx_sup_content {
+      padding: 48px 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Email Support Card */
+    .vx_sup_email_card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 48px;
+      backdrop-filter: blur(10px);
+      animation: vx_sup_fadeInUp 0.6s ease-out forwards;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      transition: all 0.3s ease;
+    }
+
+    .vx_sup_email_card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_sup_email_icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(59, 130, 246, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .vx_sup_email_icon svg {
+      width: 32px;
+      height: 32px;
+      color: #3b82f6;
+    }
+
+    .vx_sup_email_info {
+      flex: 1;
+    }
+
+    .vx_sup_email_title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+    }
+
+    .vx_sup_email_desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 0 12px 0;
+    }
+
+    .vx_sup_email_link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .vx_sup_email_link:hover {
+      gap: 10px;
+      color: #2563eb;
+    }
+
+    .vx_sup_email_link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Form Section */
+    .vx_sup_form_section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 48px;
+      backdrop-filter: blur(10px);
+      animation: vx_sup_fadeInUp 0.6s ease-out forwards 0.1s;
+    }
+
+    .vx_sup_form_title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+      text-align: center;
+    }
+
+    .vx_sup_form_subtitle {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 0 36px 0;
+      text-align: center;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .vx_sup_form {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .vx_sup_form_row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 28px;
+    }
+
+    .vx_sup_form_group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vx_sup_form_label {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .vx_sup_form_label.required::after {
+      content: '*';
+      color: #ef4444;
+      margin-left: 4px;
+    }
+
+    .vx_sup_input_wrapper {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 0 16px;
+      transition: all 0.3s ease;
+    }
+
+    .vx_sup_input_wrapper:focus-within {
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_sup_input_wrapper svg {
+      width: 18px;
+      height: 18px;
+      color: rgba(255, 255, 255, 0.5);
+      flex-shrink: 0;
+    }
+
+    .vx_sup_input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      padding: 14px 0;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .vx_sup_input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .vx_sup_input_avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .vx_sup_textarea_wrapper {
+      position: relative;
+      margin-bottom: 28px;
+    }
+
+    .vx_sup_textarea {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #ffffff;
+      padding: 16px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 140px;
+      transition: all 0.3s ease;
+    }
+
+    .vx_sup_textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_sup_textarea::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .vx_sup_char_count {
+      position: absolute;
+      bottom: 12px;
+      right: 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .vx_sup_helper_text {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+
+    /* Form Footer */
+    .vx_sup_form_footer {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .vx_sup_submit_btn {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      border: none;
+      padding: 14px 40px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_sup_submit_btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_sup_submit_btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .vx_sup_submit_btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .vx_sup_response_time {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      text-align: center;
+    }
+
+    .vx_sup_success_message {
+      display: none;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      padding: 16px;
+      color: #10b981;
+      margin-bottom: 24px;
+      font-size: 14px;
+      animation: vx_sup_slideDown 0.3s ease-out;
+    }
+
+    .vx_sup_success_message.show {
+      display: block;
+    }
+
+    /* Animations */
+    @keyframes vx_sup_pulse {
+      0%, 100% {
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+      }
+      50% {
+        box-shadow: 0 8px 24px rgba(59, 130, 246, 0.6);
+      }
+    }
+
+    @keyframes vx_sup_fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes vx_sup_slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .vx_sup_header {
+        padding: 32px 24px;
+      }
+
+      .vx_sup_title {
+        font-size: 28px;
+      }
+
+      .vx_sup_subtitle {
+        font-size: 14px;
+      }
+
+      .vx_sup_content {
+        padding: 32px 24px;
+      }
+
+      .vx_sup_email_card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px;
+      }
+
+      .vx_sup_form_section {
+        padding: 32px 24px;
+      }
+
+      .vx_sup_form_title {
+        font-size: 22px;
+      }
+
+      .vx_sup_form_row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_sup_header {
+        padding: 24px 16px;
+      }
+
+      .vx_sup_header_icon {
+        width: 56px;
+        height: 56px;
+      }
+
+      .vx_sup_header_icon svg {
+        width: 32px;
+        height: 32px;
+      }
+
+      .vx_sup_title {
+        font-size: 24px;
+      }
+
+      .vx_sup_content {
+        padding: 24px 16px;
+      }
+
+      .vx_sup_form_section {
+        padding: 20px 16px;
+      }
+
+      .vx_sup_form_label {
+        font-size: 12px;
+      }
+
+      .vx_sup_input {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+      <div class="vx_support_section" id="vx_support_main">
+
+        <!-- Header -->
+        <div class="vx_sup_header">
+          <div class="vx_sup_header_icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </div>
+          <h1 class="vx_sup_title">Support Center</h1>
+          <p class="vx_sup_subtitle">We're here to help you with any questions or concerns</p>
+        </div>
+
+        <!-- Content -->
+        <div class="vx_sup_content">
+
+          <!-- Email Support Card -->
+          <div class="vx_sup_email_card">
+            <div class="vx_sup_email_icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="vx_sup_email_info">
+              <h3 class="vx_sup_email_title">Email Support</h3>
+              <p class="vx_sup_email_desc">Get help via email</p>
+              <p class="vx_sup_helper_text">Direct email communication for detailed inquiries and support requests.</p>
+            </div>
+            <a href="mailto:support@velocityx-ai.com" class="vx_sup_email_link">
+              support@velocityx-ai.com
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+            </a>
+          </div>
+
+          <!-- Support Form -->
+          <div class="vx_sup_form_section">
+            <h2 class="vx_sup_form_title">Send us a Message</h2>
+            <p class="vx_sup_form_subtitle">Have a specific question or need assistance? Fill out the form below and our support team will get back to you as soon as possible.</p>
+
+            <form class="vx_sup_form" id="supportForm">
+              <div class="vx_sup_success_message" id="successMessage">
+                ✓ Your message has been sent successfully. We'll get back to you within 24 hours.
+              </div>
+
+              <div class="vx_sup_form_row">
+                <div class="vx_sup_form_group">
+                  <label class="vx_sup_form_label">Your Name</label>
+                  <div class="vx_sup_input_wrapper">
+                    <div class="vx_sup_input_avatar"><%= (user && user.email) ? user.email.charAt(0).toUpperCase() : 'U' %></div>
+                    <input
+                      type="text"
+                      class="vx_sup_input"
+                      id="supportName"
+                      placeholder="Full name"
+                      value="<%= (user && user.user_metadata && user.user_metadata.full_name) ? user.user_metadata.full_name : '' %>"
+                      required
+                    >
+                  </div>
+                </div>
+
+                <div class="vx_sup_form_group">
+                  <label class="vx_sup_form_label">Your Email</label>
+                  <div class="vx_sup_input_wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <input
+                      type="email"
+                      class="vx_sup_input"
+                      id="supportEmail"
+                      placeholder="your@email.com"
+                      value="<%= (user && user.email) ? user.email : '' %>"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="vx_sup_form_group">
+                <label class="vx_sup_form_label required">Message</label>
+                <div class="vx_sup_textarea_wrapper">
+                  <textarea
+                    class="vx_sup_textarea"
+                    id="supportMessage"
+                    placeholder="Please describe your issue or question in detail..."
+                    required
+                  ></textarea>
+                  <span class="vx_sup_char_count"><span id="charCount">0</span>/1000</span>
+                </div>
+                <p class="vx_sup_helper_text">Please provide as much detail as possible to help us assist you better.</p>
+              </div>
+
+              <div class="vx_sup_form_footer">
+                <button type="submit" class="vx_sup_submit_btn" id="submitBtn">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                  </svg>
+                  Send Message
+                </button>
+                <p class="vx_sup_response_time">We typically respond within 24 hours during business days.</p>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Character counter
+    const textarea = document.getElementById('supportMessage');
+    const charCount = document.getElementById('charCount');
+    const maxChars = 1000;
+
+    if (textarea) {
+      textarea.addEventListener('input', function() {
+        const length = this.value.length;
+        charCount.textContent = Math.min(length, maxChars);
+        if (length > maxChars) {
+          this.value = this.value.substring(0, maxChars);
+        }
+      });
+    }
+
+    // Form submission
+    const supportForm = document.getElementById('supportForm');
+    const successMessage = document.getElementById('successMessage');
+    const submitBtn = document.getElementById('submitBtn');
+
+    if (supportForm) {
+      supportForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('supportName').value.trim();
+        const email = document.getElementById('supportEmail').value.trim();
+        const message = document.getElementById('supportMessage').value.trim();
+
+        if (!name || !email || !message) {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        // Show success message
+        successMessage.classList.add('show');
+
+        // Reset form
+        supportForm.reset();
+        charCount.textContent = '0';
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          successMessage.classList.remove('show');
+        }, 5000);
+
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Initialize lucide icons
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join VelocityX AI — Sign Up</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="/css/signup.css">
+  <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="signup-wrap">
+    <div class="signup-card" role="main" aria-labelledby="joinTitle">
+      <div class="signup-header">
+        <img src="/img/fortiv1.png" alt="VelocityX AI" class="auth-logo">
+        <div>
+          <h1 id="joinTitle" class="signup-title">Join VelocityX AI</h1>
+          <p class="signup-sub">Start your professional trading journey</p>
+        </div>
+        <div class="trust-badge" aria-hidden="true">1M+ Traders</div>
+      </div>
+
+      <!-- progress -->
+      <div class="progress-row" role="tablist" aria-label="Signup steps">
+        <div id="step-1" class="step" role="tab" aria-selected="true">
+          <div class="circle">1</div>
+          <div class="step-label"><div class="title">Personal Info</div><div class="sub">Basic details</div></div>
+        </div>
+        <div id="step-2" class="step" role="tab" aria-selected="false">
+          <div class="circle">2</div>
+          <div class="step-label"><div class="title">Location</div><div class="sub">Regional settings</div></div>
+        </div>
+        <div id="step-3" class="step" role="tab" aria-selected="false">
+          <div class="circle">3</div>
+          <div class="step-label"><div class="title">Security</div><div class="sub">Account protection</div></div>
+        </div>
+      </div>
+
+      <div id="signupGlobalErr" class="error" role="alert" aria-live="polite" style="margin-top:8px;display:none"></div>
+
+      <div class="form-grid">
+        <div class="panel" aria-hidden="false">
+          <!-- Step panels -->
+          <section id="panel-1" class="step-panel">
+            <h3>Personal Information</h3>
+            <p class="small-muted">Create your trading profile</p>
+            <div class="field float-field">
+              <input id="username" class="input" name="username" aria-describedby="usernameErr" autocomplete="username" />
+              <label for="username">Trading Username *</label>
+              <div id="usernameErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="field float-field">
+              <input id="fullName" class="input" name="fullName" autocomplete="name" />
+              <label for="fullName">Full Name *</label>
+              <div id="fullNameErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="field float-field">
+              <input id="email" class="input" name="email" type="email" autocomplete="email" />
+              <label for="email">Email Address *</label>
+              <div id="emailErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="field float-field">
+              <input id="phone" class="input" name="phone" placeholder="+1 555 555 5555" autocomplete="tel" />
+              <label for="phone">Phone Number *</label>
+              <div id="phoneErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="btn-row">
+              <div></div>
+              <button id="continue1" class="btn primary" aria-label="Continue to location" disabled>Continue →</button>
+            </div>
+            <div class="footer-note">Already have an account? <a href="/login">Sign in here</a></div>
+          </section>
+
+          <section id="panel-2" class="step-panel hidden" aria-hidden="true">
+            <h3>Location</h3>
+            <p class="small-muted">Set your regional trading preferences</p>
+            <div class="field country-select">
+              <div class="float-field">
+                <input id="countrySearch" class="input" placeholder="Search your country" aria-describedby="countryErr" autocomplete="country-name" aria-autocomplete="list" aria-controls="countryList" aria-expanded="false" />
+                <label for="countrySearch">Country *</label>
+              </div>
+              <div id="countryList" class="country-list" role="listbox" aria-label="Country results" tabindex="0"></div>
+              <div id="countryErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="info-box" role="region" aria-live="polite">
+              <div aria-hidden="true"><i class="fas fa-info-circle" style="font-size:18px;color:#83d8ff"></i></div>
+              <div><strong>Your location helps VelocityX AI</strong><div class="small-muted">Region-specific features, regulatory compliance, and optimal server connections for faster trading execution.</div></div>
+            </div>
+            <div class="btn-row">
+              <button id="back2" class="btn ghost">← Previous</button>
+              <button id="continue2" class="btn primary" disabled>Continue →</button>
+            </div>
+          </section>
+
+          <section id="panel-3" class="step-panel hidden" aria-hidden="true">
+            <h3>Account Security</h3>
+            <p class="small-muted">Secure your VelocityX AI account</p>
+            <div class="field float-field">
+              <input id="password" type="password" class="input" aria-describedby="passwordErr" autocomplete="new-password" />
+              <label for="password">Password *</label>
+              <div id="passwordErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="field float-field">
+              <input id="confirm" type="password" class="input" aria-describedby="confirmErr" autocomplete="new-password" />
+              <label for="confirm">Confirm Password *</label>
+              <div id="confirmErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+            <div class="rules-list" aria-hidden="false">
+              <div class="rule pw-rule" data-rule=".{8,}">Minimum 8 characters</div>
+              <div class="rule pw-rule" data-rule="(?=.*[A-Z])">One uppercase letter</div>
+              <div class="rule pw-rule" data-rule="(?=.*[a-z])">One lowercase letter</div>
+              <div class="rule pw-rule" data-rule="(?=.*[0-9\W])">One number or special character</div>
+            </div>
+
+            <div class="field">
+              <label for="captchaInput">Verification Code *</label>
+              <div class="captcha" role="group" aria-labelledby="captchaLabel">
+                <div id="captchaCode" class="captcha-code" aria-live="polite">XXXXXX</div>
+                <input id="captchaInput" class="input" placeholder="Type the code shown" aria-describedby="captchaErr" />
+                <button type="button" id="regenCaptcha" class="btn ghost" aria-label="Regenerate code">Regenerate</button>
+              </div>
+              <div id="captchaErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="field">
+              <label class="small-muted"><input type="checkbox" id="agreeTos" /> I agree to VelocityX AI’s <a href="/terms" target="_blank">Terms and Conditions</a> and acknowledge the <a href="/privacy" target="_blank">Privacy Policy</a>.</label>
+              <div id="tosErr" class="error" role="alert" aria-live="polite"></div>
+            </div>
+
+            <div class="btn-row">
+              <button id="back3" class="btn ghost">← Previous</button>
+              <button id="createBtn" class="btn primary" disabled>Create Account</button>
+            </div>
+          </section>
+
+        </div>
+
+        <aside class="panel" aria-hidden="false">
+          <div id="sideInfo">
+            <h3>Why join VelocityX AI?</h3>
+            <p class="small-muted">Institutional-grade AI, fast execution, and regulatory compliance across supported regions.</p>
+            <div style="margin-top:12px">
+              <strong style="color:#e6eefc">Security first</strong>
+              <p class="small-muted">Two-factor ready, encrypted wallets, and audited strategies.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- hidden final form to POST when all client checks pass -->
+      <form id="finalForm" action="/signup" method="POST" class="sr-only">
+        <input name="username" />
+        <input name="fullName" />
+        <input name="email" />
+        <input name="phone" />
+        <input name="country" />
+        <input name="password" />
+      </form>
+
+    </div>
+  </div>
+
+  <script src="/js/countries.js"></script>
+  <script src="/js/signup.js"></script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Trading Bots</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --dark-bg: #0a0e1a;
+  --dark-surface: #121827;
+  --dark-card: #1e293b;
+  --border-color: #475569;
+  --text-primary: #ffffff;
+  --text-secondary: #e2e8f0;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --color-blue: #3b82f6;
+  --color-green: #22c55e;
+  --color-yellow: #fbbf24;
+  --color-orange: #f97316;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: linear-gradient(180deg, var(--dark-bg) 0%, var(--dark-surface) 50%, #0f1419 100%);
+  color: var(--text-secondary);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 600px;
+  background: radial-gradient(ellipse at top, rgba(59, 130, 246, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.atb_main {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+}
+
+.atb_header {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.atb_header_content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.atb_title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.atb_subtitle {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.atb_container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem 4rem;
+}
+
+.atb_filters {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.6s ease-out 0.1s both;
+}
+
+.atb_filter_btn {
+  padding: 0.75rem 1.75rem;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(71, 85, 105, 0.4);
+  border-radius: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(12px);
+}
+
+.atb_filter_btn:hover {
+  border-color: rgba(71, 85, 105, 0.8);
+  color: var(--text-secondary);
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.atb_filter_active {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border-color: rgba(59, 130, 246, 0.6);
+  color: var(--text-primary);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.atb_bots_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  animation: fadeInUp 0.6s ease-out 0.2s both;
+}
+
+.atb_bot_card {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.8) 100%);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.atb_bot_card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.05), transparent);
+  transition: left 0.6s ease;
+}
+
+.atb_bot_card:hover::before {
+  left: 100%;
+}
+
+.atb_bot_card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.atb_bot_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_bot_icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.1) 100%);
+  border-radius: 0.75rem;
+  color: var(--color-blue);
+  transition: transform 0.3s ease;
+}
+
+.atb_bot_card:hover .atb_bot_icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.atb_success_badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(22, 163, 74, 0.1) 100%);
+  color: var(--color-green);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.atb_bot_name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.25rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_bot_category {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem 0;
+  text-transform: capitalize;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_bot_description {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_bot_metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.atb_metric_label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.atb_metric_value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-blue);
+}
+
+.atb_bot_section {
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_bot_label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.atb_bot_range {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0;
+  font-weight: 500;
+}
+
+.atb_bot_pairs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.atb_pair {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--color-blue);
+  font-weight: 500;
+}
+
+.atb_bot_stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(71, 85, 105, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.atb_stat {
+  text-align: center;
+}
+
+.atb_stat_label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.atb_btn_invest {
+  padding: 0.875rem 1.5rem;
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  border: none;
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.atb_btn_invest:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .atb_header {
+    padding: 2.5rem 1rem 2rem;
+  }
+
+  .atb_title {
+    font-size: 2rem;
+  }
+
+  .atb_subtitle {
+    font-size: 1rem;
+  }
+
+  .atb_container {
+    padding: 0 1rem 2.5rem;
+  }
+
+  .atb_filters {
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .atb_filter_btn {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  .atb_bots_grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .atb_bot_card {
+    padding: 1.5rem;
+  }
+
+  .atb_bot_name {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .atb_header {
+    padding: 2rem 1rem 1.5rem;
+  }
+
+  .atb_title {
+    font-size: 1.75rem;
+  }
+
+  .atb_subtitle {
+    font-size: 0.9rem;
+  }
+
+  .atb_filters {
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .atb_filter_btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .atb_bot_metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .atb_bot_stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+      <h2>AI Trading Bots</h2>
+      <p>Configure and run AI-driven trading bots. Each bot can be tuned for risk profile, allocation and favorite markets.</p>
+
+      <main class="atb_main">
+    <div class="atb_header">
+      <div class="atb_header_content">
+        <h1 class="atb_title">AI Trading Bots</h1>
+        <p class="atb_subtitle">Choose from our AI-powered trading bots. Each bot can be tuned for risk profile, allocation and favorite markets.</p>
+      </div>
+    </div>
+
+    <div class="atb_container">
+      <div class="atb_filters">
+        <button class="atb_filter_btn atb_filter_active" data-filter="all">All Bots</button>
+        <button class="atb_filter_btn" data-filter="forex">Forex</button>
+        <button class="atb_filter_btn" data-filter="crypto">Crypto</button>
+        <button class="atb_filter_btn" data-filter="stocks">Stocks</button>
+        <button class="atb_filter_btn" data-filter="commodities">Commodities</button>
+      </div>
+
+      <div class="atb_bots_grid" id="botsContainer">
+      </div>
+    </div>
+  </main>
+
+  </div>
+  <script src="/js/chart.js"></script>
+  <script>
+    const botsData = [
+  {
+    name: "ForexMaster Pro",
+    category: "forex",
+    success: "87%",
+    description: "Advanced forex trading bot specializing in major currency pairs. Uses sophisticated algorithms to analyze market trends...",
+    profitRange: "0.80% - 2.50%",
+    duration: "30 Days",
+    minInvest: "$100",
+    maxInvest: "$10,000",
+    pairs: ["EUR/USD", "GBP/USD", "USD/JPY", "USD/CHF", "+1 more"],
+    activeUsers: "1",
+    earned: "$137"
+  },
+  {
+    name: "ScalpMaster Quick",
+    category: "forex",
+    success: "79%",
+    description: "High-frequency scalping bot designed for quick profits from small price movements. Perfect for active traders seeking mu...",
+    profitRange: "1.50% - 3.50%",
+    duration: "21 Days",
+    minInvest: "$150",
+    maxInvest: "$5,000",
+    pairs: ["EUR/USD", "GBP/JPY", "USD/CAD", "AUD/NZD"],
+    activeUsers: "0",
+    earned: "$23"
+  },
+  {
+    name: "Forex Precision Elite",
+    category: "forex",
+    success: "93%",
+    description: "Premium forex trading bot utilizing advanced neural networks and sentiment analysis. Designed for institutional-grade pr...",
+    profitRange: "1.50% - 4.10%",
+    duration: "90 Days",
+    minInvest: "$750",
+    maxInvest: "$50,000",
+    pairs: ["EUR/USD", "GBP/USD", "USD/JPY", "AUD/USD", "+2 more"],
+    activeUsers: "0",
+    earned: "$0"
+  },
+  {
+    name: "A.I Sentiment Trader",
+    category: "forex",
+    success: "86%",
+    description: "Revolutionary sentiment-based trading bot that analyzes social media, news, and market sentiment across multiple asset c...",
+    profitRange: "1.90% - 2.08%",
+    duration: "14 Days",
+    minInvest: "$12,000",
+    maxInvest: "$35,000",
+    pairs: ["BTC/USD", "ETH/USD", "AAPL", "TSLA", "+1 more"],
+    activeUsers: "0",
+    earned: "$0"
+  },
+  {
+    name: "CryptoGain Elite",
+    category: "crypto",
+    success: "82%",
+    description: "High-performance cryptocurrency trading bot designed for the volatile crypto markets. Leverages machine learning to iden...",
+    profitRange: "1.20% - 4.50%",
+    duration: "45 Days",
+    minInvest: "$250",
+    maxInvest: "$25,000",
+    pairs: ["BTC/USD", "ETH/USD", "BNB/USD", "ADA/USD", "+2 more"],
+    activeUsers: "0",
+    earned: "$23"
+  },
+  {
+    name: "AlgoTrader Supreme",
+    category: "crypto",
+    success: "91%",
+    description: "Next-generation algorithmic trading bot powered by quantum computing principles. Specializes in high-frequency crypto ar...",
+    profitRange: "2.10% - 6.80%",
+    duration: "45 Days",
+    minInvest: "$500",
+    maxInvest: "$100,000",
+    pairs: ["BTC/USDT", "ETH/USDT", "BNB/USDT", "ADA/USDT", "+2 more"],
+    activeUsers: "0",
+    earned: "$0"
+  },
+  {
+    name: "DeFi Yield Hunter",
+    category: "crypto",
+    success: "88%",
+    description: "Specialized DeFi protocol explorer that identifies the most profitable yield farming opportunities across decentralized...",
+    profitRange: "1.80% - 5.20%",
+    duration: "60 Days",
+    minInvest: "$1,000",
+    maxInvest: "$75,000",
+    pairs: ["UNI/USDT", "AAVE/USDT", "COMP/USDT", "SUSHI/USDT", "+1 more"],
+    activeUsers: "0",
+    earned: "$98"
+  },
+  {
+    name: "StockTrader AI",
+    category: "stocks",
+    success: "89%",
+    description: "Intelligent stock trading bot focusing on blue-chip stocks and growth companies. Combines fundamental analysis with tech...",
+    profitRange: "0.50% - 2.00%",
+    duration: "60 Days",
+    minInvest: "$500",
+    maxInvest: "$50,000",
+    pairs: ["AAPL", "GOOGL", "MSFT", "AMZN", "+2 more"],
+    activeUsers: "0",
+    earned: "$2,399"
+  },
+  {
+    name: "Stock Momentum Master",
+    category: "stocks",
+    success: "89%",
+    description: "Advanced momentum trading bot that identifies breakout patterns and trending stocks. Focuses on high-volume stocks with...",
+    profitRange: "1.20% - 3.80%",
+    duration: "120 Days",
+    minInvest: "$1,500",
+    maxInvest: "$80,000",
+    pairs: ["AAPL", "TSLA", "NVDA", "AMD", "+4 more"],
+    activeUsers: "0",
+    earned: "$0"
+  },
+  {
+    name: "GoldRush Bot",
+    category: "commodities",
+    success: "84%",
+    description: "Specialized commodities trading bot with expertise in precious metals and energy markets. Ideal for portfolio diversific...",
+    profitRange: "0.70% - 2.80%",
+    duration: "90 Days",
+    minInvest: "$200",
+    maxInvest: "$15,000",
+    pairs: ["GOLD", "SILVER", "OIL", "COPPER", "+1 more"],
+    activeUsers: "0",
+    earned: "$1,550"
+  },
+  {
+    name: "Commodity Weather AI",
+    category: "commodities",
+    success: "87%",
+    description: "Intelligent commodity trading bot that incorporates weather data, supply chain analysis, and seasonal patterns for agric...",
+    profitRange: "1.30% - 4.50%",
+    duration: "180 Days",
+    minInvest: "$800",
+    maxInvest: "$40,000",
+    pairs: ["WHEAT", "CORN", "SOYBEANS", "COFFEE", "+2 more"],
+    activeUsers: "0",
+    earned: "$0"
+  },
+  {
+    name: "Energy Futures Pro",
+    category: "commodities",
+    success: "83%",
+    description: "Professional energy trading bot focused on oil, gas, and renewable energy futures. Uses geopolitical analysis and supply...",
+    profitRange: "1.70% - 5.10%",
+    duration: "90 Days",
+    minInvest: "$1,200",
+    maxInvest: "$70,000",
+    pairs: ["WTI_OIL", "BRENT_OIL", "NATURAL_GAS", "HEATING_OIL", "+1 more"],
+    activeUsers: "0",
+    earned: "$0"
+  }
+];
+
+function createBotCard(bot) {
+  return `
+    <div class="atb_bot_card" data-category="${bot.category}">
+      <div class="atb_bot_header">
+        <div class="atb_bot_icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 3l-1 4"></path>
+            <path d="M8 3l1 4"></path>
+          </svg>
+        </div>
+        <div class="atb_bot_success">
+          <span class="atb_success_badge">${bot.success} Success</span>
+        </div>
+      </div>
+
+      <h3 class="atb_bot_name">${bot.name}</h3>
+      <p class="atb_bot_category">${bot.category} Trading</p>
+
+      <p class="atb_bot_description">${bot.description}</p>
+
+      <div class="atb_bot_metrics">
+        <div class="atb_metric">
+          <span class="atb_metric_label">Daily Profit</span>
+          <span class="atb_metric_value">${bot.profitRange}</span>
+        </div>
+        <div class="atb_metric">
+          <span class="atb_metric_label">Duration</span>
+          <span class="atb_metric_value">${bot.duration}</span>
+        </div>
+      </div>
+
+      <div class="atb_bot_section">
+        <p class="atb_bot_label">Investment Range:</p>
+        <p class="atb_bot_range">${bot.minInvest} - ${bot.maxInvest}</p>
+      </div>
+
+      <div class="atb_bot_section">
+        <p class="atb_bot_label">Trading Pairs:</p>
+        <div class="atb_bot_pairs">
+          ${bot.pairs.map(pair => `<span class="atb_pair">${pair}</span>`).join('')}
+        </div>
+      </div>
+
+      <div class="atb_bot_stats">
+        <div class="atb_stat">
+          <span class="atb_stat_label">${bot.activeUsers} Active Users</span>
+        </div>
+        <div class="atb_stat">
+          <span class="atb_stat_label">${bot.earned} Total Earned</span>
+        </div>
+      </div>
+
+      <a class="atb_btn_invest" href="/user/bot-trading/4">Invest Now</a>
+    </div>
+  `;
+}
+
+function renderBots(category = 'all') {
+  const container = document.getElementById('botsContainer');
+  const filtered = category === 'all'
+    ? botsData
+    : botsData.filter(bot => bot.category === category);
+
+  container.innerHTML = filtered.map(bot => createBotCard(bot)).join('');
+}
+
+function setupFilters() {
+  document.querySelectorAll('.atb_filter_btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.atb_filter_btn').forEach(b =>
+        b.classList.remove('atb_filter_active')
+      );
+      this.classList.add('atb_filter_active');
+      renderBots(this.dataset.filter);
+    });
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderBots('all');
+  setupFilters();
+});
+
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

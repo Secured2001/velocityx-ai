@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Growth & Rewards</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+      <h2>Growth & Rewards</h2>
+      <div class="card-glass">
+        <div style="display:flex; justify-content:space-between; align-items:center">
+          <h4>Growth & Rewards</h4>
+          <div class="muted">Bonus Credit: <strong>$50</strong></div>
+        </div>
+        <div style="display:flex; gap:12px; margin-top:12px">
+          <div class="reward-card"><div class="stat">$50</div><div class="muted">Bonus Credit</div></div>
+          <div class="reward-card"><div class="stat">120</div><div class="muted">Referral Points</div></div>
+          <div class="reward-card"><div class="stat positive">+3.2%</div><div class="muted">Monthly Bonus Rate</div></div>
+        </div>
+        <div style="margin-top:14px"><button class="btn btn-primary" id="redeemBtn">Redeem Bonus</button></div>
+        <div style="margin-top:14px"><h5>Reward History</h5>
+          <table class="striped" style="width:100%"><thead><tr><th>Date</th><th>Type</th><th>Amount</th></tr></thead>
+            <tbody><tr><td>2026-01-10</td><td>Referral Bonus</td><td>$25</td></tr></tbody></table>
+        </div>
+      </div>
+      <script>
+        if(document.getElementById('redeemBtn')){
+          document.getElementById('redeemBtn').addEventListener('click', function(){ alert('Redeemed $50 to your spot wallet — simulated.'); });
+        }
+      </script>
+    </main>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

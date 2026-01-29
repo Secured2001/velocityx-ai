@@ -1,0 +1,959 @@
+<!-- Premium Fintech Navigation - Namespace: vx_nav -->
+<style>
+  /* Top Navigation Bar */
+  .vx_nav_top_bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 100%);
+    border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    gap: 24px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+  }
+
+  .vx_nav_logo_section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .vx_nav_logo_img {
+    width: 140px;
+    height: 36px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .vx_nav_logo_img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
+  }
+
+  .vx_nav_market_status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .vx_nav_status_dot {
+    width: 8px;
+    height: 8px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: vx_nav_pulse_dot 2s ease-in-out infinite;
+  }
+
+  @keyframes vx_nav_pulse_dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .vx_nav_ticker {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    max-width: 400px;
+  }
+
+  .vx_nav_ticker_item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(30, 41, 59, 0.8);
+    border-radius: 8px;
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .vx_nav_ticker_item:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .vx_nav_ticker_label {
+    font-size: 12px;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .vx_nav_ticker_price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  .vx_nav_ticker_change {
+    font-size: 12px;
+    color: #4ade80;
+    font-weight: 600;
+  }
+
+  .vx_nav_spacer {
+    flex: 1;
+  }
+
+  .vx_nav_account_balance {
+    display: flex;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .vx_nav_account_balance:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .vx_nav_balance_label {
+    font-size: 11px;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-right: 8px;
+  }
+
+  .vx_nav_balance_amount {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4ade80;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  .vx_nav_actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .vx_nav_action_btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    border-radius: 8px;
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .vx_nav_action_btn:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+  }
+
+  .vx_nav_action_btn svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .vx_nav_notification_badge {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .vx_nav_notification_badge:hover {
+    opacity: 0.8;
+  }
+
+  .vx_nav_badge_dot {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    width: 10px;
+    height: 10px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 2px solid #0f172a;
+    animation: vx_nav_pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes vx_nav_pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  .vx_nav_user_profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .vx_nav_user_profile:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .vx_nav_user_avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  }
+
+  .vx_nav_user_info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .vx_nav_user_name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+  }
+
+  .vx_nav_user_status {
+    font-size: 11px;
+    color: #94a3b8;
+  }
+
+  .vx_nav_user_dropdown_icon {
+    width: 16px;
+    height: 16px;
+    color: #64748b;
+    transition: transform 0.3s ease;
+  }
+
+  .vx_nav_mobile_toggle {
+    display: none;
+    width: 36px;
+    height: 36px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(71, 85, 105, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .vx_nav_mobile_toggle:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+  }
+
+  .vx_nav_mobile_toggle span {
+    width: 20px;
+    height: 2px;
+    background: #cbd5e1;
+    border-radius: 1px;
+    transition: all 0.3s ease;
+  }
+
+  /* Sidebar Navigation */
+  .vx_nav_sidebar {
+    position: fixed;
+    left: 0;
+    top: 64px;
+    width: 240px;
+    height: calc(100vh - 64px);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.99) 0%, rgba(30, 41, 59, 0.99) 100%);
+    border-right: 1px solid rgba(71, 85, 105, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 999;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(71, 85, 105, 0.3) transparent;
+  }
+
+  .vx_nav_sidebar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .vx_nav_sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .vx_nav_sidebar::-webkit-scrollbar-thumb {
+    background: rgba(71, 85, 105, 0.3);
+    border-radius: 3px;
+  }
+
+  .vx_nav_sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(71, 85, 105, 0.5);
+  }
+
+  .vx_nav_sidebar_content {
+    flex: 1;
+    padding: 0;
+  }
+
+  .vx_nav_sidebar_top {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 16px;
+  }
+
+  .vx_nav_market_section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .vx_nav_market_label {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0 12px;
+  }
+
+  .vx_nav_live_badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #4ade80;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    width: fit-content;
+    margin-left: 12px;
+  }
+
+  .vx_nav_live_dot {
+    width: 6px;
+    height: 6px;
+    background: #4ade80;
+    border-radius: 50%;
+    animation: vx_nav_pulse_dot 2s ease-in-out infinite;
+  }
+
+  .vx_nav_links_container {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 0;
+    list-style: none;
+    margin: 0;
+  }
+
+  .vx_nav_group_title {
+    font-size: 10px;
+    color: #64748b;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 16px 16px 12px 16px;
+    margin-top: 12px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(71, 85, 105, 0.2);
+  }
+
+  .vx_nav_group_title:first-of-type {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 12px;
+  }
+
+  .vx_nav_item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .vx_nav_item a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vx_nav_item a::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 3px;
+    background: #3b82f6;
+    transform: scaleY(0);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: top;
+  }
+
+  .vx_nav_item a:hover {
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+  }
+
+  .vx_nav_item a:hover::before {
+    transform: scaleY(1);
+  }
+
+  .vx_nav_item.vx_nav_active-2 a {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border-right: 3px solid #3b82f6;
+  }
+
+  .vx_nav_item.vx_nav_active-2 a::before {
+    transform: scaleY(1);
+  }
+
+  .vx_nav_icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    stroke-width: 2;
+  }
+
+  .vx_nav_item span {
+    flex: 1;
+  }
+
+  .vx_nav_badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    flex-shrink: 0;
+  }
+
+  .vx_nav_badge-pro {
+    background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+    color: #ffffff;
+  }
+
+  .vx_nav_badge-ai {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #ffffff;
+  }
+
+  .vx_nav_badge-fast {
+    background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+    color: #ffffff;
+  }
+
+  .vx_nav_badge-ref {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    color: #ffffff;
+  }
+
+  .vx_nav_divider {
+    height: 1px;
+    background: rgba(71, 85, 105, 0.2);
+    margin: 16px 16px;
+  }
+
+  .vx_nav_sidebar_bottom {
+    padding: 16px;
+    border-top: 1px solid rgba(71, 85, 105, 0.2);
+    background: rgba(15, 23, 42, 0.5);
+  }
+
+  .vx_nav_user_card {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .vx_nav_user_card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    word-break: break-word;
+  }
+
+  .vx_nav_user_card-balance {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .vx_nav_user_card-label {
+    font-size: 10px;
+    color: #94a3b8;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .vx_nav_user_card-amount {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4ade80;
+    font-family: 'SF Mono', 'Monaco', monospace;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .vx_nav_top_bar {
+      padding: 0 12px;
+      height: 56px;
+      gap: 12px;
+    }
+
+    .vx_nav_logo_img {
+      width: 100px;
+      height: 32px;
+    }
+
+    .vx_nav_ticker {
+      display: none;
+    }
+
+    .vx_nav_action_btn {
+      display: none;
+    }
+
+    .vx_nav_mobile_toggle {
+      display: flex;
+    }
+
+    .vx_nav_sidebar {
+      top: 56px;
+      height: calc(100vh - 56px);
+      width: 100%;
+      transform: translateX(-100%);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .vx_nav_sidebar.vx_nav_active {
+      transform: translateX(0);
+    }
+
+    .vx_nav_spacer {
+      display: none;
+    }
+
+    .vx_nav_account_balance {
+      min-width: 140px;
+      font-size: 12px;
+    }
+
+    .vx_nav_account_balance .vx_nav_balance_label {
+      display: none;
+    }
+
+    .vx_nav_user_profile {
+      padding: 6px 8px;
+      gap: 8px;
+    }
+
+    .vx_nav_user_avatar {
+      width: 32px;
+      height: 32px;
+      font-size: 12px;
+    }
+
+    .vx_nav_user_info {
+      display: none;
+    }
+
+    .vx_nav_user_dropdown_icon {
+      display: none;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .vx_nav_top_bar {
+      height: 52px;
+      padding: 0 8px;
+      gap: 8px;
+    }
+
+    .vx_nav_logo_img {
+      width: 80px;
+      height: 28px;
+    }
+
+    .vx_nav_market_status {
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+
+    .vx_nav_account_balance {
+      padding: 6px 12px;
+      min-width: 100px;
+      font-size: 11px;
+    }
+
+    .vx_nav_sidebar {
+      width: 100%;
+    }
+
+    .vx_nav_item a {
+      padding: 10px 12px;
+      font-size: 13px;
+      gap: 10px;
+    }
+
+    .vx_nav_icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .vx_nav_sidebar_bottom {
+      padding: 12px;
+    }
+
+    .vx_nav_user_card {
+      padding: 12px;
+    }
+  }
+
+  /* Main Content Offset */
+  .vx_nav_main_content {
+    margin-left: 240px;
+    margin-top: 64px;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (max-width: 768px) {
+    .vx_nav_main_content {
+      margin-left: 0;
+      margin-top: 56px;
+    }
+  }
+</style>
+
+<!-- Top Navigation Bar -->
+<nav class="vx_nav_top_bar">
+  <div class="vx_nav_logo_section">
+   	<!-- <img src="fortiv1.png"  alt="VelocityX Logo"> -->
+  </div>
+
+  <div class="vx_nav_market_status">
+    <div class="vx_nav_status_dot"></div>
+    <span>LIVE</span>
+  </div>
+
+  <div class="vx_nav_ticker">
+    <div class="vx_nav_ticker_item">
+      <div class="vx_nav_ticker_label">BTC</div>
+      <div class="vx_nav_ticker_price">$45,328</div>
+      <div class="vx_nav_ticker_change">+2.4%</div>
+    </div>
+    <div class="vx_nav_ticker_item">
+      <div class="vx_nav_ticker_label">ETH</div>
+      <div class="vx_nav_ticker_price">$2,650</div>
+      <div class="vx_nav_ticker_change">+1.8%</div>
+    </div>
+  </div>
+
+  <div class="vx_nav_spacer"></div>
+
+  <div class="vx_nav_account_balance">
+    <div class="vx_nav_balance_label">Account Balance</div>
+    <div class="vx_nav_balance_amount">$<%= user.balance.toFixed(2) %></div>
+  </div>
+
+  <div class="vx_nav_actions">
+    <button class="vx_nav_action_btn" id="vx_nav_quick_trade">
+      <i data-lucide="zap"></i>
+      Quick Trade
+    </button>
+
+    <div class="vx_nav_notification_badge" id="vx_nav_notifications">
+      <i data-lucide="bell" style="width: 20px; height: 20px;"></i>
+      <div class="vx_nav_badge_dot"></div>
+    </div>
+
+    <div style="width: 1px; height: 24px; background: rgba(71, 85, 105, 0.3);"></div>
+
+    <div class="vx_nav_user_profile" id="vx_nav_user_menu">
+      <div class="vx_nav_user_avatar" id="vx_nav_user_initials">
+        <%= user.fullName.charAt(0).toUpperCase() %>
+      </div>
+      <div class="vx_nav_user_info">
+        <div class="vx_nav_user_name"><%= user.fullName %></div>
+        <div class="vx_nav_user_status">Trading Account</div>
+      </div>
+      <i data-lucide="chevron-down" class="vx_nav_user_dropdown_icon"></i>
+    </div>
+  </div>
+
+  <button class="vx_nav_mobile_toggle" id="vx_nav_mobile_toggle">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Sidebar Navigation -->
+<nav class="vx_nav_sidebar" id="vx_nav_sidebar">
+  <div class="vx_nav_sidebar_content">
+    <div class="vx_nav_sidebar_top">
+      <div class="vx_nav_market_section">
+        <div class="vx_nav_market_label">LIVE MARKET</div>
+        <div class="vx_nav_live_badge">
+          <div class="vx_nav_live_dot"></div>
+          LIVE
+        </div>
+      </div>
+    </div>
+
+    <ul class="vx_nav_links_container" id="vx_nav_links">
+      <li class="vx_nav_group_title">OVERVIEW</li>
+      <li class="vx_nav_item <%= page === 'dashboard' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/dashboard">
+          <i data-lucide="layout-dashboard" class="vx_nav_icon"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'account-statement' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/account-statement">
+          <i data-lucide="file-text" class="vx_nav_icon"></i>
+          <span>Account Statement</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_group_title">PORTFOLIO & INVESTMENTS</li>
+      <li class="vx_nav_item <%= page === 'real-estate-plans' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/real-estate-plans">
+          <i data-lucide="home" class="vx_nav_icon"></i>
+          <span>Real Estate Plans</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'my-portfolio' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/my-portfolio">
+          <i data-lucide="briefcase" class="vx_nav_icon"></i>
+          <span>My Portfolio</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'performance-history' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/performance-history">
+          <i data-lucide="trending-up" class="vx_nav_icon"></i>
+          <span>Performance History</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_group_title">TRADING & MARKETS</li>
+      <li class="vx_nav_item <%= page === 'copy-trading' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/copy-trading">
+          <i data-lucide="users" class="vx_nav_icon"></i>
+          <span>Copy Trading</span>
+          <span class="vx_nav_badge vx_nav_badge-pro">Pro</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'ai-trading-bots' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/ai-trading-bots">
+          <i data-lucide="cpu" class="vx_nav_icon"></i>
+          <span>AI Trading Bots</span>
+          <span class="vx_nav_badge vx_nav_badge-ai">AI</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_group_title">WALLET & FUNDS</li>
+      <li class="vx_nav_item <%= page === 'deposit' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/deposit">
+          <i data-lucide="download-cloud" class="vx_nav_icon"></i>
+          <span>Deposit Funds</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'withdraw' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/withdraw">
+          <i data-lucide="credit-card" class="vx_nav_icon"></i>
+          <span>Withdraw Funds</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'internal-transfer' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/internal-transfer">
+          <i data-lucide="corner-up-right" class="vx_nav_icon"></i>
+          <span>Internal Transfer</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_group_title">CREDIT & FINANCING</li>
+      <li class="vx_nav_item <%= page === 'apply-credit' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/apply-credit">
+          <i data-lucide="zap" class="vx_nav_icon"></i>
+          <span>Apply for Credit</span>
+          <span class="vx_nav_badge vx_nav_badge-fast">Fast</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'credit-history' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/credit-history">
+          <i data-lucide="clock" class="vx_nav_icon"></i>
+          <span>Credit History</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_group_title">ACCOUNT MANAGEMENT</li>
+      <li class="vx_nav_item <%= page === 'profile-settings' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/profile-settings">
+          <i data-lucide="settings" class="vx_nav_icon"></i>
+          <span>Profile Settings</span>
+        </a>
+      </li>
+      <li class="vx_nav_item <%= page === 'identity-verification' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/identity-verification">
+          <i data-lucide="id" class="vx_nav_icon"></i>
+          <span>Identity Verification</span>
+        </a>
+      </li>
+      <li class="vx_nav_group_title">GROWTH & REWARDS</li>
+      <li class="vx_nav_item <%= page === 'referral-program' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/referral-program">
+          <i data-lucide="share-2" class="vx_nav_icon"></i>
+          <span>Referral Program</span>
+          <span class="vx_nav_badge vx_nav_badge-ref">5%</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_group_title">SUPPORT & HELP</li>
+      <li class="vx_nav_item <%= page === 'support-center' ? 'vx_nav_active-2' : '' %>">
+        <a href="/user/support-center">
+          <i data-lucide="help-circle" class="vx_nav_icon"></i>
+          <span>Support Center</span>
+        </a>
+      </li>
+
+      <li class="vx_nav_divider"></li>
+      <li class="vx_nav_item">
+        <a href="/logout" id="vx_nav_logout">
+          <i data-lucide="log-out" class="vx_nav_icon"></i>
+          <span>Sign Out</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="vx_nav_sidebar_bottom">
+    <div class="vx_nav_user_card">
+      <div class="vx_nav_user_card-name"><%= user.fullName %></div>
+      <div class="vx_nav_user_card-balance">
+        <div class="vx_nav_user_card-label">Account Balance</div>
+        <div class="vx_nav_user_card-amount">$<%= user.balance.toFixed(2) %></div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Main Content Wrapper -->
+<div class="vx_nav_main_content" id="vx_nav_main_content">
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const mobileToggle = document.getElementById('vx_nav_mobile_toggle');
+    const sidebar = document.getElementById('vx_nav_sidebar');
+    const mainContent = document.getElementById('vx_nav_main_content');
+    const navLinks = document.querySelectorAll('.vx_nav_item a');
+
+    function toggleSidebar() {
+      sidebar.classList.toggle('vx_nav_active');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('vx_nav_active');
+    }
+
+    mobileToggle.addEventListener('click', toggleSidebar);
+
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', closeSidebar);
+    });
+
+    if (window.innerWidth > 768) {
+      sidebar.classList.remove('vx_nav_active');
+    }
+
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        closeSidebar();
+      }
+    });
+
+    const userMenu = document.getElementById('vx_nav_user_menu');
+    const quickTrade = document.getElementById('vx_nav_quick_trade');
+    const notifications = document.getElementById('vx_nav_notifications');
+
+    if (userMenu) {
+      userMenu.addEventListener('click', function() {
+        console.log('User menu clicked');
+      });
+    }
+
+    if (quickTrade) {
+      quickTrade.addEventListener('click', function() {
+        console.log('Quick trade clicked');
+      });
+    }
+
+    if (notifications) {
+      notifications.addEventListener('click', function() {
+        console.log('Notifications clicked');
+      });
+    }
+
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  });
+</script>

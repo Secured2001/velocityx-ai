@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade - Trading Platform</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    
+    <main class="dashboard-content">
+      <!-- Forex Ticker -->
+      <div class="forex-ticker" id="forexTicker">
+        <div class="ticker-content" id="tickerContent">
+          <div class="ticker-item"><span>EUR/USD:</span><span class="up">1.0923 ↑</span></div>
+          <div class="ticker-item"><span>GBP/USD:</span><span class="down">1.2712 ↓</span></div>
+          <div class="ticker-item"><span>USD/JPY:</span><span class="up">148.57 ↑</span></div>
+          <div class="ticker-item"><span>AUD/USD:</span><span class="down">0.6741 ↓</span></div>
+          <div class="ticker-item"><span>BTC/USD:</span><span class="up">43,200.00 ↑</span></div>
+          <!-- add more as needed -->
+        </div>
+      </div>
+      
+     <div class="chart-section">
+  <div class="chart-header">
+    <h3 class="chart-title">
+  <i data-lucide="line-chart"></i>
+  Live Trading Chart
+</h3>
+
+    <select id="tradingPair" class="trading-pair-select">
+      <option value="EURUSD">EUR/USD</option>
+      <option value="GBPUSD">GBP/USD</option>
+      <option value="USDJPY">USD/JPY</option>
+    </select>
+  </div>
+
+  <div class="chart-wrapper">
+    <canvas id="tradingChart"></canvas>
+    <div id="traderOverlay" class="trader-overlay"></div>
+  </div>
+
+  <button 
+    id="startTradeBtn" 
+    class="start-trade-btn" 
+    data-can-trade="<%= user.canTrade %>"
+    <%= !user.canTrade ? 'disabled' : '' %>
+  >
+    Start Trade
+  </button>
+</div>
+      <div class="trade-ticker">
+  <div class="ticker-track">
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=12" alt="Trader"> $230 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=23" alt="Trader"> $540 • Sell • USD/JPY
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=31" alt="Trader"> $105 • Buy • GBP/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $1540 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $8521 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $134 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $356 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $831 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $125 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $901 • Buy • EUR/USD
+    </div>
+    <div class="ticker-item">
+      <img src="https://i.pravatar.cc/24?img=9" alt="Trader"> $12850 • Buy • EUR/USD
+    </div>
+    <!-- Repeat as needed -->
+  </div>
+</div>
+
+<div class="thought-bubble-zone" id="thoughtBubbleZone"></div>
+
+      <div class="market-analysis">
+  <h3 style="display: flex; align-items: center; gap: 10px;">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" 
+       xmlns="http://www.w3.org/2000/svg" class="glow-icon">
+    <path d="M3 12L6 9L9 12L12 9L15 12L18 9L21 12" 
+          stroke="#00ffe7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  Market Analysis
+</h3>
+
+  <div class="analysis-content">
+    <div class="ai-insight">
+      <h4>AI Insight</h4>
+      <div class="ai-bubble" id="aiBubble">Analyzing chart patterns...</div>
+    </div>
+    <div class="market-news" style="height: 200px;">
+      <h4>Latest Updates</h4>
+      <ul class="news-list">
+        <li>EUR/USD faces resistance at 1.0900 level</li>
+        <li>Fed signals potential rate cuts in 2025</li>
+        <li>ECB maintains hawkish stance on inflation</li>
+      </ul>
+    </div>
+
+    <div class="technical-indicators">
+      <h4>Technical Indicators</h4>
+      <div class="indicator">
+        <span>RSI (14)</span>
+        <span class="value">56.8</span>
+      </div>
+      <div class="indicator">
+        <span>MACD</span>
+        <span class="value positive">0.0012</span>
+      </div>
+      <div class="indicator">
+        <span>MA (200)</span>
+        <span class="value">1.0865</span>
+      </div>
+    </div>
+
+    
+  </div>
+</div>
+
+    </main>
+  </div>
+  
+  <!-- Trade Modal -->
+  <div id="tradeModal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title">Start Trading</h3>
+      <div class="form-group">
+        <label for="signalSelect">Select Signal</label>
+        <select id="signalSelect" required>
+          <option value="">Choose a signal</option>
+          <option value="EURUSD">EUR/USD</option>
+          <option value="GBPUSD">GBP/USD</option>
+          <option value="USDJPY">USD/JPY</option>
+          <option value="USDCHF">USD/CHF</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="tradeAmount">Amount ($)</label>
+        <input 
+          type="number" 
+          id="tradeAmount" 
+          min="10" 
+          step="0.01" 
+          placeholder="Minimum $10.00"
+          required
+        >
+      </div>
+      <div class="modal-buttons">
+        <button onclick="confirmTrade()" class="btn btn-primary">Confirm</button>
+        <button onclick="closeModal('tradeModal')" class="btn btn-secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content"></div>
+  </div>
+  
+  <!-- Error Modal -->
+  <div id="errorModal" class="modal">
+    <div class="modal-content">
+      <h3 class="modal-title">Error</h3>
+      <p class="modal-message"></p>
+      <button onclick="closeModal('errorModal')" class="btn btn-primary">OK</button>
+    </div>
+  </div>
+  <script>
+    const newsList = document.querySelector(".news-list");
+    const newsItems = Array.from(newsList.children);
+    let currentNews = 0;
+  
+    function cycleNews() {
+      newsItems.forEach((item, i) => {
+        item.style.opacity = i === currentNews ? "1" : "0";
+        item.style.transition = "opacity 1s ease";
+        item.style.position = "absolute";
+      });
+  
+      currentNews = (currentNews + 1) % newsItems.length;
+    }
+  
+    function initNewsTicker() {
+      newsList.style.position = "relative";
+      newsList.style.height = "1.5em";
+      setInterval(cycleNews, 3000);
+    }
+  
+    document.addEventListener("DOMContentLoaded", initNewsTicker);
+    const aiInsights = [
+    "Analyzing chart patterns...",
+    "Detecting bullish momentum...",
+    "Low volatility detected — caution advised.",
+    "High-frequency signals converging.",
+    "AI suggests potential breakout zone ahead.",
+    "Volume spike analysis in progress...",
+    "Identifying hidden support levels...",
+    "Forecasting next 1-hour trend...",
+    "Market sentiment: Neutral → Slightly Bullish."
+  ];
+
+  const aiBubble = document.getElementById("aiBubble");
+  let aiIndex = 0;
+
+  setInterval(() => {
+    aiIndex = (aiIndex + 1) % aiInsights.length;
+    aiBubble.textContent = aiInsights[aiIndex];
+  }, 5000);
+  </script>
+  
+  <script src="/js/trade.js"></script>
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

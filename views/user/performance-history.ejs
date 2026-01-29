@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance History</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    /* Scoped styles for vx_performance_history_section */
+    .vx_performance_history_section {
+      background: linear-gradient(135deg, #0a1628 0%, #0d1b2a 100%);
+      border-radius: 16px;
+      padding: 0;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_performance_history_section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+    }
+
+    .vx_perf_header_area {
+      padding: 32px 32px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.6) 0%, transparent 100%);
+    }
+
+    .vx_perf_header_content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .vx_perf_icon_wrapper {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      animation: vx_perf_pulse_glow 3s ease-in-out infinite;
+    }
+
+    @keyframes vx_perf_pulse_glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(59, 130, 246, 0.6); }
+    }
+
+    .vx_perf_icon_wrapper svg {
+      width: 24px;
+      height: 24px;
+      color: #3b82f6;
+    }
+
+    .vx_perf_title_group h2 {
+      color: #f1f5f9;
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_perf_subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .vx_perf_main_content {
+      padding: 32px;
+    }
+
+    .vx_perf_tabs_container {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .vx_perf_tab_button {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: #94a3b8;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_perf_tab_button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .vx_perf_tab_button:hover::before {
+      left: 100%;
+    }
+
+    .vx_perf_tab_button:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.4);
+      color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+
+    .vx_perf_tab_button.vx_perf_active_tab {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(147, 51, 234, 0.15));
+      border-color: #3b82f6;
+      color: #3b82f6;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_perf_section_header {
+      margin-bottom: 24px;
+    }
+
+    .vx_perf_section_title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .vx_perf_section_title h3 {
+      color: #f1f5f9;
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .vx_perf_ytd_badge {
+      color: #94a3b8;
+      font-size: 13px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .vx_perf_ytd_value {
+      color: #22c55e;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .vx_perf_subtitle_text {
+      color: #64748b;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .vx_perf_chart_container {
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+      animation: vx_perf_fadeIn 0.5s ease;
+    }
+
+    @keyframes vx_perf_fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .vx_perf_chart_wrapper {
+      position: relative;
+      width: 100%;
+      height: 300px;
+      margin-bottom: 16px;
+    }
+
+    .vx_perf_canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .vx_perf_chart_grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      pointer-events: none;
+    }
+
+    .vx_perf_grid_line {
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    }
+
+    .vx_perf_legend {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .vx_perf_legend_item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    .vx_perf_legend_dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .vx_perf_legend_dot.vx_perf_profit {
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
+    }
+
+    .vx_perf_legend_dot.vx_perf_loss {
+      background: #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+    }
+
+    .vx_perf_stats_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .vx_perf_stat_card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_perf_stat_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+    }
+
+    .vx_perf_stat_card:hover {
+      background: rgba(30, 41, 59, 0.8);
+      border-color: rgba(59, 130, 246, 0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.2);
+    }
+
+    .vx_perf_stat_icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      font-size: 20px;
+    }
+
+    .vx_perf_stat_icon.vx_perf_total {
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .vx_perf_stat_icon.vx_perf_wins {
+      background: rgba(34, 197, 94, 0.2);
+    }
+
+    .vx_perf_stat_icon.vx_perf_losses {
+      background: rgba(239, 68, 68, 0.2);
+    }
+
+    .vx_perf_stat_icon.vx_perf_active {
+      background: rgba(147, 51, 234, 0.2);
+    }
+
+    .vx_perf_stat_value {
+      color: #f1f5f9;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .vx_perf_stat_label {
+      color: #94a3b8;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .vx_perf_stat_change {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vx_perf_stat_change.vx_perf_positive {
+      color: #22c55e;
+    }
+
+    .vx_perf_stat_change.vx_perf_negative {
+      color: #ef4444;
+    }
+
+    .vx_perf_empty_state {
+      padding: 80px 20px;
+      text-align: center;
+      animation: vx_perf_fadeIn 0.5s ease;
+    }
+
+    .vx_perf_empty_icon {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 24px;
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(59, 130, 246, 0.2);
+      font-size: 48px;
+    }
+
+    .vx_perf_empty_title {
+      color: #f1f5f9;
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+    }
+
+    .vx_perf_empty_subtitle {
+      color: #64748b;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .vx_perf_cta_area {
+      padding: 24px 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(15, 23, 42, 0.4);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .vx_perf_cta_stats {
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+
+    .vx_perf_cta_stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vx_perf_cta_label {
+      color: #64748b;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_perf_cta_value {
+      color: #f1f5f9;
+      font-size: 22px;
+      font-weight: 700;
+    }
+
+    .vx_perf_cta_value.vx_perf_positive {
+      color: #22c55e;
+    }
+
+    .vx_perf_cta_value.vx_perf_negative {
+      color: #ef4444;
+    }
+
+    .vx_perf_cta_buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .vx_perf_btn {
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+    }
+
+    .vx_perf_btn_primary {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_perf_btn_primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_perf_btn_secondary {
+      background: rgba(30, 41, 59, 0.6);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .vx_perf_btn_secondary:hover {
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_perf_btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .vx_perf_header_area {
+        padding: 24px 24px 20px;
+      }
+
+      .vx_perf_main_content {
+        padding: 24px;
+      }
+
+      .vx_perf_cta_area {
+        padding: 20px 24px;
+      }
+
+      .vx_perf_chart_wrapper {
+        height: 250px;
+      }
+
+      .vx_perf_stats_grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vx_perf_header_area {
+        padding: 20px 16px 16px;
+      }
+
+      .vx_perf_title_group h2 {
+        font-size: 22px;
+      }
+
+      .vx_perf_icon_wrapper {
+        width: 40px;
+        height: 40px;
+      }
+
+      .vx_perf_main_content {
+        padding: 20px 16px;
+      }
+
+      .vx_perf_chart_wrapper {
+        height: 220px;
+      }
+
+      .vx_perf_stats_grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vx_perf_cta_area {
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .vx_perf_cta_stats {
+        justify-content: space-between;
+        width: 100%;
+      }
+
+      .vx_perf_cta_buttons {
+        width: 100%;
+      }
+
+      .vx_perf_btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_perf_tabs_container {
+        gap: 8px;
+      }
+
+      .vx_perf_tab_button {
+        flex: 1;
+        justify-content: center;
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+
+      .vx_perf_section_title h3 {
+        font-size: 18px;
+      }
+
+      .vx_perf_stat_value {
+        font-size: 24px;
+      }
+
+      .vx_perf_stats_grid {
+        gap: 12px;
+      }
+
+      .vx_perf_chart_wrapper {
+        height: 200px;
+      }
+
+      .vx_perf_cta_stats {
+        gap: 16px;
+      }
+
+      .vx_perf_legend {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+
+      <!-- Ultra Premium Performance History Section -->
+      <div class="vx_performance_history_section" id="vx_performance_history_section">
+
+        <!-- Header Area -->
+        <div class="vx_perf_header_area">
+          <div class="vx_perf_header_content">
+            <div class="vx_perf_icon_wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                <polyline points="17 6 23 6 23 12"/>
+              </svg>
+            </div>
+            <div class="vx_perf_title_group">
+              <h2>Performance History</h2>
+              <p class="vx_perf_subtitle">Track your trading performance over time</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="vx_perf_main_content">
+
+          <!-- Tab Navigation -->
+          <div class="vx_perf_tabs_container">
+            <button class="vx_perf_tab_button vx_perf_active_tab" data-filter="all">
+              <span>📊</span> All
+            </button>
+            <button class="vx_perf_tab_button" data-filter="wins">
+              <span>✓</span> Wins
+            </button>
+            <button class="vx_perf_tab_button" data-filter="losses">
+              <span>✕</span> Losses
+            </button>
+            <button class="vx_perf_tab_button" data-filter="buy">
+              <span>📈</span> Buy
+            </button>
+            <button class="vx_perf_tab_button" data-filter="sell">
+              <span>📉</span> Sell
+            </button>
+          </div>
+
+          <!-- Section Header -->
+          <div class="vx_perf_section_header">
+            <div class="vx_perf_section_title">
+              <h3>Performance (Net P&L)</h3>
+              <div class="vx_perf_ytd_badge">
+                YTD: <span class="vx_perf_ytd_value" id="vx_ytd_value">+7.2%</span>
+              </div>
+            </div>
+            <p class="vx_perf_subtitle_text">Visual representation of your profit and loss trends</p>
+          </div>
+
+          <!-- Chart Container -->
+          <div class="vx_perf_chart_container">
+            <div class="vx_perf_chart_grid">
+              <div class="vx_perf_grid_line"></div>
+              <div class="vx_perf_grid_line"></div>
+              <div class="vx_perf_grid_line"></div>
+              <div class="vx_perf_grid_line"></div>
+              <div class="vx_perf_grid_line"></div>
+            </div>
+            <div class="vx_perf_chart_wrapper">
+              <canvas class="vx_perf_canvas" id="vx_perfChart"></canvas>
+            </div>
+            <div class="vx_perf_legend">
+              <div class="vx_perf_legend_item">
+                <div class="vx_perf_legend_dot vx_perf_profit"></div>
+                <span>Profit Trend</span>
+              </div>
+              <div class="vx_perf_legend_item">
+                <div class="vx_perf_legend_dot vx_perf_loss"></div>
+                <span>Loss Trend</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Statistics Grid -->
+          <div class="vx_perf_stats_grid" id="vx_stats_grid">
+            <div class="vx_perf_stat_card">
+              <div class="vx_perf_stat_icon vx_perf_total">📊</div>
+              <div class="vx_perf_stat_label">Total Trades</div>
+              <div class="vx_perf_stat_value" id="vx_stat_total">0</div>
+              <div class="vx_perf_stat_change vx_perf_positive">
+                <span id="vx_stat_total_change">+0</span>
+              </div>
+            </div>
+            <div class="vx_perf_stat_card">
+              <div class="vx_perf_stat_icon vx_perf_wins">✓</div>
+              <div class="vx_perf_stat_label">Winning Trades</div>
+              <div class="vx_perf_stat_value" id="vx_stat_wins">0</div>
+              <div class="vx_perf_stat_change vx_perf_positive">
+                <span id="vx_stat_wins_pct">0%</span>
+              </div>
+            </div>
+            <div class="vx_perf_stat_card">
+              <div class="vx_perf_stat_icon vx_perf_losses">✕</div>
+              <div class="vx_perf_stat_label">Losing Trades</div>
+              <div class="vx_perf_stat_value" id="vx_stat_losses">0</div>
+              <div class="vx_perf_stat_change vx_perf_negative">
+                <span id="vx_stat_losses_pct">0%</span>
+              </div>
+            </div>
+            <div class="vx_perf_stat_card">
+              <div class="vx_perf_stat_icon vx_perf_active">🔄</div>
+              <div class="vx_perf_stat_label">Active Positions</div>
+              <div class="vx_perf_stat_value" id="vx_stat_active">0</div>
+              <div class="vx_perf_stat_change">
+                <span style="color: #94a3b8;">from this month</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Empty State (Hidden by default) -->
+          <div class="vx_perf_empty_state" id="vx_empty_state" style="display: none;">
+            <div class="vx_perf_empty_icon">📈</div>
+            <p class="vx_perf_empty_title">No trading history</p>
+            <p class="vx_perf_empty_subtitle">Your trading activity will appear here once you start trading</p>
+          </div>
+
+        </div>
+
+        <!-- CTA Area -->
+        <div class="vx_perf_cta_area">
+          <div class="vx_perf_cta_stats">
+            <div class="vx_perf_cta_stat">
+              <span class="vx_perf_cta_label">Profit (30d)</span>
+              <span class="vx_perf_cta_value vx_perf_positive" id="vx_profit_30d">$1,920</span>
+            </div>
+            <div class="vx_perf_cta_stat">
+              <span class="vx_perf_cta_label">Return YTD</span>
+              <span class="vx_perf_cta_value vx_perf_positive" id="vx_return_ytd">+7.2%</span>
+            </div>
+            <div class="vx_perf_cta_stat">
+              <span class="vx_perf_cta_label">Trades (30d)</span>
+              <span class="vx_perf_cta_value" id="vx_trades_30d">12</span>
+            </div>
+          </div>
+          <div class="vx_perf_cta_buttons">
+            <button class="vx_perf_btn vx_perf_btn_secondary" id="vx_export_perf_btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Export Report
+            </button>
+            <button class="vx_perf_btn vx_perf_btn_primary" id="vx_refresh_perf_btn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 2v6h-6"/>
+                <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                <path d="M3 22v-6h6"/>
+                <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+              </svg>
+              Refresh Data
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <!-- End Ultra Premium Performance History Section -->
+
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+
+  <script>
+    // Scoped JavaScript for vx_performance_history_section
+    (function() {
+      'use strict';
+
+      const filterButtons = document.querySelectorAll('.vx_perf_tab_button');
+      const perfCanvas = document.getElementById('vx_perfChart');
+      const statsGrid = document.getElementById('vx_stats_grid');
+      const emptyState = document.getElementById('vx_empty_state');
+
+      let currentFilter = 'all';
+
+      // Mock performance data
+      const performanceData = {
+        all: [
+          { date: '2025-12-01', type: 'win', amount: 250 },
+          { date: '2025-12-05', type: 'loss', amount: -150 },
+          { date: '2025-12-08', type: 'win', amount: 380 },
+          { date: '2025-12-12', type: 'win', amount: 520 },
+          { date: '2025-12-15', type: 'loss', amount: -200 },
+          { date: '2025-12-18', type: 'win', amount: 450 },
+          { date: '2025-12-22', type: 'win', amount: 620 },
+          { date: '2025-12-25', type: 'loss', amount: -100 },
+        ],
+        wins: [
+          { date: '2025-12-01', type: 'win', amount: 250 },
+          { date: '2025-12-08', type: 'win', amount: 380 },
+          { date: '2025-12-12', type: 'win', amount: 520 },
+          { date: '2025-12-18', type: 'win', amount: 450 },
+          { date: '2025-12-22', type: 'win', amount: 620 },
+        ],
+        losses: [
+          { date: '2025-12-05', type: 'loss', amount: -150 },
+          { date: '2025-12-15', type: 'loss', amount: -200 },
+          { date: '2025-12-25', type: 'loss', amount: -100 },
+        ],
+        buy: [
+          { date: '2025-12-01', type: 'buy', amount: 250 },
+          { date: '2025-12-08', type: 'buy', amount: 380 },
+          { date: '2025-12-15', type: 'buy', amount: -200 },
+          { date: '2025-12-22', type: 'buy', amount: 620 },
+        ],
+        sell: [
+          { date: '2025-12-05', type: 'sell', amount: -150 },
+          { date: '2025-12-12', type: 'sell', amount: 520 },
+          { date: '2025-12-18', type: 'sell', amount: 450 },
+          { date: '2025-12-25', type: 'sell', amount: -100 },
+        ]
+      };
+
+      function drawChart(data) {
+        if (!perfCanvas) return;
+
+        const ctx = perfCanvas.getContext('2d');
+        const canvas = perfCanvas;
+
+        canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+        canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
+
+        ctx.clearRect(0, 0, width, height);
+
+        if (data.length === 0) return;
+
+        // Calculate cumulative P&L
+        let cumulative = 0;
+        const points = data.map(d => {
+          cumulative += d.amount;
+          return cumulative;
+        });
+
+        const minPoint = Math.min(...points, 0);
+        const maxPoint = Math.max(...points, 0);
+        const range = maxPoint - minPoint || 1;
+
+        const padding = 40;
+        const chartWidth = width - padding * 2;
+        const chartHeight = height - padding * 2;
+
+        // Draw line chart
+        ctx.strokeStyle = '#22c55e';
+        ctx.lineWidth = 2.5;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+
+        ctx.beginPath();
+        points.forEach((point, i) => {
+          const x = padding + (i / (points.length - 1 || 1)) * chartWidth;
+          const y = padding + chartHeight - ((point - minPoint) / range) * chartHeight;
+
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.stroke();
+
+        // Draw gradient fill
+        const gradient = ctx.createLinearGradient(0, padding, 0, padding + chartHeight);
+        gradient.addColorStop(0, 'rgba(34, 197, 94, 0.3)');
+        gradient.addColorStop(1, 'rgba(34, 197, 94, 0.05)');
+
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        points.forEach((point, i) => {
+          const x = padding + (i / (points.length - 1 || 1)) * chartWidth;
+          const y = padding + chartHeight - ((point - minPoint) / range) * chartHeight;
+
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        });
+        ctx.lineTo(padding + chartWidth, padding + chartHeight);
+        ctx.lineTo(padding, padding + chartHeight);
+        ctx.closePath();
+        ctx.fill();
+
+        // Draw data points
+        ctx.fillStyle = '#3b82f6';
+        points.forEach((point, i) => {
+          const x = padding + (i / (points.length - 1 || 1)) * chartWidth;
+          const y = padding + chartHeight - ((point - minPoint) / range) * chartHeight;
+
+          ctx.beginPath();
+          ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = '#0a1628';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        });
+      }
+
+      function updateStats(data) {
+        const total = data.length;
+        const wins = data.filter(d => d.type === 'win' || (d.amount > 0 && d.type !== 'loss')).length;
+        const losses = data.filter(d => d.type === 'loss' || (d.amount < 0 && d.type !== 'win')).length;
+        const active = Math.ceil(data.length * 0.3);
+
+        const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
+        const lossRate = total > 0 ? Math.round((losses / total) * 100) : 0;
+
+        document.getElementById('vx_stat_total').textContent = total;
+        document.getElementById('vx_stat_total_change').textContent = `+${total}`;
+        document.getElementById('vx_stat_wins').textContent = wins;
+        document.getElementById('vx_stat_wins_pct').textContent = `${winRate}%`;
+        document.getElementById('vx_stat_losses').textContent = losses;
+        document.getElementById('vx_stat_losses_pct').textContent = `${lossRate}%`;
+        document.getElementById('vx_stat_active').textContent = active;
+
+        animateCounter(document.getElementById('vx_stat_total'), total);
+      }
+
+      function animateCounter(element, target) {
+        const duration = 800;
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          element.textContent = Math.floor(current);
+        }, 16);
+      }
+
+      function switchFilter(filterName) {
+        currentFilter = filterName;
+        const data = performanceData[filterName] || [];
+
+        filterButtons.forEach(btn => {
+          if (btn.dataset.filter === filterName) {
+            btn.classList.add('vx_perf_active_tab');
+          } else {
+            btn.classList.remove('vx_perf_active_tab');
+          }
+        });
+
+        if (data.length === 0) {
+          statsGrid.style.display = 'none';
+          emptyState.style.display = 'block';
+        } else {
+          statsGrid.style.display = 'grid';
+          emptyState.style.display = 'none';
+          drawChart(data);
+          updateStats(data);
+        }
+      }
+
+      // Event listeners for filter buttons
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          switchFilter(this.dataset.filter);
+        });
+      });
+
+      // Refresh button
+      const refreshBtn = document.getElementById('vx_refresh_perf_btn');
+      refreshBtn.addEventListener('click', function() {
+        const icon = this.querySelector('svg');
+        icon.style.animation = 'vx_spin 0.8s linear';
+
+        setTimeout(() => {
+          icon.style.animation = '';
+          switchFilter(currentFilter);
+        }, 800);
+      });
+
+      // Export button
+      const exportBtn = document.getElementById('vx_export_perf_btn');
+      exportBtn.addEventListener('click', function() {
+        console.log('Exporting performance report for:', currentFilter);
+        alert('Performance report would be exported as PDF/CSV');
+      });
+
+      // Initialize with default filter
+      switchFilter('all');
+
+      // Redraw chart on window resize
+      window.addEventListener('resize', () => {
+        if (currentFilter && performanceData[currentFilter]) {
+          drawChart(performanceData[currentFilter]);
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>

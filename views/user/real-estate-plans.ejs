@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Real Estate Plans</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .vx_realestate_wrapper {
+      background: linear-gradient(135deg, #0a0f1e 0%, #151b2e 100%);
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
+
+    .vx_realestate_container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      width: 100%;
+    }
+
+    .vx_realestate_header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: vx_fadeInDown 0.6s ease-out;
+    }
+
+    .vx_realestate_header h2 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_realestate_header p {
+      font-size: 16px;
+      color: #8b92a7;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .vx_realestate_grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 28px;
+      margin-bottom: 48px;
+    }
+
+    .vx_plan_card {
+      background: linear-gradient(135deg, #1a2332 0%, #0f1621 100%);
+      border: 1px solid rgba(99, 179, 237, 0.15);
+      border-radius: 16px;
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: vx_fadeInUp 0.6s ease-out backwards;
+    }
+
+    .vx_plan_card:nth-child(1) { animation-delay: 0.1s; }
+    .vx_plan_card:nth-child(2) { animation-delay: 0.2s; }
+    .vx_plan_card:nth-child(3) { animation-delay: 0.3s; }
+    .vx_plan_card:nth-child(4) { animation-delay: 0.4s; }
+    .vx_plan_card:nth-child(5) { animation-delay: 0.5s; }
+    .vx_plan_card:nth-child(6) { animation-delay: 0.6s; }
+    .vx_plan_card:nth-child(7) { animation-delay: 0.7s; }
+    .vx_plan_card:nth-child(8) { animation-delay: 0.8s; }
+
+    .vx_plan_card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 179, 237, 0.4);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.15);
+    }
+
+    .vx_plan_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .vx_plan_card:hover::before {
+      opacity: 1;
+    }
+
+    .vx_plan_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+
+    .vx_plan_title_group h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 6px 0;
+    }
+
+    .vx_plan_subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_roi_badge {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+
+    .vx_roi_icon {
+      width: 14px;
+      height: 14px;
+    }
+
+    .vx_plan_price {
+      margin: 24px 0 28px 0;
+    }
+
+    .vx_price_amount {
+      font-size: 48px;
+      font-weight: 700;
+      color: #3b82f6;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .vx_price_label {
+      font-size: 14px;
+      color: #6b7280;
+      margin-left: 4px;
+    }
+
+    .vx_plan_features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 28px 0;
+    }
+
+    .vx_feature_item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s;
+    }
+
+    .vx_feature_item:last-child {
+      border-bottom: none;
+    }
+
+    .vx_feature_item:hover {
+      padding-left: 4px;
+    }
+
+    .vx_check_icon {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 12px;
+    }
+
+    .vx_feature_content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex: 1;
+      gap: 12px;
+    }
+
+    .vx_feature_label {
+      font-size: 14px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+
+    .vx_feature_value {
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .vx_feature_value.vx_highlight {
+      color: #10b981;
+    }
+
+    .vx_risk_low { color: #10b981; }
+    .vx_risk_medium { color: #f59e0b; }
+    .vx_risk_high { color: #ef4444; }
+    .vx_risk_very-high { color: #dc2626; }
+
+    .vx_investment_section {
+      margin-top: 28px;
+    }
+
+    .vx_investment_label {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .vx_amount_input_wrapper {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .vx_dollar_sign {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #6b7280;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .vx_amount_input {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(99, 179, 237, 0.2);
+      border-radius: 10px;
+      padding: 14px 16px 14px 32px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .vx_amount_input:focus {
+      border-color: #3b82f6;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_slider_wrapper {
+      margin: 16px 0;
+    }
+
+    .vx_slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .vx_slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+      transition: all 0.2s;
+    }
+
+    .vx_slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
+    }
+
+    .vx_slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+      transition: all 0.2s;
+    }
+
+    .vx_slider::-moz-range-thumb:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
+    }
+
+    .vx_slider_labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 8px;
+    }
+
+    .vx_slider_label {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .vx_potential_return {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 16px 0;
+      text-align: center;
+    }
+
+    .vx_potential_return_label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .vx_potential_return_amount {
+      font-size: 20px;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    .vx_join_button {
+      width: 100%;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+      border-radius: 10px;
+      padding: 16px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_join_button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .vx_join_button:hover::before {
+      left: 100%;
+    }
+
+    .vx_join_button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_join_button:active {
+      transform: translateY(0);
+    }
+
+    .vx_lock_icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .vx_guide_section {
+      background: linear-gradient(135deg, #1a2332 0%, #0f1621 100%);
+      border: 1px solid rgba(99, 179, 237, 0.15);
+      border-radius: 16px;
+      padding: 48px 40px;
+      animation: vx_fadeInUp 0.6s ease-out 0.9s backwards;
+    }
+
+    .vx_guide_header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+
+    .vx_guide_icon {
+      width: 28px;
+      height: 28px;
+      color: #3b82f6;
+    }
+
+    .vx_guide_title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .vx_guide_steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .vx_guide_step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 24px;
+      background: rgba(59, 130, 246, 0.03);
+      border-radius: 12px;
+      border: 1px solid rgba(99, 179, 237, 0.1);
+      transition: all 0.3s;
+    }
+
+    .vx_guide_step:hover {
+      background: rgba(59, 130, 246, 0.06);
+      border-color: rgba(99, 179, 237, 0.3);
+      transform: translateX(4px);
+    }
+
+    .vx_step_icon_wrapper {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2) 0%, rgba(37, 99, 235, 0.2) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #3b82f6;
+    }
+
+    .vx_step_icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .vx_step_content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+    }
+
+    .vx_step_content p {
+      font-size: 14px;
+      color: #8b92a7;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .vx_modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+      animation: vx_fadeIn 0.3s;
+    }
+
+    .vx_modal_content {
+      background: linear-gradient(135deg, #1a2332 0%, #0f1621 100%);
+      border: 1px solid rgba(99, 179, 237, 0.2);
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 500px;
+      width: 100%;
+      animation: vx_scaleIn 0.3s;
+    }
+
+    .vx_modal_content h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 24px 0;
+    }
+
+    .vx_modal_summary {
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(99, 179, 237, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .vx_modal_summary p {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+
+    .vx_modal_summary p strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .vx_modal_actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .vx_btn_primary {
+      flex: 1;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+      border-radius: 10px;
+      padding: 14px 24px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vx_btn_primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_btn_ghost {
+      flex: 1;
+      background: transparent;
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      border-radius: 10px;
+      padding: 14px 24px;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vx_btn_ghost:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+    }
+
+    .vx_success_message {
+      padding: 16px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 10px;
+      color: #10b981;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    @keyframes vx_fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes vx_fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes vx_fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes vx_scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @media (max-width: 1200px) {
+      .vx_realestate_grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vx_realestate_container {
+        padding: 24px 16px;
+      }
+
+      .vx_realestate_header h2 {
+        font-size: 32px;
+      }
+
+      .vx_realestate_grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .vx_plan_card {
+        padding: 24px 20px;
+      }
+
+      .vx_price_amount {
+        font-size: 40px;
+      }
+
+      .vx_guide_section {
+        padding: 32px 24px;
+      }
+
+      .vx_guide_steps {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .vx_modal_content {
+        padding: 24px;
+      }
+
+      .vx_modal_actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_realestate_header h2 {
+        font-size: 28px;
+      }
+
+      .vx_realestate_header p {
+        font-size: 14px;
+      }
+
+      .vx_plan_header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .vx_price_amount {
+        font-size: 36px;
+      }
+
+      .vx_guide_title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page: 'real-estate' }) %>
+    <main class="dashboard-content">
+      <div class="vx_realestate_wrapper">
+        <div class="vx_realestate_container">
+
+          <div class="vx_realestate_header">
+            <h2>Investment Plans</h2>
+            <p>Upgrade your account with our high-yield investment opportunities</p>
+          </div>
+
+          <div class="vx_realestate_grid">
+            <% const plans = [
+              {id:1,name:'Beginner Plan',roi:2.23,duration:3,min:1250,max:9650,level:'Conservative',risk:'Low',dailyReturn:27.88},
+              {id:2,name:'Standard Plan',roi:2.5,duration:5,min:10210,max:24750,level:'Income',risk:'Medium',dailyReturn:255.25},
+              {id:3,name:'Business Plan',roi:3.10,duration:7,min:25210,max:105750,level:'Balanced',risk:'Medium',dailyReturn:781.51},
+              {id:4,name:'Premium',roi:11,duration:3,min:25000,max:100000,level:'High Yield',risk:'High',dailyReturn:916.67},
+              {id:5,name:'Elite / Institutional Plan',roi:3.65,duration:10,min:110250,max:725075,level:'Institutional',risk:'High',dailyReturn:4024.13},
+              {id:6,name:'velocityx-ai Institutional Plan',roi:3.99,duration:10,min:1000000,max:4500000,level:'Opportunistic',risk:'Very High',dailyReturn:39900},
+              {id:7,name:'Short-Term Yield',roi:4,duration:0.5,min:1000,max:5000,level:'Short',risk:'Low',dailyReturn:219.18},
+              {id:8,name:'Balanced Plus',roi:9,duration:2.5,min:15000,max:75000,level:'Balanced+',risk:'Medium',dailyReturn:920.55}
+            ]; %>
+
+            <% plans.forEach(function(p){ %>
+            <div class="vx_plan_card" data-plan-id="<%= p.id %>">
+              <div class="vx_plan_header">
+                <div class="vx_plan_title_group">
+                  <h3><%= p.name %></h3>
+                  <div class="vx_plan_subtitle"><%= p.level %></div>
+                </div>
+                <div class="vx_roi_badge">
+                  <svg class="vx_roi_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                  </svg>
+                  <%= p.roi %>% ROI
+                </div>
+              </div>
+
+              <div class="vx_plan_price">
+                <div class="vx_price_amount">
+                  $<span class="vx_price_value"><%= p.min.toLocaleString() %></span>
+                  <span class="vx_price_label">minimum</span>
+                </div>
+              </div>
+
+              <ul class="vx_plan_features">
+                <li class="vx_feature_item">
+                  <div class="vx_check_icon">✓</div>
+                  <div class="vx_feature_content">
+                    <span class="vx_feature_label">Min Investment:</span>
+                    <span class="vx_feature_value">$<%= p.min.toLocaleString() %></span>
+                  </div>
+                </li>
+                <li class="vx_feature_item">
+                  <div class="vx_check_icon">✓</div>
+                  <div class="vx_feature_content">
+                    <span class="vx_feature_label">Max Investment:</span>
+                    <span class="vx_feature_value">$<%= p.max.toLocaleString() %></span>
+                  </div>
+                </li>
+                <li class="vx_feature_item">
+                  <div class="vx_check_icon">✓</div>
+                  <div class="vx_feature_content">
+                    <span class="vx_feature_label">Return Rate:</span>
+                    <span class="vx_feature_value vx_highlight"><%= p.roi %>% Daily</span>
+                  </div>
+                </li>
+                <li class="vx_feature_item">
+                  <div class="vx_check_icon">✓</div>
+                  <div class="vx_feature_content">
+                    <span class="vx_feature_label">Duration:</span>
+                    <span class="vx_feature_value"><%= Math.floor(p.duration) %> Days</span>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="vx_investment_section">
+                <div class="vx_investment_label">Investment Amount ($)</div>
+                <div class="vx_amount_input_wrapper">
+                  <span class="vx_dollar_sign">$</span>
+                  <input
+                    type="number"
+                    class="vx_amount_input"
+                    placeholder="<%= p.min %>"
+                    value="<%= p.min %>"
+                    data-min="<%= p.min %>"
+                    data-max="<%= p.max %>"
+                    data-roi="<%= p.roi %>"
+                    data-duration="<%= p.duration %>"
+                    data-plan-name="<%= p.name %>"
+                  />
+                </div>
+
+                <div class="vx_slider_wrapper">
+                  <input
+                    type="range"
+                    class="vx_slider"
+                    min="<%= p.min %>"
+                    max="<%= p.max %>"
+                    value="<%= p.min %>"
+                    step="<%= Math.floor((p.max - p.min) / 100) || 1 %>"
+                  />
+                  <div class="vx_slider_labels">
+                    <span class="vx_slider_label">Min: $<%= p.min.toLocaleString() %></span>
+                    <span class="vx_slider_label">Max: $<%= p.max.toLocaleString() %></span>
+                  </div>
+                </div>
+
+                <div class="vx_potential_return">
+                  <div class="vx_potential_return_label">Potential Return:</div>
+                  <div class="vx_potential_return_amount">
+                    $<span class="vx_return_value"><%= p.dailyReturn.toFixed(2) %></span> Daily
+                  </div>
+                </div>
+
+                <button class="vx_join_button">
+                  <svg class="vx_lock_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                  Join Investment Plan
+                </button>
+              </div>
+            </div>
+            <% }); %>
+          </div>
+
+          <div class="vx_guide_section">
+            <div class="vx_guide_header">
+              <svg class="vx_guide_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <h3 class="vx_guide_title">Investment Guide</h3>
+            </div>
+
+            <div class="vx_guide_steps">
+              <div class="vx_guide_step">
+                <div class="vx_step_icon_wrapper">
+                  <svg class="vx_step_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                </div>
+                <div class="vx_step_content">
+                  <h4>Choose your plan</h4>
+                  <p>Select an investment plan that matches your financial goals and risk tolerance.</p>
+                </div>
+              </div>
+
+              <div class="vx_guide_step">
+                <div class="vx_step_icon_wrapper">
+                  <svg class="vx_step_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                  </svg>
+                </div>
+                <div class="vx_step_content">
+                  <h4>Invest securely</h4>
+                  <p>Your funds are securely managed with state-of-the-art investment strategies.</p>
+                </div>
+              </div>
+
+              <div class="vx_guide_step">
+                <div class="vx_step_icon_wrapper">
+                  <svg class="vx_step_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                  </svg>
+                </div>
+                <div class="vx_step_content">
+                  <h4>Earn returns</h4>
+                  <p>Watch your investment grow with competitive returns deposited directly to your account.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="vx_invest_modal" class="vx_modal">
+        <div class="vx_modal_content">
+          <h3>Confirm Investment</h3>
+          <div id="vx_modal_summary" class="vx_modal_summary"></div>
+          <div class="vx_modal_actions">
+            <button id="vx_confirm_invest" class="vx_btn_primary">Confirm & Invest</button>
+            <button id="vx_cancel_invest" class="vx_btn_ghost">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+
+  <script>
+    (function() {
+      function formatUSD(value) {
+        return '$' + Number(value).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      }
+
+      function calculateDailyReturn(amount, roiPercent) {
+        return (amount * roiPercent) / 100;
+      }
+
+      document.querySelectorAll('.vx_plan_card').forEach(function(card) {
+        var input = card.querySelector('.vx_amount_input');
+        var slider = card.querySelector('.vx_slider');
+        var returnDisplay = card.querySelector('.vx_return_value');
+        var joinButton = card.querySelector('.vx_join_button');
+
+        function syncValues() {
+          var value = Number(input.value) || Number(input.dataset.min);
+          var min = Number(input.dataset.min);
+          var max = Number(input.dataset.max);
+
+          if (value < min) value = min;
+          if (value > max) value = max;
+
+          input.value = value;
+          slider.value = value;
+
+          var roi = Number(input.dataset.roi);
+          var dailyReturn = calculateDailyReturn(value, roi);
+          returnDisplay.textContent = dailyReturn.toFixed(2);
+        }
+
+        input.addEventListener('input', syncValues);
+        slider.addEventListener('input', function() {
+          input.value = this.value;
+          syncValues();
+        });
+
+        joinButton.addEventListener('click', function() {
+          var amount = Number(input.value);
+          var min = Number(input.dataset.min);
+          var max = Number(input.dataset.max);
+          var roi = Number(input.dataset.roi);
+          var duration = Number(input.dataset.duration);
+          var planName = input.dataset.planName;
+
+          if (amount < min) {
+            alert('Amount must be at least ' + formatUSD(min));
+            return;
+          }
+
+          if (amount > max) {
+            alert('Amount cannot exceed ' + formatUSD(max));
+            return;
+          }
+
+          var dailyReturn = calculateDailyReturn(amount, roi);
+          var totalReturn = dailyReturn * Math.floor(duration);
+          var totalAmount = amount + totalReturn;
+
+          var summaryHTML = '<p><span>Plan:</span> <strong>' + planName + '</strong></p>';
+          summaryHTML += '<p><span>Amount:</span> <strong>' + formatUSD(amount) + '</strong></p>';
+          summaryHTML += '<p><span>Duration:</span> <strong>' + Math.floor(duration) + ' Days</strong></p>';
+          summaryHTML += '<p><span>Daily Return:</span> <strong>' + formatUSD(dailyReturn) + '</strong></p>';
+          summaryHTML += '<p><span>Total Expected:</span> <strong>' + formatUSD(totalAmount) + '</strong></p>';
+          summaryHTML += '<p><span>Total Earnings:</span> <strong>' + formatUSD(totalReturn) + '</strong></p>';
+
+          document.getElementById('vx_modal_summary').innerHTML = summaryHTML;
+          document.getElementById('vx_invest_modal').style.display = 'flex';
+
+          // store amount and plan info on confirm button for later
+          var confirmBtn = document.getElementById('vx_confirm_invest');
+          confirmBtn.dataset.amount = amount;
+          confirmBtn.dataset.plan = planName;
+          confirmBtn.dataset.planId = card.getAttribute('data-plan-id') || '';
+        });
+
+        syncValues();
+      });
+
+      document.getElementById('vx_cancel_invest').addEventListener('click', function() {
+        document.getElementById('vx_invest_modal').style.display = 'none';
+      });
+
+      document.getElementById('vx_invest_modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.style.display = 'none';
+        }
+      });
+
+      document.getElementById('vx_confirm_invest').addEventListener('click', function() {
+        var btn = this;
+        var amount = btn.dataset.amount;
+        var plan = btn.dataset.plan;
+        var planId = btn.dataset.planId || null;
+
+        if (!amount) return;
+
+        btn.disabled = true;
+        var originalText = btn.textContent;
+        btn.textContent = 'Processing...';
+
+        fetch('/user/join-plan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ amount: amount, planId: planId, planName: plan })
+        }).then(function(res){ return res.json(); }).then(function(data){
+          if (!data || !data.success) {
+            alert(data && data.message ? data.message : 'Failed to process investment');
+            if (data && data.redirect) window.location.href = data.redirect;
+            btn.textContent = originalText;
+            btn.disabled = false;
+            return;
+          }
+
+          var successHTML = '<div class="vx_success_message">';
+          successHTML += 'Investment started: ' + formatUSD(amount) + ' into ' + plan;
+          successHTML += '</div>';
+
+          document.getElementById('vx_modal_summary').innerHTML = successHTML;
+          btn.textContent = originalText;
+
+          setTimeout(function() {
+            document.getElementById('vx_invest_modal').style.display = 'none';
+            document.getElementById('vx_modal_summary').innerHTML = '';
+            // show an alert per spec
+            alert('Trading has started for ' + plan + '.');
+            // optionally reload to update balance displayed elsewhere
+            window.location.reload();
+          }, 1200);
+
+        }).catch(function(err){
+          console.error(err);
+          alert('Error processing investment');
+          btn.textContent = originalText;
+          btn.disabled = false;
+        });
+      });
+
+      var cards = document.querySelectorAll('.vx_plan_card');
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      cards.forEach(function(card) {
+        observer.observe(card);
+      });
+    })();
+  </script>
+</body>
+</html>

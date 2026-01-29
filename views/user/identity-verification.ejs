@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Identity Verification</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    .vx_kyc_wrapper {
+      background: linear-gradient(135deg, #0a0f1e 0%, #151b2e 100%);
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+    }
+
+    .vx_kyc_container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .vx_kyc_header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: vx_fadeInDown 0.6s ease-out;
+    }
+
+    .vx_kyc_badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: #3b82f6;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .vx_kyc_badge_icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .vx_kyc_header h2 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_kyc_header p {
+      font-size: 16px;
+      color: #8b92a7;
+      margin: 0;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .vx_progress_section {
+      margin-bottom: 40px;
+    }
+
+    .vx_progress_info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .vx_progress_label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .vx_progress_step {
+      font-size: 13px;
+      color: #6b7280;
+    }
+
+    .vx_progress_bar {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .vx_progress_fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 4px;
+      width: 33.33%;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .vx_steps_indicator {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vx_step_item {
+      flex: 1;
+      position: relative;
+    }
+
+    .vx_step_button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vx_step_circle {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(99, 179, 237, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #9ca3af;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .vx_step_item.vx_active .vx_step_circle {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-color: #3b82f6;
+      color: #ffffff;
+      box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.15);
+    }
+
+    .vx_step_item.vx_completed .vx_step_circle {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-color: #10b981;
+      color: #ffffff;
+    }
+
+    .vx_step_label {
+      font-size: 13px;
+      color: #9ca3af;
+      font-weight: 500;
+      text-align: center;
+      transition: color 0.3s;
+    }
+
+    .vx_step_item.vx_active .vx_step_label,
+    .vx_step_item.vx_completed .vx_step_label {
+      color: #ffffff;
+    }
+
+    .vx_step_connector {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      right: -50%;
+      height: 2px;
+      background: rgba(99, 179, 237, 0.2);
+      transition: background 0.3s;
+    }
+
+    .vx_step_item.vx_completed .vx_step_connector {
+      background: linear-gradient(90deg, #10b981 0%, rgba(16, 185, 129, 0.2) 100%);
+    }
+
+    .vx_form_card {
+      background: linear-gradient(135deg, #1a2332 0%, #0f1621 100%);
+      border: 1px solid rgba(99, 179, 237, 0.15);
+      border-radius: 16px;
+      padding: 40px;
+      animation: vx_fadeInUp 0.6s ease-out 0.2s backwards;
+    }
+
+    .vx_form_section {
+      display: none;
+    }
+
+    .vx_form_section.vx_active {
+      display: block;
+      animation: vx_fadeIn 0.4s ease-out;
+    }
+
+    .vx_form_title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .vx_form_title_icon {
+      width: 24px;
+      height: 24px;
+      color: #3b82f6;
+    }
+
+    .vx_form_title h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .vx_form_subtitle {
+      font-size: 14px;
+      color: #8b92a7;
+      margin: 0 0 28px 0;
+      padding-left: 36px;
+    }
+
+    .vx_notice_box {
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .vx_notice_icon {
+      width: 20px;
+      height: 20px;
+      color: #3b82f6;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .vx_notice_content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vx_notice_title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #3b82f6;
+      margin-bottom: 4px;
+    }
+
+    .vx_notice_text {
+      font-size: 13px;
+      color: #8b92a7;
+      line-height: 1.5;
+    }
+
+    .vx_form_group {
+      margin-bottom: 24px;
+    }
+
+    .vx_form_row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .vx_form_row.vx_full {
+      grid-template-columns: 1fr;
+    }
+
+    .vx_form_label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .vx_form_label .vx_required {
+      color: #ef4444;
+      margin-left: 2px;
+    }
+
+    .vx_form_input,
+    .vx_form_select {
+      width: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(99, 179, 237, 0.2);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .vx_form_input::placeholder {
+      color: #6b7280;
+    }
+
+    .vx_form_input:focus,
+    .vx_form_select:focus {
+      border-color: #3b82f6;
+      background: rgba(15, 23, 42, 0.9);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_form_input.vx_error,
+    .vx_form_select.vx_error {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+    }
+
+    .vx_form_select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'%3e%3c/path%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 20px;
+      padding-right: 40px;
+    }
+
+    .vx_form_select option {
+      background: #1a2332;
+      color: #ffffff;
+    }
+
+    .vx_file_input_wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .vx_file_input {
+      display: none;
+    }
+
+    .vx_file_input_label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 40px 24px;
+      border: 2px dashed rgba(99, 179, 237, 0.3);
+      border-radius: 12px;
+      background: rgba(59, 130, 246, 0.05);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vx_file_input_label:hover {
+      border-color: rgba(59, 130, 246, 0.6);
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_file_input:checked + .vx_file_input_label,
+    .vx_file_uploaded .vx_file_input_label {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.08);
+    }
+
+    .vx_file_icon {
+      width: 32px;
+      height: 32px;
+      color: #3b82f6;
+    }
+
+    .vx_file_uploaded .vx_file_icon {
+      color: #10b981;
+    }
+
+    .vx_file_text {
+      text-align: center;
+    }
+
+    .vx_file_main {
+      font-size: 14px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    .vx_file_sub {
+      font-size: 13px;
+      color: #8b92a7;
+    }
+
+    .vx_file_uploaded .vx_file_main {
+      color: #10b981;
+    }
+
+    .vx_file_name {
+      font-size: 13px;
+      color: #3b82f6;
+      margin-top: 8px;
+    }
+
+    .vx_error_message {
+      color: #ef4444;
+      font-size: 12px;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .vx_error_message.vx_show {
+      display: block;
+    }
+
+    .vx_privacy_notice {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+    }
+
+    .vx_privacy_icon {
+      width: 24px;
+      height: 24px;
+      color: #10b981;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .vx_privacy_content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .vx_privacy_title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #10b981;
+      margin-bottom: 4px;
+    }
+
+    .vx_privacy_text {
+      font-size: 13px;
+      color: #8b92a7;
+      line-height: 1.5;
+    }
+
+    .vx_form_actions {
+      display: flex;
+      gap: 16px;
+      justify-content: flex-end;
+      margin-top: 40px;
+    }
+
+    .vx_btn_back {
+      background: transparent;
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      color: #ffffff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vx_btn_back:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .vx_btn_next {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+      color: #ffffff;
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .vx_btn_next:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_btn_next:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .vx_btn_icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .vx_success_state {
+      text-align: center;
+      padding: 60px 40px;
+    }
+
+    .vx_success_icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: #ffffff;
+      font-size: 40px;
+    }
+
+    .vx_success_title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 12px 0;
+    }
+
+    .vx_success_text {
+      font-size: 14px;
+      color: #8b92a7;
+      margin: 0 0 32px 0;
+      line-height: 1.6;
+    }
+
+    .vx_success_btn {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+      color: #ffffff;
+      padding: 14px 40px;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .vx_success_btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    @keyframes vx_fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes vx_fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes vx_fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vx_kyc_container {
+        padding: 24px 16px;
+      }
+
+      .vx_kyc_header h2 {
+        font-size: 32px;
+      }
+
+      .vx_form_card {
+        padding: 28px 20px;
+      }
+
+      .vx_form_row {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .vx_form_actions {
+        flex-direction: column-reverse;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .vx_btn_back,
+      .vx_btn_next {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .vx_steps_indicator {
+        gap: 8px;
+      }
+
+      .vx_step_circle {
+        width: 40px;
+        height: 40px;
+        font-size: 13px;
+      }
+
+      .vx_step_label {
+        font-size: 11px;
+      }
+
+      .vx_file_input_label {
+        padding: 30px 16px;
+      }
+
+      .vx_privacy_notice {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_kyc_header h2 {
+        font-size: 26px;
+      }
+
+      .vx_form_card {
+        padding: 20px 16px;
+      }
+
+      .vx_form_title h3 {
+        font-size: 18px;
+      }
+
+      .vx_progress_bar {
+        height: 6px;
+      }
+
+      .vx_step_circle {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+      }
+
+      .vx_success_icon {
+        width: 64px;
+        height: 64px;
+        font-size: 32px;
+      }
+
+      .vx_success_title {
+        font-size: 22px;
+      }
+
+      .vx_success_state {
+        padding: 40px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page: 'kyc' }) %>
+    <main class="dashboard-content">
+      <div class="vx_kyc_wrapper">
+        <div class="vx_kyc_container">
+
+          <div class="vx_kyc_header">
+            <div class="vx_kyc_badge">
+              <svg class="vx_kyc_badge_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              Secure Verification Process
+            </div>
+            <h2>Account Verification</h2>
+            <p>Complete your KYC verification to unlock full trading features and ensure account security</p>
+          </div>
+
+          <div class="vx_progress_section">
+            <div class="vx_progress_info">
+              <span class="vx_progress_label">Verification Progress</span>
+              <span class="vx_progress_step"><span id="vx_current_step">1</span> of 3</span>
+            </div>
+            <div class="vx_progress_bar">
+              <div class="vx_progress_fill" id="vx_progress_fill"></div>
+            </div>
+            <div class="vx_steps_indicator">
+              <div class="vx_step_item vx_active" data-step="1">
+                <div class="vx_step_connector"></div>
+                <div class="vx_step_button">
+                  <div class="vx_step_circle">1</div>
+                  <span class="vx_step_label">Personal Info</span>
+                </div>
+              </div>
+              <div class="vx_step_item" data-step="2">
+                <div class="vx_step_connector"></div>
+                <div class="vx_step_button">
+                  <div class="vx_step_circle">2</div>
+                  <span class="vx_step_label">Address</span>
+                </div>
+              </div>
+              <div class="vx_step_item" data-step="3">
+                <div class="vx_step_button">
+                  <div class="vx_step_circle">3</div>
+                  <span class="vx_step_label">Documents</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="vx_form_card">
+
+            <div id="vx_form_step_1" class="vx_form_section vx_active">
+              <div class="vx_form_title">
+                <svg class="vx_form_title_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3>Personal Information</h3>
+              </div>
+              <p class="vx_form_subtitle">Provide your personal details as they appear on your ID</p>
+
+              <div class="vx_notice_box">
+                <svg class="vx_notice_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="vx_notice_content">
+                  <div class="vx_notice_title">Important Notice</div>
+                  <div class="vx_notice_text">Please ensure all information matches exactly with your government-issued ID. Details cannot be modified after submission.</div>
+                </div>
+              </div>
+
+              <div class="vx_form_row">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">First Name <span class="vx_required">*</span></label>
+                  <input type="text" class="vx_form_input" id="vx_firstName" placeholder="John" required>
+                  <div class="vx_error_message"></div>
+                </div>
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Last Name <span class="vx_required">*</span></label>
+                  <input type="text" class="vx_form_input" id="vx_lastName" placeholder="Doe" required>
+                  <div class="vx_error_message"></div>
+                </div>
+              </div>
+
+              <div class="vx_form_row">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Email Address <span class="vx_required">*</span></label>
+                  <input type="email" class="vx_form_input" id="vx_email" placeholder="john@example.com" required>
+                  <div class="vx_error_message"></div>
+                </div>
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Phone Number <span class="vx_required">*</span></label>
+                  <input type="tel" class="vx_form_input" id="vx_phone" placeholder="+1 (555) 000-0000" required>
+                  <div class="vx_error_message"></div>
+                </div>
+              </div>
+
+              <div class="vx_form_row">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Date of Birth <span class="vx_required">*</span></label>
+                  <input type="date" class="vx_form_input" id="vx_dob" required>
+                  <div class="vx_error_message"></div>
+                </div>
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Social Media Username (Optional)</label>
+                  <input type="text" class="vx_form_input" id="vx_socialMedia" placeholder="@username">
+                </div>
+              </div>
+
+              <div class="vx_form_actions">
+                <button class="vx_btn_next" onclick="vx_goToStep(2)">
+                  Continue to Address
+                  <svg class="vx_btn_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div id="vx_form_step_2" class="vx_form_section">
+              <div class="vx_form_title">
+                <svg class="vx_form_title_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                </svg>
+                <h3>Address Information</h3>
+              </div>
+              <p class="vx_form_subtitle">Please provide your current residential address</p>
+
+              <div class="vx_notice_box">
+                <svg class="vx_notice_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="vx_notice_content">
+                  <div class="vx_notice_title">Note</div>
+                  <div class="vx_notice_text">We use your address for regulatory compliance and account verification purposes only.</div>
+                </div>
+              </div>
+
+              <div class="vx_form_row vx_full">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Street Address <span class="vx_required">*</span></label>
+                  <input type="text" class="vx_form_input" id="vx_street" placeholder="123 Main Street" required>
+                  <div class="vx_error_message"></div>
+                </div>
+              </div>
+
+              <div class="vx_form_row">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">City <span class="vx_required">*</span></label>
+                  <input type="text" class="vx_form_input" id="vx_city" placeholder="New York" required>
+                  <div class="vx_error_message"></div>
+                </div>
+                <div class="vx_form_group">
+                  <label class="vx_form_label">State / Province <span class="vx_required">*</span></label>
+                  <input type="text" class="vx_form_input" id="vx_state" placeholder="NY" required>
+                  <div class="vx_error_message"></div>
+                </div>
+              </div>
+
+              <div class="vx_form_row">
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Postal Code <span class="vx_required">*</span></label>
+                  <input type="text" class="vx_form_input" id="vx_postal" placeholder="10001" required>
+                  <div class="vx_error_message"></div>
+                </div>
+                <div class="vx_form_group">
+                  <label class="vx_form_label">Country <span class="vx_required">*</span></label>
+                  <select class="vx_form_select" id="vx_country" required>
+                    <option value="">Select country</option>
+                    <option value="US">United States</option>
+                    <option value="CA">Canada</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="AU">Australia</option>
+                    <option value="DE">Germany</option>
+                    <option value="FR">France</option>
+                    <option value="IT">Italy</option>
+                    <option value="ES">Spain</option>
+                    <option value="JP">Japan</option>
+                    <option value="SG">Singapore</option>
+                    <option value="OTHER">Other</option>
+                  </select>
+                  <div class="vx_error_message"></div>
+                </div>
+              </div>
+
+              <div class="vx_form_actions">
+                <button class="vx_btn_back" onclick="vx_goToStep(1)">
+                  <svg class="vx_btn_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                  Back
+                </button>
+                <button class="vx_btn_next" onclick="vx_goToStep(3)">
+                  Continue to Documents
+                  <svg class="vx_btn_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div id="vx_form_step_3" class="vx_form_section">
+              <div class="vx_form_title">
+                <svg class="vx_form_title_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <h3>Document Upload</h3>
+              </div>
+              <p class="vx_form_subtitle">Upload your government-issued ID and a selfie for verification</p>
+
+              <div class="vx_notice_box">
+                <svg class="vx_notice_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="vx_notice_content">
+                  <div class="vx_notice_title">Document Requirements</div>
+                  <div class="vx_notice_text">Accepted: Passport, National ID, Driver's License. Files must be clear, legible, and not expired.</div>
+                </div>
+              </div>
+
+              <div class="vx_form_group">
+                <label class="vx_form_label">Government-Issued ID <span class="vx_required">*</span></label>
+                <div class="vx_file_input_wrapper">
+                  <input type="file" id="vx_idDocument" class="vx_file_input" accept="image/*,application/pdf" required>
+                  <label for="vx_idDocument" class="vx_file_input_label">
+                    <svg class="vx_file_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <div class="vx_file_text">
+                      <div class="vx_file_main">Click to upload or drag and drop</div>
+                      <div class="vx_file_sub">PDF, PNG, JPG (Max 10MB)</div>
+                    </div>
+                    <div class="vx_file_name" id="vx_idFileName"></div>
+                  </label>
+                </div>
+                <div class="vx_error_message"></div>
+              </div>
+
+              <div class="vx_form_group">
+                <label class="vx_form_label">Selfie with ID <span class="vx_required">*</span></label>
+                <div class="vx_file_input_wrapper">
+                  <input type="file" id="vx_selfie" class="vx_file_input" accept="image/*" required>
+                  <label for="vx_selfie" class="vx_file_input_label">
+                    <svg class="vx_file_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                    </svg>
+                    <div class="vx_file_text">
+                      <div class="vx_file_main">Click to upload or drag and drop</div>
+                      <div class="vx_file_sub">PNG, JPG (Max 10MB)</div>
+                    </div>
+                    <div class="vx_file_name" id="vx_selfieFileName"></div>
+                  </label>
+                </div>
+                <div class="vx_error_message"></div>
+              </div>
+
+              <div class="vx_privacy_notice">
+                <svg class="vx_privacy_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div class="vx_privacy_content">
+                  <div class="vx_privacy_title">Your Privacy is Protected</div>
+                  <div class="vx_privacy_text">Your documents are encrypted and stored securely. We use bank-level security measures to protect your personal information and comply with international data protection regulations.</div>
+                </div>
+              </div>
+
+              <div class="vx_form_actions">
+                <button class="vx_btn_back" onclick="vx_goToStep(2)">
+                  <svg class="vx_btn_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                  Back
+                </button>
+                <button class="vx_btn_next" id="vx_submitBtn" onclick="vx_submitKYC()">
+                  Submit Verification
+                  <svg class="vx_btn_icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div id="vx_form_success" class="vx_form_section">
+              <div class="vx_success_state">
+                <div class="vx_success_icon">✓</div>
+                <h3 class="vx_success_title">Verification Submitted!</h3>
+                <p class="vx_success_text">Your KYC verification has been successfully submitted. Our team will review your documents within 24 hours. You'll receive an email confirmation once your account is verified.</p>
+                <button class="vx_success_btn" onclick="window.location.href='/user/dashboard'">
+                  Return to Dashboard
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+
+  <script>
+    (function() {
+      var vx_currentStep = 1;
+
+      window.vx_goToStep = function(step) {
+        if (step === 2 && vx_currentStep === 1) {
+          if (!vx_validateStep1()) return;
+        } else if (step === 3 && vx_currentStep === 2) {
+          if (!vx_validateStep2()) return;
+        }
+
+        document.querySelectorAll('.vx_form_section').forEach(function(el) {
+          el.classList.remove('vx_active');
+        });
+
+        document.getElementById('vx_form_step_' + step).classList.add('vx_active');
+
+        vx_currentStep = step;
+        vx_updateProgress();
+      };
+
+      function vx_updateProgress() {
+        var progressPercent = (vx_currentStep / 3) * 100;
+        document.getElementById('vx_progress_fill').style.width = progressPercent + '%';
+        document.getElementById('vx_current_step').textContent = vx_currentStep;
+
+        document.querySelectorAll('.vx_step_item').forEach(function(item) {
+          var itemStep = parseInt(item.dataset.step);
+          item.classList.remove('vx_active', 'vx_completed');
+
+          if (itemStep === vx_currentStep) {
+            item.classList.add('vx_active');
+          } else if (itemStep < vx_currentStep) {
+            item.classList.add('vx_completed');
+          }
+        });
+      }
+
+      function vx_validateStep1() {
+        var firstName = document.getElementById('vx_firstName').value.trim();
+        var lastName = document.getElementById('vx_lastName').value.trim();
+        var email = document.getElementById('vx_email').value.trim();
+        var phone = document.getElementById('vx_phone').value.trim();
+        var dob = document.getElementById('vx_dob').value;
+
+        var isValid = true;
+
+        if (!firstName) {
+          vx_showError(document.getElementById('vx_firstName'), 'First name is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_firstName'));
+        }
+
+        if (!lastName) {
+          vx_showError(document.getElementById('vx_lastName'), 'Last name is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_lastName'));
+        }
+
+        if (!email || !vx_isValidEmail(email)) {
+          vx_showError(document.getElementById('vx_email'), 'Valid email is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_email'));
+        }
+
+        if (!phone) {
+          vx_showError(document.getElementById('vx_phone'), 'Phone number is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_phone'));
+        }
+
+        if (!dob) {
+          vx_showError(document.getElementById('vx_dob'), 'Date of birth is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_dob'));
+        }
+
+        return isValid;
+      }
+
+      function vx_validateStep2() {
+        var street = document.getElementById('vx_street').value.trim();
+        var city = document.getElementById('vx_city').value.trim();
+        var state = document.getElementById('vx_state').value.trim();
+        var postal = document.getElementById('vx_postal').value.trim();
+        var country = document.getElementById('vx_country').value;
+
+        var isValid = true;
+
+        if (!street) {
+          vx_showError(document.getElementById('vx_street'), 'Street address is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_street'));
+        }
+
+        if (!city) {
+          vx_showError(document.getElementById('vx_city'), 'City is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_city'));
+        }
+
+        if (!state) {
+          vx_showError(document.getElementById('vx_state'), 'State/Province is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_state'));
+        }
+
+        if (!postal) {
+          vx_showError(document.getElementById('vx_postal'), 'Postal code is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_postal'));
+        }
+
+        if (!country) {
+          vx_showError(document.getElementById('vx_country'), 'Country is required');
+          isValid = false;
+        } else {
+          vx_clearError(document.getElementById('vx_country'));
+        }
+
+        return isValid;
+      }
+
+      function vx_isValidEmail(email) {
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+      }
+
+      function vx_showError(input, message) {
+        input.classList.add('vx_error');
+        var errorMsg = input.parentElement.querySelector('.vx_error_message');
+        if (errorMsg) {
+          errorMsg.textContent = message;
+          errorMsg.classList.add('vx_show');
+        }
+      }
+
+      function vx_clearError(input) {
+        input.classList.remove('vx_error');
+        var errorMsg = input.parentElement.querySelector('.vx_error_message');
+        if (errorMsg) {
+          errorMsg.textContent = '';
+          errorMsg.classList.remove('vx_show');
+        }
+      }
+
+      window.vx_submitKYC = function() {
+        var idFile = document.getElementById('vx_idDocument').files[0];
+        var selfieFile = document.getElementById('vx_selfie').files[0];
+
+        if (!idFile) {
+          vx_showError(document.getElementById('vx_idDocument'), 'ID document is required');
+          return;
+        } else {
+          vx_clearError(document.getElementById('vx_idDocument'));
+        }
+
+        if (!selfieFile) {
+          vx_showError(document.getElementById('vx_selfie'), 'Selfie is required');
+          return;
+        } else {
+          vx_clearError(document.getElementById('vx_selfie'));
+        }
+
+        var submitBtn = document.getElementById('vx_submitBtn');
+        var originalText = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processing...';
+
+        // prepare payload (we send filenames as lightweight proof markers)
+        var payload = {
+          fullName: document.getElementById('vx_firstName').value.trim() + ' ' + document.getElementById('vx_lastName').value.trim(),
+          idNumber: idFile.name || ('id-' + Date.now()),
+          country: document.getElementById('vx_country').value || '',
+          document: (idFile.name || '') + '|' + (selfieFile.name || '')
+        };
+
+        fetch('/user/kyc-submit', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload) })
+          .then(r => r.json())
+          .then(function(data){
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+            if (!data || !data.success) {
+              alert(data && data.message ? data.message : 'Failed to submit KYC');
+              return;
+            }
+            document.querySelectorAll('.vx_form_section').forEach(function(el) { el.classList.remove('vx_active'); });
+            document.getElementById('vx_form_success').classList.add('vx_active');
+            document.querySelector('.vx_progress_section').style.display = 'none';
+          }).catch(function(err){ console.error(err); submitBtn.disabled=false; submitBtn.textContent=originalText; alert('Network error'); });
+      };
+
+      document.getElementById('vx_idDocument').addEventListener('change', function() {
+        if (this.files[0]) {
+          var fileName = this.files[0].name;
+          document.getElementById('vx_idFileName').textContent = fileName;
+          this.parentElement.classList.add('vx_file_uploaded');
+        }
+      });
+
+      document.getElementById('vx_selfie').addEventListener('change', function() {
+        if (this.files[0]) {
+          var fileName = this.files[0].name;
+          document.getElementById('vx_selfieFileName').textContent = fileName;
+          this.parentElement.classList.add('vx_file_uploaded');
+        }
+      });
+
+      document.querySelectorAll('.vx_file_input').forEach(function(input) {
+        var label = input.nextElementSibling;
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(function(eventName) {
+          label.addEventListener(eventName, function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+          }, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(function(eventName) {
+          label.addEventListener(eventName, function() {
+            label.style.borderColor = '#3b82f6';
+            label.style.background = 'rgba(59, 130, 246, 0.15)';
+          }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(function(eventName) {
+          label.addEventListener(eventName, function() {
+            label.style.borderColor = 'rgba(99, 179, 237, 0.3)';
+            label.style.background = 'rgba(59, 130, 246, 0.05)';
+          }, false);
+        });
+
+        label.addEventListener('drop', function(e) {
+          var dt = e.dataTransfer;
+          var files = dt.files;
+          input.files = files;
+
+          var changeEvent = new Event('change', { bubbles: true });
+          input.dispatchEvent(changeEvent);
+        }, false);
+      });
+    })();
+  </script>
+</body>
+</html>

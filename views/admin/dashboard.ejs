@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Trading Platform</title>
+  <link rel="stylesheet" href="/css/styles.css">
+  <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+</head>
+<body>
+  <div class="admin-container">
+    <header class="admin-header">
+      <h1>Admin Dashboard</h1>
+      <div class="admin-tabs">
+        <button class="admin-tab <%= view === 'users' ? 'active' : '' %>" onclick="window.location.href='/admin/dashboard?view=users'">Users</button>
+        <button class="admin-tab <%= view === 'withdrawals' ? 'active' : '' %>" onclick="window.location.href='/admin/dashboard?view=withdrawals'">Withdrawals</button>
+        <button class="admin-tab <%= view === 'deposits' ? 'active' : '' %>" onclick="window.location.href='/admin/dashboard?view=deposits'">Deposits</button>
+        <button class="admin-tab <%= view === 'kyc' ? 'active' : '' %>" onclick="window.location.href='/admin/dashboard?view=kyc'">KYC</button>
+        <button class="admin-tab <%= view === 'credits' ? 'active' : '' %>" onclick="window.location.href='/admin/dashboard?view=credits'">Credits</button>
+      </div>
+      <div class="admin-actions">
+        <a href="/logout" class="btn btn-sm btn-outline">Logout</a>
+      </div>
+    </header>
+    
+    <main class="admin-content">
+      <% if (success) { %>
+        <div class="alert alert-success">
+          Action completed successfully
+        </div>
+      <% } %>
+
+      <% if (view === 'users') { %>
+        <div class="search-section">
+          <h2>User Management</h2>
+          <form action="/admin/dashboard" method="GET" class="search-form">
+            <div class="search-input">
+              <input 
+                type="text" 
+                name="search" 
+                placeholder="Search by ID or name..." 
+                value="<%= query %>"
+              >
+              <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Country</th>
+                <th>Balance</th>
+                <th>Trading Status</th>
+                <th>Referrals</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (users.length === 0) { %>
+                <tr>
+                  <td colspan="7" class="no-results">No users found</td>
+                </tr>
+              <% } else { %>
+                <% users.forEach(user => { %>
+                  <tr>
+                    <td><%= user.id.substring(0, 8) %>...</td>
+                    <td><%= user.fullName %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.country %></td>
+                    <td>$<%= user.balance.toFixed(2) %></td>
+                    <td>
+                      <span class="status-badge <%= user.canTrade ? 'status-approved' : 'status-pending' %>">
+                        <%= user.canTrade ? 'Approved' : 'Pending' %>
+                      </span>
+                    </td>
+                    <td><%= user.referralsCount || 0 %></td>
+                    <td class="action-buttons">
+                      <button class="btn btn-sm btn-primary" onclick="openEditModal('<%= user.id %>', '<%= user.fullName %>', <%= user.balance %>)">Edit Balance</button>
+                      <% if (!user.canTrade) { %>
+                        <form action="/admin/user/<%= user.id %>/toggle-trading" method="POST" style="display: inline;">
+                          <input type="hidden" name="action" value="approve">
+                          <button type="submit" class="btn btn-sm btn-success">Approve Trading</button>
+                        </form>
+                      <% } else { %>
+                        <form action="/admin/user/<%= user.id %>/toggle-trading" method="POST" style="display: inline;">
+                          <input type="hidden" name="action" value="reject">
+                          <button type="submit" class="btn btn-sm btn-danger">Reject Trading</button>
+                        </form>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+      <% } else if (view === 'withdrawals') { %>
+        <div class="section-header">
+          <h2>Withdrawal Requests</h2>
+        </div>
+        
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Bitcoin Address</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (withdrawals.length === 0) { %>
+                <tr>
+                  <td colspan="6" class="no-results">No withdrawal requests</td>
+                </tr>
+              <% } else { %>
+                <% withdrawals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).forEach(withdrawal => { %>
+                  <tr>
+                    <td><%= new Date(withdrawal.createdAt).toLocaleString() %></td>
+                    <td><%= withdrawal.userName %></td>
+                    <td>$<%= withdrawal.amount.toFixed(2) %></td>
+                    <td><%= withdrawal.bitcoinAddress %></td>
+                    <td>
+                      <span class="status-badge status-<%= withdrawal.status %>">
+                        <%= withdrawal.status %>
+                      </span>
+                    </td>
+                    <td class="action-buttons">
+                      <% if (withdrawal.status === 'pending') { %>
+                        <form action="/admin/withdrawal/<%= withdrawal.id %>/approve" method="POST" style="display: inline;">
+                          <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                        </form>
+                        <form action="/admin/withdrawal/<%= withdrawal.id %>/reject" method="POST" style="display: inline;">
+                          <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                        </form>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+
+      <% } else if (view === 'deposits') { %>
+        <div class="section-header">
+          <h2>Deposit Requests</h2>
+        </div>
+        
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>User</th>
+                <th>Amount</th>
+                <th>Cryptocurrency</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (deposits.length === 0) { %>
+                <tr>
+                  <td colspan="6" class="no-results">No deposit requests</td>
+                </tr>
+              <% } else { %>
+                <% deposits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).forEach(deposit => { %>
+                  <tr>
+                    <td><%= new Date(deposit.createdAt).toLocaleString() %></td>
+                    <td><%= deposit.userName %></td>
+                    <td>$<%= deposit.amount.toFixed(2) %></td>
+                    <td><%= deposit.cryptocurrency %></td>
+                    <td>
+                      <span class="status-badge status-<%= deposit.status %>">
+                        <%= deposit.status %>
+                      </span>
+                    </td>
+                    <td class="action-buttons">
+                      <% if (deposit.status === 'pending') { %>
+                        <form action="/admin/deposit/<%= deposit.id %>/approve" method="POST" style="display: inline;">
+                          <button type="submit" class="btn btn-sm btn-success">Approve</button>
+                        </form>
+                        <form action="/admin/deposit/<%= deposit.id %>/reject" method="POST" style="display: inline;">
+                          <button type="submit" class="btn btn-sm btn-danger">Reject</button>
+                        </form>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+      <% if (view === 'kyc') { %>
+        <div class="section-header"><h2>KYC Submissions</h2></div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Date</th><th>User</th><th>Full Name</th><th>ID Number</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <% if (!kyc || kyc.length === 0) { %>
+                <tr><td colspan="6" class="no-results">No KYC submissions</td></tr>
+              <% } else { %>
+                <% kyc.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt)).forEach(item=>{ %>
+                  <tr>
+                    <td><%= new Date(item.createdAt).toLocaleString() %></td>
+                    <td><%= item.userName %></td>
+                    <td><%= item.fullName %></td>
+                    <td><%= item.idNumber %></td>
+                    <td><span class="status-badge status-<%= item.status %>"><%= item.status %></span></td>
+                    <td class="action-buttons">
+                      <% if (item.status === 'pending') { %>
+                        <form action="/admin/kyc/<%= item.id %>/approve" method="POST" style="display:inline;"><button class="btn btn-sm btn-success">Approve</button></form>
+                        <form action="/admin/kyc/<%= item.id %>/reject" method="POST" style="display:inline;"><button class="btn btn-sm btn-danger">Reject</button></form>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      <% } else if (view === 'credits') { %>
+        <div class="section-header"><h2>Credit Requests</h2></div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Date</th><th>User</th><th>Amount</th><th>Reason</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <% if (!credits || credits.length === 0) { %>
+                <tr><td colspan="6" class="no-results">No credit requests</td></tr>
+              <% } else { %>
+                <% credits.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt)).forEach(req=>{ %>
+                  <tr>
+                    <td><%= new Date(req.createdAt).toLocaleString() %></td>
+                    <td><%= req.userName %></td>
+                    <td>$<%= req.amount.toFixed(2) %></td>
+                    <td><%= req.reason %></td>
+                    <td><span class="status-badge status-<%= req.status %>"><%= req.status %></span></td>
+                    <td class="action-buttons">
+                      <% if (req.status === 'pending') { %>
+                        <form action="/admin/credit/<%= req.id %>/approve" method="POST" style="display:inline;"><button class="btn btn-sm btn-success">Approve</button></form>
+                        <form action="/admin/credit/<%= req.id %>/reject" method="POST" style="display:inline;"><button class="btn btn-sm btn-danger">Reject</button></form>
+                      <% } %>
+                    </td>
+                  </tr>
+                <% }) %>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </main>
+  </div>
+
+  <!-- Edit Balance Modal -->
+  <div id="editBalanceModal" class="modal">
+    <div class="modal-content">
+      <h3>Edit User Balance</h3>
+      <form id="editBalanceForm" action="/admin/user/update-balance" method="POST">
+        <input type="hidden" id="editUserId" name="userId">
+        <div class="form-group">
+          <label>User: <span id="editUserName"></span></label>
+        </div>
+        <div class="form-group">
+          <label for="newBalance">New Balance</label>
+          <div class="input-group">
+            <span class="input-prefix">$</span>
+            <input type="number" id="newBalance" name="balance" step="0.01" min="0" required>
+          </div>
+        </div>
+        <div class="modal-buttons">
+          <button type="submit" class="btn btn-primary">Update Balance</button>
+          <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openEditModal(userId, userName, currentBalance) {
+      const modal = document.getElementById('editBalanceModal');
+      const form = document.getElementById('editBalanceForm');
+      const userIdInput = document.getElementById('editUserId');
+      const userNameSpan = document.getElementById('editUserName');
+      const balanceInput = document.getElementById('newBalance');
+      
+      userIdInput.value = userId;
+      userNameSpan.textContent = userName;
+      balanceInput.value = currentBalance;
+      
+      modal.classList.add('show');
+      
+      // Update form action
+      form.action = `/admin/user/${userId}/update-balance`;
+    }
+
+    function closeEditModal() {
+      const modal = document.getElementById('editBalanceModal');
+      modal.classList.remove('show');
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('editBalanceModal');
+      if (event.target === modal) {
+        closeEditModal();
+      }
+    }
+  </script>
+</body>
+</html>

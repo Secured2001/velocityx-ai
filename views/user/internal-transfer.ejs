@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Internal Transfer</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <style>
+    /* Premium Dark Fintech Internal Transfer Styles - Namespace: vx_it_section */
+    .vx_it_section {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0;
+      animation: vx_it_fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes vx_it_fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .vx_it_page_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+      padding: 0 8px;
+      animation: vx_it_slideDown 0.6s ease-out;
+    }
+
+    @keyframes vx_it_slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .vx_it_header_left h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.5px;
+    }
+
+    .vx_it_header_left p {
+      font-size: 15px;
+      color: #8b92a7;
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .vx_it_back_btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid rgba(71, 85, 105, 0.4);
+      border-radius: 10px;
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      text-decoration: none;
+    }
+
+    .vx_it_back_btn:hover {
+      background: rgba(51, 65, 85, 0.9);
+      border-color: rgba(100, 116, 139, 0.6);
+      transform: translateX(-4px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .vx_it_balance_card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: vx_it_scaleIn 0.5s ease-out 0.1s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes vx_it_scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .vx_it_balance_card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+      animation: vx_it_shimmer 3s infinite;
+    }
+
+    @keyframes vx_it_shimmer {
+      0%, 100% { transform: translateX(-100%); }
+      50% { transform: translateX(100%); }
+    }
+
+    .vx_it_balance_icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+      animation: vx_it_pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes vx_it_pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .vx_it_balance_icon svg {
+      width: 28px;
+      height: 28px;
+      color: #ffffff;
+    }
+
+    .vx_it_balance_info h3 {
+      font-size: 13px;
+      color: #94a3b8;
+      margin: 0 0 8px 0;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_it_balance_amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+      letter-spacing: -1px;
+    }
+
+    .vx_it_main_grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 32px;
+    }
+
+    .vx_it_transfer_card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: vx_it_slideInLeft 0.6s ease-out 0.2s both;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes vx_it_slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .vx_it_card_header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+    }
+
+    .vx_it_card_icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+    }
+
+    .vx_it_card_icon svg {
+      width: 24px;
+      height: 24px;
+      color: #ffffff;
+    }
+
+    .vx_it_card_title h4 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 6px 0;
+    }
+
+    .vx_it_card_title p {
+      font-size: 14px;
+      color: #8b92a7;
+      margin: 0;
+    }
+
+    .vx_it_form_group {
+      margin-bottom: 24px;
+    }
+
+    .vx_it_form_label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: #cbd5e1;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .vx_it_form_label .vx_it_required {
+      color: #ef4444;
+      margin-left: 4px;
+    }
+
+    .vx_it_input_wrapper {
+      position: relative;
+    }
+
+    .vx_it_input_icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #64748b;
+      pointer-events: none;
+      transition: color 0.3s ease;
+      z-index: 1;
+    }
+
+    .vx_it_input_icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .vx_it_input_wrapper input,
+    .vx_it_input_wrapper select {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(71, 85, 105, 0.4);
+      border-radius: 10px;
+      color: #e2e8f0;
+      font-size: 15px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+      font-family: inherit;
+    }
+
+    .vx_it_input_wrapper input:focus,
+    .vx_it_input_wrapper select:focus {
+      background: rgba(15, 23, 42, 0.8);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .vx_it_input_wrapper input:focus ~ .vx_it_input_icon,
+    .vx_it_input_wrapper select:focus ~ .vx_it_input_icon {
+      color: #3b82f6;
+    }
+
+    .vx_it_input_wrapper input::placeholder {
+      color: #64748b;
+    }
+
+    .vx_it_input_hint {
+      display: block;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .vx_it_info_box {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .vx_it_info_icon {
+      color: #3b82f6;
+      flex-shrink: 0;
+    }
+
+    .vx_it_info_icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .vx_it_info_content h5 {
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin: 0 0 4px 0;
+    }
+
+    .vx_it_info_content p {
+      font-size: 14px;
+      color: #3b82f6;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .vx_it_submit_btn {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+      border-radius: 10px;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_it_submit_btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .vx_it_submit_btn:hover::before {
+      left: 100%;
+    }
+
+    .vx_it_submit_btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .vx_it_submit_btn:active {
+      transform: translateY(0);
+    }
+
+    .vx_it_submit_btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .vx_it_success_msg {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 10px;
+      padding: 14px 16px;
+      color: #4ade80;
+      font-size: 14px;
+      margin-top: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      animation: vx_it_slideInUp 0.4s ease-out;
+    }
+
+    @keyframes vx_it_slideInUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .vx_it_success_msg svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .vx_it_history_card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(51, 65, 85, 0.95) 100%);
+      border: 1px solid rgba(71, 85, 105, 0.5);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      animation: vx_it_slideInRight 0.6s ease-out 0.3s both;
+    }
+
+    @keyframes vx_it_slideInRight {
+      from { opacity: 0; transform: translateX(30px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .vx_it_history_header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+    }
+
+    .vx_it_history_header h4 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0;
+    }
+
+    .vx_it_filter_btn {
+      padding: 8px 16px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(71, 85, 105, 0.4);
+      border-radius: 8px;
+      color: #cbd5e1;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vx_it_filter_btn:hover {
+      background: rgba(15, 23, 42, 0.9);
+      border-color: #3b82f6;
+    }
+
+    .vx_it_filter_btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .vx_it_table_wrapper {
+      overflow-x: auto;
+    }
+
+    .vx_it_table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    .vx_it_table thead tr th {
+      padding: 14px 12px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.3);
+    }
+
+    .vx_it_table tbody tr {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .vx_it_table tbody tr:hover {
+      background: rgba(59, 130, 246, 0.05);
+    }
+
+    .vx_it_table tbody tr td {
+      padding: 16px 12px;
+      font-size: 14px;
+      color: #cbd5e1;
+      border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+    }
+
+    .vx_it_table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .vx_it_status_badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #4ade80;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .vx_it_status_badge svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .vx_it_amount_positive {
+      color: #4ade80;
+      font-weight: 600;
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    }
+
+    .vx_it_wallet_badge {
+      display: inline-block;
+      padding: 4px 10px;
+      background: rgba(100, 116, 139, 0.2);
+      border-radius: 6px;
+      font-size: 13px;
+      color: #e2e8f0;
+      font-weight: 500;
+    }
+
+    @media (max-width: 1024px) {
+      .vx_it_main_grid {
+        grid-template-columns: 1fr;
+      }
+
+      .vx_it_page_header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .vx_it_back_btn {
+        align-self: flex-end;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .vx_it_section {
+        padding: 0 16px;
+      }
+
+      .vx_it_header_left h2 {
+        font-size: 26px;
+      }
+
+      .vx_it_balance_card {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px 20px;
+      }
+
+      .vx_it_balance_amount {
+        font-size: 30px;
+      }
+
+      .vx_it_transfer_card,
+      .vx_it_history_card {
+        padding: 24px 20px;
+      }
+
+      .vx_it_table_wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .vx_it_table {
+        min-width: 600px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .vx_it_header_left h2 {
+        font-size: 22px;
+      }
+
+      .vx_it_balance_icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .vx_it_balance_icon svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .vx_it_balance_amount {
+        font-size: 26px;
+      }
+
+      .vx_it_card_header {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .vx_it_submit_btn {
+        padding: 14px 20px;
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <%- include('../partials/user-nav.ejs', { user, page }) %>
+    <main class="dashboard-content">
+
+      <div class="vx_it_section" id="vx_it_main_section">
+
+        <div class="vx_it_page_header">
+          <div class="vx_it_header_left">
+            <h2>Transfer Funds</h2>
+            <p>Send funds securely to other platform users</p>
+          </div>
+          <a href="/dashboard" class="vx_it_back_btn">
+            <i data-lucide="arrow-left"></i>
+            Back to Dashboard
+          </a>
+        </div>
+
+        <div class="vx_it_balance_card" id="vx_it_balance_display">
+          <div class="vx_it_balance_icon">
+            <i data-lucide="wallet"></i>
+          </div>
+          <div class="vx_it_balance_info">
+            <h3>Available Balance</h3>
+            <div class="vx_it_balance_amount" id="vx_it_user_balance">$0.00</div>
+          </div>
+        </div>
+
+        <div class="vx_it_main_grid">
+
+          <div class="vx_it_transfer_card">
+            <div class="vx_it_card_header">
+              <div class="vx_it_card_icon">
+                <i data-lucide="send"></i>
+              </div>
+              <div class="vx_it_card_title">
+                <h4>Send Funds</h4>
+                <p>Transfer funds to another user account</p>
+              </div>
+            </div>
+
+            <form id="vx_it_transfer_form">
+              <div class="vx_it_form_group">
+                <label class="vx_it_form_label">
+                  From Wallet <span class="vx_it_required">*</span>
+                </label>
+                <div class="vx_it_input_wrapper">
+                  <select id="vx_it_from_wallet">
+                    <option value="spot">Spot Wallet</option>
+                    <option value="margin">Margin Wallet</option>
+                    <option value="savings">Savings Wallet</option>
+                  </select>
+                  <div class="vx_it_input_icon">
+                    <i data-lucide="wallet"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="vx_it_form_group">
+                <label class="vx_it_form_label">
+                  To Wallet <span class="vx_it_required">*</span>
+                </label>
+                <div class="vx_it_input_wrapper">
+                  <select id="vx_it_to_wallet">
+                    <option value="margin">Margin Wallet</option>
+                    <option value="spot">Spot Wallet</option>
+                    <option value="savings">Savings Wallet</option>
+                  </select>
+                  <div class="vx_it_input_icon">
+                    <i data-lucide="wallet"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="vx_it_form_group">
+                <label class="vx_it_form_label">
+                  Amount ($) <span class="vx_it_required">*</span>
+                </label>
+                <div class="vx_it_input_wrapper">
+                  <input
+                    type="number"
+                    id="vx_it_transfer_amount"
+                    placeholder="Enter amount to transfer"
+                    step="0.01"
+                    min="0.01"
+                  >
+                  <div class="vx_it_input_icon">
+                    <i data-lucide="dollar-sign"></i>
+                  </div>
+                </div>
+                <span class="vx_it_input_hint">Minimum transfer amount: $1.00</span>
+              </div>
+
+              <div class="vx_it_info_box">
+                <div class="vx_it_info_icon">
+                  <i data-lucide="info"></i>
+                </div>
+                <div class="vx_it_info_content">
+                  <h5>Transfer Information</h5>
+                  <p>Transfer fee: 0%</p>
+                </div>
+              </div>
+
+              <button type="submit" class="vx_it_submit_btn" id="vx_it_transfer_btn">
+                <i data-lucide="send"></i>
+                Transfer Funds
+              </button>
+
+              <div class="vx_it_success_msg" id="vx_it_success_message">
+                <i data-lucide="check-circle"></i>
+                <span id="vx_it_success_text"></span>
+              </div>
+            </form>
+          </div>
+
+          <div class="vx_it_history_card">
+            <div class="vx_it_history_header">
+              <h4>Recent Transfers</h4>
+              <button class="vx_it_filter_btn" id="vx_it_filter_toggle">
+                <i data-lucide="filter"></i>
+                Filter
+              </button>
+            </div>
+
+            <div class="vx_it_table_wrapper">
+              <table class="vx_it_table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="vx_it_transfer_history">
+                  <tr>
+                    <td>2026-01-24</td>
+                    <td><span class="vx_it_wallet_badge">Spot</span></td>
+                    <td><span class="vx_it_wallet_badge">Margin</span></td>
+                    <td><span class="vx_it_amount_positive">$500.00</span></td>
+                    <td>
+                      <span class="vx_it_status_badge">
+                        <i data-lucide="check-circle"></i>
+                        Completed
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2026-01-20</td>
+                    <td><span class="vx_it_wallet_badge">Savings</span></td>
+                    <td><span class="vx_it_wallet_badge">Spot</span></td>
+                    <td><span class="vx_it_amount_positive">$1,200.00</span></td>
+                    <td>
+                      <span class="vx_it_status_badge">
+                        <i data-lucide="check-circle"></i>
+                        Completed
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+      const balanceDisplay = document.getElementById('vx_it_user_balance');
+      const transferForm = document.getElementById('vx_it_transfer_form');
+      const fromWallet = document.getElementById('vx_it_from_wallet');
+      const toWallet = document.getElementById('vx_it_to_wallet');
+      const transferAmount = document.getElementById('vx_it_transfer_amount');
+      const successMsg = document.getElementById('vx_it_success_message');
+      const successText = document.getElementById('vx_it_success_text');
+      const transferHistory = document.getElementById('vx_it_transfer_history');
+      const transferBtn = document.getElementById('vx_it_transfer_btn');
+      const filterBtn = document.getElementById('vx_it_filter_toggle');
+
+      let currentBalance = 2500.00;
+
+      function updateBalanceDisplay() {
+        balanceDisplay.textContent = '$' + currentBalance.toFixed(2);
+        balanceDisplay.style.animation = 'none';
+        setTimeout(function() {
+          balanceDisplay.style.animation = 'vx_it_pulse 0.5s ease-in-out';
+        }, 10);
+      }
+
+      updateBalanceDisplay();
+
+      function animateNumber(element, start, end, duration) {
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+        const timer = setInterval(function() {
+          current += increment;
+          if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+            current = end;
+            clearInterval(timer);
+          }
+          element.textContent = '$' + current.toFixed(2);
+        }, 16);
+      }
+
+      transferForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const from = fromWallet.value;
+        const to = toWallet.value;
+        const amount = parseFloat(transferAmount.value || 0);
+
+        if (from === to) {
+          alert('Please select different wallets for transfer');
+          return;
+        }
+
+        if (amount <= 0) {
+          alert('Please enter a valid amount greater than $0');
+          return;
+        }
+
+        if (amount < 1) {
+          alert('Minimum transfer amount is $1.00');
+          return;
+        }
+
+        transferBtn.disabled = true;
+        transferBtn.innerHTML = '<i data-lucide="loader" style="animation: spin 1s linear infinite;"></i> Processing...';
+
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+
+        setTimeout(function() {
+          const now = new Date();
+          const dateStr = now.toISOString().slice(0, 10);
+
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = '<td>' + dateStr + '</td><td><span class="vx_it_wallet_badge">' + capitalizeFirst(from) + '</span></td><td><span class="vx_it_wallet_badge">' + capitalizeFirst(to) + '</span></td><td><span class="vx_it_amount_positive">$' + amount.toFixed(2) + '</span></td><td><span class="vx_it_status_badge"><i data-lucide="check-circle"></i>Completed</span></td>';
+
+          newRow.style.animation = 'vx_it_slideInUp 0.5s ease-out';
+          transferHistory.insertBefore(newRow, transferHistory.firstChild);
+
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+
+          successText.textContent = 'Transfer completed — $' + amount.toFixed(2) + ' sent from ' + capitalizeFirst(from) + ' to ' + capitalizeFirst(to);
+          successMsg.style.display = 'flex';
+
+          transferAmount.value = '';
+
+          transferBtn.disabled = false;
+          transferBtn.innerHTML = '<i data-lucide="send"></i> Transfer Funds';
+
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+
+          setTimeout(function() {
+            successMsg.style.display = 'none';
+          }, 5000);
+
+        }, 1500);
+      });
+
+      function capitalizeFirst(str) {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+      }
+
+      transferAmount.addEventListener('input', function(e) {
+        const value = parseFloat(e.target.value || 0);
+        if (value > currentBalance) {
+          e.target.style.borderColor = '#ef4444';
+        } else {
+          e.target.style.borderColor = 'rgba(71, 85, 105, 0.4)';
+        }
+      });
+
+      const allRows = transferHistory.querySelectorAll('tr');
+      allRows.forEach(function(row, index) {
+        row.style.opacity = '0';
+        row.style.animation = 'vx_it_fadeIn 0.5s ease-out ' + (index * 0.1) + 's forwards';
+      });
+
+      let filterActive = false;
+      filterBtn.addEventListener('click', function() {
+        filterActive = !filterActive;
+        if (filterActive) {
+          filterBtn.style.borderColor = '#3b82f6';
+          filterBtn.style.background = 'rgba(59, 130, 246, 0.1)';
+        } else {
+          filterBtn.style.borderColor = 'rgba(71, 85, 105, 0.4)';
+          filterBtn.style.background = 'rgba(15, 23, 42, 0.6)';
+        }
+      });
+
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.vx_it_transfer_card, .vx_it_history_card').forEach(function(card) {
+        observer.observe(card);
+      });
+
+    });
+
+    const style = document.createElement('style');
+    style.textContent = '@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }';
+    document.head.appendChild(style);
+
+  </script>
+
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>
