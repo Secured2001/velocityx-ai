@@ -7,23 +7,15 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
   <style>
-    /* ============================================
-     VELOCITYX-AI TRADING DASHBOARD
-     Professional Dark Fintech Design
-     ============================================ */
-
 :root {
   --primary-bg: #0a0f1f;
-  --secondary-bg: #111827;
-  --card-bg: #1a2332;
-  --card-border: #1e3a5f;
+  --secondary-bg: #1a2332;
   --text-primary: #f9fafb;
   --text-secondary: #9ca3af;
   --text-muted: #6b7280;
   --accent-blue: #3b82f6;
   --success-green: #10b981;
   --danger-red: #ef4444;
-  --warning-orange: #f59e0b;
 }
 
 * {
@@ -48,131 +40,256 @@ body {
 .dashboard-content {
   flex: 1;
   padding: 2rem;
-  /* margin-left: 60px; */
   overflow-y: auto;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 768px) {
   .dashboard-content {
-    margin-left: 0;
     padding: 1rem;
   }
 }
-
-/* ============================================
-   DASHBOARD HEADER
-   ============================================ */
 
 .vx_dashboard_header_section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
-  background: linear-gradient(135deg, #1a2332 0%, #1e3a5f 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 16px;
-  padding: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .vx_header_title h1 {
-  font-size: 2rem;
+  font-size: 1.875rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
-  letter-spacing: -0.02em;
+  margin-bottom: 0.25rem;
 }
 
 .vx_header_title p {
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  font-size: 0.875rem;
 }
 
 .vx_btn_invest_now {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.875rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   background: var(--success-green);
   color: white;
   border: none;
-  border-radius: 12px;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .vx_btn_invest_now:hover {
   background: #059669;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
 }
 
 @media (max-width: 768px) {
   .vx_dashboard_header_section {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .vx_header_title h1 {
+    font-size: 1.5rem;
+  }
+
+  .vx_btn_invest_now {
+    width: 100%;
+    justify-content: center;
   }
 }
 
-/* ============================================
-   STATS ROW
-   ============================================ */
+.vx_account_balance_card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  max-width: 100%;
+}
+
+.vx_balance_icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.vx_balance_title {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.25rem;
+}
+
+.vx_balance_subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.vx_balance_amount {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.vx_balance_status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.vx_balance_status.success {
+  color: var(--success-green);
+}
+
+.vx_balance_status.unverified {
+  color: var(--danger-red);
+}
+
+.vx_balance_updated {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.vx_balance_actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.vx_btn_deposit,
+.vx_btn_withdraw {
+  padding: 0.875rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.vx_btn_deposit {
+  background: var(--success-green);
+  color: white;
+}
+
+.vx_btn_deposit:hover {
+  background: #059669;
+}
+
+.vx_btn_withdraw {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.vx_btn_withdraw:hover {
+  background: rgba(59, 130, 246, 0.25);
+}
+
+@media (max-width: 768px) {
+  .vx_account_balance_card {
+    padding: 1.5rem;
+  }
+
+  .vx_balance_amount {
+    font-size: 2rem;
+  }
+}
 
 .vx_stats_row {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
   margin-bottom: 2rem;
 }
 
 .vx_stat_card {
-  background: linear-gradient(135deg, #1a2332 0%, #1e3a5f 100%);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.5rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .vx_stat_card:hover {
-  border-color: var(--accent-blue);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
-.vx_stat_card label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.vx_stat_header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
 
+.vx_stat_icon {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+}
+
+.vx_stat_label {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .vx_stat_value {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
-.vx_stat_label {
-  display: block;
-  font-size: 0.75rem;
+.vx_stat_subtitle {
+  font-size: 0.7rem;
   color: var(--text-muted);
 }
 
-/* ============================================
-   VERIFICATION SECTION
-   ============================================ */
+@media (max-width: 1024px) {
+  .vx_stats_row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .vx_stats_row {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .vx_stat_card {
+    padding: 1rem;
+  }
+}
 
 .vx_verification_section {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -186,11 +303,11 @@ body {
 }
 
 .vx_verification_icon {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
 }
 
 .vx_verification_text h3 {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
@@ -198,11 +315,11 @@ body {
 
 .vx_verification_text p {
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
 }
 
 .vx_btn_view_details {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   background: var(--accent-blue);
   color: white;
   border: none;
@@ -211,7 +328,7 @@ body {
   font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .vx_btn_view_details:hover {
@@ -226,10 +343,6 @@ body {
   }
 }
 
-/* ============================================
-   TWO COLUMN LAYOUT
-   ============================================ */
-
 .vx_layout_two_col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -243,28 +356,20 @@ body {
   }
 }
 
-/* ============================================
-   SECTION STYLES
-   ============================================ */
-
 .vx_section_trades,
 .vx_section_referrals {
-  background: var(--card-bg);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.5rem;
 }
 
 .vx_section_title {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
 }
-
-/* ============================================
-   TRADES TABLE
-   ============================================ */
 
 .vx_trades_table {
   width: 100%;
@@ -274,24 +379,25 @@ body {
 }
 
 .vx_trades_table thead {
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .vx_trades_table th {
-  padding: 1rem;
+  padding: 0.875rem;
   text-align: left;
   font-weight: 600;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .vx_trades_table td {
-  padding: 1rem;
+  padding: 0.875rem;
   color: var(--text-primary);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 0.875rem;
 }
 
 .vx_link_view_all {
@@ -299,28 +405,23 @@ body {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.875rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .vx_link_view_all:hover {
   color: #2563eb;
-  text-decoration: underline;
 }
-
-/* ============================================
-   REFERRALS SECTION
-   ============================================ */
 
 .vx_referral_text {
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   margin-bottom: 1rem;
   line-height: 1.6;
 }
 
 .vx_btn_learn_more {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 1.25rem;
   background: var(--accent-blue);
   color: white;
   border: none;
@@ -329,7 +430,7 @@ body {
   font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   margin-bottom: 1.5rem;
 }
 
@@ -338,14 +439,14 @@ body {
 }
 
 .vx_referral_link_box {
-  background: rgba(59, 130, 246, 0.05);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.15);
   border-radius: 8px;
   padding: 1rem;
 }
 
 .vx_referral_label {
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
@@ -358,12 +459,12 @@ body {
 
 .vx_referral_link_input input {
   flex: 1;
-  background: transparent;
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(10, 15, 31, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 6px;
   padding: 0.75rem;
   color: var(--text-primary);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
 }
 
 .vx_referral_link_input input::placeholder {
@@ -378,155 +479,166 @@ body {
   border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
 }
 
 .vx_btn_copy:hover {
   background: #2563eb;
 }
 
-/* ============================================
-   MARKET TICKERS
-   ============================================ */
-
-/* .vx_market_tickers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 130px, 130px, 1fr));
-  gap: 1rem;
+.vx_market_tickers_section {
   margin-bottom: 2rem;
-} */
- .vx_market_tickers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  width: 100%;          /* 🔥 IMPORTANT */
-  box-sizing: border-box;
 }
 
-.vx_market_tickers > * {
-  flex: 0 0 25%;        /* 4 items per row */
-  max-width: 25%;
-  box-sizing: border-box;
+.vx_market_tickers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
 }
-
-.vx_market_tickers-item {
-  padding: 0.75rem;
-  border-right: 1px solid rgba(59, 130, 246, 0.1);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-  width: 100%;          /* 🔥 IMPORTANT */
-}
-
-
- .market-tickers {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0.75rem;
-  }
-
-  .market-ticker-item {
-    padding: 0.75rem;
-    border-right: 1px solid rgba(59, 130, 246, 0.1);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-  }
-
-  .market-ticker-item:nth-child(2n) {
-    border-right: none;
-  }
-
-
-  .vx_market_tickers-item {
-    padding: 0.75rem;
-    border-right: 1px solid rgba(59, 130, 246, 0.1);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-    width: fit-content;
-  }
-
-  .vx_market_ticker-item:nth-child(2n) {
-    border-right: none;
-  }
-
-  /* .market-tickers {
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  } */
 
 .vx_ticker_card {
-  background: linear-gradient(135deg, #1a2332 0%, #1e3a5f 100%);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.25rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .vx_ticker_card:hover {
-  border-color: var(--accent-blue);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.2);
-  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .vx_ticker_header {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
-.vx_ticker_icon {
-  font-size: 1.5rem;
+.vx_ticker_logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vx_ticker_info {
+  display: flex;
+  flex-direction: column;
 }
 
 .vx_ticker_pair {
   font-weight: 700;
   color: var(--text-primary);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 .vx_ticker_exchange {
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .vx_ticker_price {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
 
 .vx_ticker_change {
-  font-weight: 600;
-  font-size: 0.875rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  display: inline-block;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  width: fit-content;
 }
 
 .vx_ticker_change.up {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.15);
   color: var(--success-green);
 }
 
 .vx_ticker_change.down {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.15);
   color: var(--danger-red);
 }
 
-/* ============================================
-   DATA TABLES
-   ============================================ */
+.market-overview-section {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+
+.market-overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.market-overview-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.market-overview-link {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.market-overview-link:hover {
+  color: #2563eb;
+}
+
+.trading-chart-container {
+  height: 400px;
+  background: linear-gradient(180deg, #0a0e1a, #0f1724);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  margin: 1rem;
+}
+
+.chart-widget {
+  height: 100%;
+  min-height: 380px;
+}
+
+@media (max-width: 768px) {
+  .trading-chart-container {
+    height: 280px;
+  }
+}
 
 .vx_table_section {
-  background: var(--card-bg);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   margin-bottom: 2rem;
   overflow: hidden;
 }
 
 .vx_table_header {
-  background: rgba(59, 130, 246, 0.05);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   padding: 1rem 1.5rem;
 }
 
@@ -545,48 +657,55 @@ body {
 }
 
 .vx_data_table thead {
-  background: rgba(59, 130, 246, 0.03);
+  background: rgba(255, 255, 255, 0.01);
 }
 
 .vx_data_table th {
-  padding: 1rem 1.5rem;
+  padding: 0.875rem 1.25rem;
   text-align: left;
   font-weight: 600;
   color: var(--text-muted);
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-  white-space: nowrap;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .vx_data_table tbody tr {
-  border-bottom: 1px solid rgba(59, 130, 246, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   transition: background 0.2s ease;
 }
 
 .vx_data_table tbody tr:hover {
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .vx_data_table td {
-  padding: 1rem 1.5rem;
+  padding: 0.875rem 1.25rem;
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
-.vx_coin_badge {
-  margin-right: 0.5rem;
-  font-size: 1.1rem;
+.vx_coin_info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
-/* ============================================
-   TOP STORIES SECTION
-   ============================================ */
+.vx_coin_logo {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.vx_coin_name {
+  font-weight: 600;
+}
 
 .vx_stories_section {
-  background: var(--card-bg);
-  border: 1px solid rgba(59, 130, 246, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
@@ -595,11 +714,11 @@ body {
 .vx_stories_header {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .vx_stories_header h3 {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
 }
@@ -612,20 +731,21 @@ body {
 
 .vx_story_item {
   padding: 1rem;
-  background: rgba(59, 130, 246, 0.03);
-  border: 1px solid rgba(59, 130, 246, 0.05);
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 8px;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  cursor: pointer;
 }
 
 .vx_story_item:hover {
-  background: rgba(59, 130, 246, 0.08);
-  border-color: rgba(59, 130, 246, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .vx_story_time {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 600;
@@ -636,10 +756,6 @@ body {
   color: var(--text-primary);
   line-height: 1.5;
 }
-
-/* ============================================
-   MODAL
-   ============================================ */
 
 .modal {
   display: none;
@@ -660,9 +776,9 @@ body {
 }
 
 .modal-content {
-  background: var(--card-bg);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 16px;
+  background: var(--secondary-bg);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
   padding: 2rem;
   max-width: 400px;
   width: 90%;
@@ -706,7 +822,7 @@ body {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-danger {
@@ -716,83 +832,17 @@ body {
 
 .btn-danger:hover {
   background: #dc2626;
-  transform: translateY(-2px);
 }
 
 .btn-secondary {
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(255, 255, 255, 0.12);
 }
-
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
-
-@media (max-width: 768px) {
-  .vx_stats_row {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .vx_data_table th {
-    font-size: 0.7rem;
-    padding: 0.75rem;
-  }
-
-  .vx_data_table td {
-    padding: 0.75rem;
-    font-size: 0.8rem;
-  }
-
-  .vx_dashboard_header_section {
-    padding: 1.5rem;
-  }
-
-  .vx_header_title h1 {
-    font-size: 1.5rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .vx_stats_row {
-    grid-template-columns: 1fr;
-  }
-
-  .vx_market_tickers {
-    grid-template-columns: 1fr;
-  }
-
-  .vx_dashboard_header_section {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .vx_header_title h1 {
-    font-size: 1.25rem;
-  }
-
-  .vx_data_table {
-    font-size: 0.75rem;
-  }
-
-  .vx_data_table th,
-  .vx_data_table td {
-    padding: 0.5rem;
-  }
-
-  .vx_btn_invest_now {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* ============================================
-   SCROLLBAR STYLING
-   ============================================ */
 
 .dashboard-content::-webkit-scrollbar {
   width: 8px;
@@ -803,122 +853,13 @@ body {
 }
 
 .dashboard-content::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
 }
 
 .dashboard-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.3);
 }
-/* Dashboard trading chart sizing */
-.trading-chart-container{height:520px;}
-.trading-chart-container .chart-widget{height:100%;min-height:480px}
-.trading-chart-container canvas{width:100% !important;height:100% !important;display:block}
-/* MARKET OVERVIEW SECTION */
-.market-overview-section {
-  background: linear-gradient(135deg, #1a2332 0%, #1e3a5f 100%);
-  border: 1px solid rgba(59, 130, 246, 0.2);
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  overflow: hidden;
-}
-
-.market-overview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.75rem;
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-}
-
-.market-overview-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.market-overview-link {
-  color: var(--accent-blue);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-}
-
-.market-overview-link:hover {
-  color: #2563eb;
-}
-
-.market-tickers {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.market-ticker-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border-right: 1px solid rgba(59, 130, 246, 0.1);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.market-ticker-item:hover {
-  background: rgba(59, 130, 246, 0.1);
-}
-
-.market-ticker-item:nth-child(3n) {
-  border-right: none;
-}
-
-.ticker-icon {
-  font-size: 1.75rem;
-  min-width: 40px;
-  text-align: center;
-}
-
-.ticker-info {
-  flex: 1;
-}
-
-.ticker-symbol {
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  text-transform: uppercase;
-}
-
-.ticker-price {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: var(--accent-blue);
-  margin-top: 0.25rem;
-}
-
-.ticker-change {
-  font-size: 0.85rem;
-  font-weight: 700;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  white-space: nowrap;
-}
-
-.ticker-change.up {
-  background: rgba(16, 185, 129, 0.2);
-  color: var(--success-green);
-}
-
-.ticker-change.down {
-  background: rgba(239, 68, 68, 0.2);
-  color: var(--danger-red);
-}
-
-
   </style>
 </head>
 <body>
@@ -926,46 +867,69 @@ body {
     <%- include('../partials/user-nav.ejs', { user, page }) %>
 
     <main class="dashboard-content">
-      <!-- Welcome Header -->
       <div class="vx_dashboard_header_section">
         <div class="vx_header_title">
           <h1>Welcome back, <%= user.fullName.toUpperCase() %>!</h1>
           <p>Your investment dashboard overview</p>
         </div>
         <a href="/user/real-estate-plans" class="vx_btn_invest_now">
-          <span>📈</span> Invest Now
+          📈 Invest Now
         </a>
       </div>
 
-      <!-- Top Stats Row -->
-      <div class="vx_stats_row">
-        <div class="vx_stat_card">
-          <label>ACCOUNT BALANCE</label>
-          <div class="vx_stat_value">$<%= user.balance.toFixed(2) %></div>
-        </div>
-        <div class="vx_stat_card">
-          <label>Total Profit</label>
-          <div class="vx_stat_value">$0.00</div>
-          <span class="vx_stat_label">Last period</span>
-        </div>
-        <div class="vx_stat_card">
-          <label>Total Deposit</label>
-          <div class="vx_stat_value">$0.00</div>
-          <span class="vx_stat_label">All time</span>
-        </div>
-        <div class="vx_stat_card">
-          <label>Total Withdrawal</label>
-          <div class="vx_stat_value">$0.00</div>
-          <span class="vx_stat_label">All time</span>
-        </div>
-        <div class="vx_stat_card">
-          <label>Bonus</label>
-          <div class="vx_stat_value">$0.00</div>
-          <span class="vx_stat_label">All time</span>
+      <div class="vx_account_balance_card">
+        <div class="vx_balance_icon">💳</div>
+        <div class="vx_balance_title">Account Balance</div>
+        <div class="vx_balance_subtitle">Your available funds</div>
+        <div class="vx_balance_amount">$<%= user.balance.toFixed(2) %></div>
+        <div class="vx_balance_status success">✓ Available for Withdrawal</div>
+        <div class="vx_balance_status unverified">⚠ Unverified</div>
+        <div class="vx_balance_updated">Last updated: <%= new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) %></div>
+        <div class="vx_balance_actions">
+          <button class="vx_btn_deposit" onclick="window.location.href='/user/deposit'">
+            ⊕ Deposit
+          </button>
+          <button class="vx_btn_withdraw" onclick="window.location.href='/user/withdraw'">
+            ↗ Withdraw
+          </button>
         </div>
       </div>
 
-      <!-- Identity Verification Section -->
+      <div class="vx_stats_row">
+        <div class="vx_stat_card">
+          <div class="vx_stat_header">
+            <span class="vx_stat_icon">💵</span>
+            <span class="vx_stat_label">Total Profit</span>
+          </div>
+          <div class="vx_stat_value">$0.00</div>
+          <div class="vx_stat_subtitle">Last period</div>
+        </div>
+        <div class="vx_stat_card">
+          <div class="vx_stat_header">
+            <span class="vx_stat_icon">⬇</span>
+            <span class="vx_stat_label">Total Deposit</span>
+          </div>
+          <div class="vx_stat_value">$0.00</div>
+          <div class="vx_stat_subtitle">All time</div>
+        </div>
+        <div class="vx_stat_card">
+          <div class="vx_stat_header">
+            <span class="vx_stat_icon">⬆</span>
+            <span class="vx_stat_label">Total Withdrawal</span>
+          </div>
+          <div class="vx_stat_value">$0.00</div>
+          <div class="vx_stat_subtitle">All time</div>
+        </div>
+        <div class="vx_stat_card">
+          <div class="vx_stat_header">
+            <span class="vx_stat_icon">🎁</span>
+            <span class="vx_stat_label">Bonus</span>
+          </div>
+          <div class="vx_stat_value">$0.00</div>
+          <div class="vx_stat_subtitle">All time</div>
+        </div>
+      </div>
+
       <div class="vx_verification_section">
         <div class="vx_verification_content">
           <div class="vx_verification_icon">🛡️</div>
@@ -977,11 +941,8 @@ body {
         <a href="/user/identity-verification" class="vx_btn_view_details">View Details</a>
       </div>
 
-      <!-- Two Column Layout -->
       <div class="vx_layout_two_col">
-        <!-- Left Column -->
         <div class="vx_col_left">
-          <!-- Latest Trades -->
           <div class="vx_section_trades">
             <h3 class="vx_section_title">Latest Trades</h3>
             <table class="vx_trades_table">
@@ -1002,9 +963,7 @@ body {
           </div>
         </div>
 
-        <!-- Right Column -->
         <div class="vx_col_right">
-          <!-- Referrals Section -->
           <div class="vx_section_referrals">
             <h3 class="vx_section_title">Referrals</h3>
             <p class="vx_referral_text">Present our project to your network and enjoy financial benefits. You don't need an active deposit to earn affiliate commissions.</p>
@@ -1021,20 +980,23 @@ body {
         </div>
       </div>
 
-      <!-- Market Overview (institutional live chart copied from landing hero) -->
-        <div class="market-overview-section">
-          <div class="market-overview-header">
-            <h3 class="market-overview-title">Market Overview</h3>
-            <a href="#" class="market-overview-link">Open Markets</a>
-          </div>
-          <div style="padding:0 1rem 1rem 1rem">
-            <div class="trading-chart-container" style="background:linear-gradient(180deg,#0a0e1a,#0f1724);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.03)">
-              <div class="chart-widget" id="tradingviewWidgetDash"></div>
-            </div>
+      <div class="vx_market_tickers_section">
+        <div class="vx_market_tickers" id="marketTickersContainer">
+        </div>
+      </div>
+
+      <div class="market-overview-section">
+        <div class="market-overview-header">
+          <h3 class="market-overview-title">Market Overview</h3>
+          <a href="#" class="market-overview-link">Open Markets</a>
+        </div>
+        <div style="padding:0;">
+          <div class="trading-chart-container">
+            <div class="chart-widget" id="tradingviewWidgetDash"></div>
           </div>
         </div>
+      </div>
 
-      <!-- Crypto Table Section -->
       <div class="vx_table_section">
         <div class="vx_table_header">
           <h3>CRYPTO</h3>
@@ -1054,40 +1016,54 @@ body {
           </thead>
           <tbody>
             <tr>
-              <td><span class="vx_coin_badge">🪙</span> Bitcoin</td>
-              <td>89,647.97</td>
-              <td style="color: #10b981;">+357.57</td>
-              <td style="color: #10b981;">0.40%</td>
+              <td>
+                <div class="vx_coin_info">
+                  <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="BTC" class="vx_coin_logo">
+                  <span class="vx_coin_name">Bitcoin</span>
+                </div>
+              </td>
+              <td>84,496.27</td>
+              <td style="color: #ef4444;">-4,803.73</td>
+              <td style="color: #ef4444;">-5.38%</td>
               <td>89,249.99</td>
               <td>90,488.00</td>
-              <td>88,833.65</td>
-              <td>89,250.00</td>
+              <td>84,196.00</td>
+              <td>89,300.00</td>
             </tr>
             <tr>
-              <td><span class="vx_coin_badge">⟠</span> Ethereum</td>
-              <td>3,007.32</td>
-              <td style="color: #ef4444;">-19.45</td>
-              <td style="color: #ef4444;">-0.64%</td>
+              <td>
+                <div class="vx_coin_info">
+                  <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="ETH" class="vx_coin_logo">
+                  <span class="vx_coin_name">Ethereum</span>
+                </div>
+              </td>
+              <td>2,816.23</td>
+              <td style="color: #ef4444;">-194.59</td>
+              <td style="color: #ef4444;">-6.47%</td>
               <td>3,026.77</td>
               <td>3,045.78</td>
-              <td>2,983.67</td>
-              <td>3,026.77</td>
+              <td>2,790.00</td>
+              <td>3,010.82</td>
             </tr>
             <tr>
-              <td><span class="vx_coin_badge">🟡</span> BNB</td>
-              <td>899.87</td>
-              <td style="color: #10b981;">1.51</td>
-              <td style="color: #10b981;">0.17%</td>
+              <td>
+                <div class="vx_coin_info">
+                  <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB" class="vx_coin_logo">
+                  <span class="vx_coin_name">BNB</span>
+                </div>
+              </td>
+              <td>866.10</td>
+              <td style="color: #ef4444;">-36.62</td>
+              <td style="color: #ef4444;">-4.06%</td>
               <td>898.35</td>
               <td>909.43</td>
-              <td>894.41</td>
-              <td>898.36</td>
+              <td>860.15</td>
+              <td>902.72</td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      <!-- Forex Table Section -->
       <div class="vx_table_section">
         <div class="vx_table_header">
           <h3>FOREX</h3>
@@ -1107,8 +1083,13 @@ body {
           </thead>
           <tbody>
             <tr>
-              <td><span class="vx_coin_badge">💶</span> EUR/USD</td>
-              <td>1.19289</td>
+              <td>
+                <div class="vx_coin_info">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg" alt="EUR" class="vx_coin_logo">
+                  <span class="vx_coin_name">EUR/USD</span>
+                </div>
+              </td>
+              <td>1.19703</td>
               <td style="color: #ef4444;">-0.01</td>
               <td style="color: #ef4444;">-0.92%</td>
               <td>1.20391</td>
@@ -1117,8 +1098,13 @@ body {
               <td>1.20391</td>
             </tr>
             <tr>
-              <td><span class="vx_coin_badge">💷</span> GBP/USD</td>
-              <td>1.37725</td>
+              <td>
+                <div class="vx_coin_info">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg" alt="GBP" class="vx_coin_logo">
+                  <span class="vx_coin_name">GBP/USD</span>
+                </div>
+              </td>
+              <td>1.38081</td>
               <td style="color: #ef4444;">-0.01</td>
               <td style="color: #ef4444;">-0.50%</td>
               <td>1.38422</td>
@@ -1127,7 +1113,12 @@ body {
               <td>1.38422</td>
             </tr>
             <tr>
-              <td><span class="vx_coin_badge">¥</span> USD/JPY</td>
+              <td>
+                <div class="vx_coin_info">
+                  <img src="https://upload.wikimedia.org/wikipedia/en/9/9e/Flag_of_Japan.svg" alt="JPY" class="vx_coin_logo">
+                  <span class="vx_coin_name">USD/JPY</span>
+                </div>
+              </td>
               <td>153.642</td>
               <td style="color: #10b981;">1.48</td>
               <td style="color: #10b981;">0.97%</td>
@@ -1140,7 +1131,6 @@ body {
         </table>
       </div>
 
-      <!-- Top Stories Section -->
       <div class="vx_stories_section">
         <div class="vx_stories_header">
           <h3>Top Stories</h3>
@@ -1167,7 +1157,6 @@ body {
     </main>
   </div>
 
-  <!-- Logout Confirmation Modal -->
   <div id="logoutModal" class="modal">
     <div class="modal-content">
       <h3>Confirm Logout</h3>
@@ -1183,99 +1172,101 @@ body {
   <script>
     lucide.createIcons();
   </script>
-  <!-- TradingView widget for dashboard (defensive init + fallback) -->
-  <script>
-    function initTradingViewWidgetDash(){
-      const widgetContainer = document.getElementById('tradingviewWidgetDash');
-      if (widgetContainer && typeof TradingView !== 'undefined') {
-        try{
-          new TradingView.widget({
-            "autosize": true,
-            "symbol": "BITSTAMP:BTCUSD",
-            "interval": "D",
-            "timezone": "Etc/UTC",
-            "theme": "dark",
-            "style": "1",
-            "locale": "en",
-            "toolbar_bg": "#0a0e1a",
-            "enable_publishing": false,
-            "allow_symbol_change": true,
-            "container_id": "tradingviewWidgetDash"
-          });
-        }catch(e){
-          // fallback handled below
-        }
-      } else if (widgetContainer) {
-        // Fallback: simple chart mockup canvas
-        widgetContainer.innerHTML = `
-          <div style="background: #0a0e1a; border-radius: 6px; padding: 12px; height: 360px; display: flex; flex-direction: column;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <div style="color:#9ca3af;font-size:12px">LIVE • BTC/USD</div>
-              <div style="color:#9ca3af;font-size:12px">00:00:00</div>
-            </div>
-            <div style="flex:1;position:relative;">
-              <canvas id="chartCanvasDash" style="width:100%;height:100%;display:block;"></canvas>
-            </div>
-          </div>
-        `;
 
-        // draw simple candlestick-like mock
-        const canvas = document.getElementById('chartCanvasDash');
-        if(canvas){
-          const ctx = canvas.getContext('2d');
-          function resize(){ canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
-          function draw(){
-            resize();
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            // grid
-            ctx.strokeStyle = 'rgba(255,255,255,0.03)'; ctx.lineWidth=1;
-            for(let y=0;y<canvas.height;y+=40){ ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke(); }
-            // simple line
-            ctx.beginPath(); ctx.lineWidth=2; ctx.strokeStyle='rgba(47,128,237,0.9)';
-            for(let i=0;i<canvas.width;i+=6){ const x=i; const y = canvas.height*0.55 + Math.sin(i/40 + Date.now()/2000)*24; if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
-            ctx.stroke();
-            requestAnimationFrame(draw);
-          }
-          draw();
-          window.addEventListener('resize', resize);
-        }
-      }
+  <script>
+function initTradingViewWidgetDash() {
+  const widgetContainer = document.getElementById('tradingviewWidgetDash');
+  if (widgetContainer && typeof TradingView !== 'undefined') {
+    try {
+      new TradingView.widget({
+        autosize: true,
+        symbol: 'BITSTAMP:BTCUSD',
+        interval: 'D',
+        timezone: 'Etc/UTC',
+        theme: 'dark',
+        style: '1',
+        locale: 'en',
+        toolbar_bg: '#0a0e1a',
+        enable_publishing: false,
+        allow_symbol_change: true,
+        container_id: 'tradingviewWidgetDash'
+      });
+    } catch (e) {
+      console.error('TradingView widget error:', e);
     }
-
-    // Load TradingView script once and init
-    (function(){
-      var s = document.createElement('script'); s.src = 'https://s3.tradingview.com/tv.js'; s.async = true;
-      s.onload = initTradingViewWidgetDash;
-      document.head.appendChild(s);
-      // fallback init if library doesn't load in time
-      setTimeout(function(){ if(!document.querySelector('#tradingviewWidgetDash iframe')) initTradingViewWidgetDash(); }, 2100);
-    })();
-  </script>
-  <script>
-   document.addEventListener('DOMContentLoaded', function() {
-  initializeMarketOverview();
-  updateMarketTickers();
-  setInterval(updateMarketTickers, 3000);
-});
-
-const marketPairs = [
-  { symbol: 'BTC/USDT', icon: '₿', price: 89538, change: 2.45, decimals: 2 },
-  { symbol: 'ETHUSDT', icon: 'Ξ', price: 3007.97, change: -1.17, decimals: 2 },
-  { symbol: 'EUR/USD', icon: '€', price: 1.19287, change: -0.92, decimals: 5 },
-  { symbol: 'GBP/USD', icon: '£', price: 1.37708, change: -0.50, decimals: 5 },
-  { symbol: 'AAPL', icon: '🍎', price: 255.58, change: 0.97, decimals: 2 },
-  { symbol: 'TSLA', icon: '⚡', price: 350.29, change: 1.48, decimals: 2 }
-];
-
-function initializeMarketOverview() {
-  const container = document.getElementById('marketTickerContainer');
-  if (!container) return;
-
-  renderMarketTickers();
+  }
 }
 
+(function () {
+  const s = document.createElement('script');
+  s.src = 'https://s3.tradingview.com/tv.js';
+  s.async = true;
+  s.onload = initTradingViewWidgetDash;
+  document.head.appendChild(s);
+  setTimeout(function () {
+    if (!document.querySelector('#tradingviewWidgetDash iframe')) initTradingViewWidgetDash();
+  }, 2100);
+})();
+
+const marketPairs = [
+  {
+    symbol: 'BTCUSDT',
+    name: 'BTC/USDT',
+    logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
+    price: 84496.20,
+    change: -5.38,
+    exchange: 'Binance',
+    tvLink: 'https://www.tradingview.com/symbols/BTCUSDT/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
+  },
+  {
+    symbol: 'ETHUSDT',
+    name: 'ETHUSDT',
+    logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
+    price: 2816.16,
+    change: -6.47,
+    exchange: 'Binance',
+    tvLink: 'https://www.tradingview.com/symbols/ETHUSDT/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
+  },
+  {
+    symbol: 'EURUSD',
+    name: 'EURUSD',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg',
+    price: 1.19703,
+    change: -0.92,
+    exchange: 'Forex',
+    tvLink: 'https://www.tradingview.com/symbols/EURUSD/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
+  },
+  {
+    symbol: 'GBPUSD',
+    name: 'GBPUSD',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg',
+    price: 1.38081,
+    change: -0.50,
+    exchange: 'Forex',
+    tvLink: 'https://www.tradingview.com/symbols/GBPUSD/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
+  },
+  {
+    symbol: 'AAPL',
+    name: 'AAPL',
+    logo: 'https://logo.clearbit.com/apple.com',
+    price: 258.28,
+    change: 1.24,
+    exchange: 'NASDAQ',
+    tvLink: 'https://www.tradingview.com/symbols/AAPL/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
+  },
+  {
+    symbol: 'XAUUSD',
+    name: 'GOLD',
+    logo: 'https://img.icons8.com/color/96/000000/gold-bars.png',
+    price: 5393.746,
+    change: 2.85,
+    exchange: 'Commodities',
+    tvLink: 'https://www.tradingview.com/symbols/XAUUSD/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
+  }
+];
+
 function renderMarketTickers() {
-  const container = document.getElementById('marketTickerContainer');
+  const container = document.getElementById('marketTickersContainer');
   if (!container) return;
 
   container.innerHTML = '';
@@ -1283,30 +1274,38 @@ function renderMarketTickers() {
   marketPairs.forEach(pair => {
     const changeClass = pair.change > 0 ? 'up' : 'down';
     const changeSign = pair.change > 0 ? '+' : '';
+    const decimals = pair.price > 1000 ? 2 : pair.price > 10 ? 3 : 5;
 
-    const ticker = document.createElement('div');
-    ticker.className = 'market-ticker-item';
-    ticker.innerHTML = `
-      <div class="ticker-icon">${pair.icon}</div>
-      <div class="ticker-info">
-        <div class="ticker-symbol">${pair.symbol}</div>
-        <div class="ticker-price">$${pair.price.toLocaleString('en-US', { minimumFractionDigits: pair.decimals, maximumFractionDigits: pair.decimals })}</div>
+    const card = document.createElement('a');
+    card.href = pair.tvLink;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+    card.className = 'vx_ticker_card';
+
+    card.innerHTML = `
+      <div class="vx_ticker_header">
+        <img src="${pair.logo}" alt="${pair.name}" class="vx_ticker_logo" onerror="this.style.display='none'">
+        <div class="vx_ticker_info">
+          <div class="vx_ticker_pair">${pair.name}</div>
+          <div class="vx_ticker_exchange">${pair.exchange}</div>
+        </div>
       </div>
-      <div class="ticker-change ${changeClass}">
-        <span>${changeSign}${pair.change.toFixed(2)}%</span>
+      <div class="vx_ticker_price">$${pair.price.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}</div>
+      <div class="vx_ticker_change ${changeClass}">
+        ${changeSign}${pair.change.toFixed(2)}%
       </div>
     `;
-    container.appendChild(ticker);
+
+    container.appendChild(card);
   });
 }
 
 function updateMarketTickers() {
   marketPairs.forEach(pair => {
-    const randomChange = (Math.random() - 0.5) * 0.5;
-    pair.change += randomChange;
-    pair.price = pair.price * (1 + (randomChange / 100));
+    const randomChange = (Math.random() - 0.5) * 0.3;
+    pair.change = Math.max(-10, Math.min(10, pair.change + randomChange));
+    pair.price = pair.price * (1 + randomChange / 100);
   });
-
   renderMarketTickers();
 }
 
@@ -1314,7 +1313,7 @@ function initializeCopyButton() {
   const copyBtn = document.querySelector('.vx_btn_copy');
   if (!copyBtn) return;
 
-  copyBtn.addEventListener('click', function() {
+  copyBtn.addEventListener('click', function () {
     const input = document.querySelector('.vx_referral_link_input input');
     if (input) {
       input.select();
@@ -1338,7 +1337,7 @@ function initializeModal() {
 
   const logoutButtons = document.querySelectorAll('[data-action="logout"]');
   logoutButtons.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', e => {
       e.preventDefault();
       modal.classList.add('show');
     });
@@ -1356,17 +1355,20 @@ function initializeModal() {
     });
   }
 
-  modal.addEventListener('click', (e) => {
+  modal.addEventListener('click', e => {
     if (e.target === modal) {
       modal.classList.remove('show');
     }
   });
 }
 
-initializeCopyButton();
-initializeModal();
-
-
+document.addEventListener('DOMContentLoaded', function () {
+  renderMarketTickers();
+  updateMarketTickers();
+  setInterval(updateMarketTickers, 5000);
+  initializeCopyButton();
+  initializeModal();
+});
   </script>
 
   <script src="/js/dashboard.js"></script>
