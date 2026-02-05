@@ -7,24 +7,17 @@
   <link rel="stylesheet" href="/css/styles.css">
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background: #0a0e1a;
-      color: #e2e8f0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
     .vx_rt_payment_container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 2rem 1.5rem;
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 2rem 2rem;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: transparent;
+      color: #e2e8f0;
       animation: vx_fadeIn 0.6s ease-out;
     }
 
@@ -60,7 +53,28 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
+      position: relative;
+    }
+
+    .vx_rt_secure_icon::before {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 10px;
+      border: 2px solid #ffffff;
+      border-top: 3px solid #ffffff;
+      border-radius: 3px 3px 0 0;
+      top: 2px;
+    }
+
+    .vx_rt_secure_icon::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 5px;
+      background: #ffffff;
+      border-radius: 0 0 2px 2px;
+      bottom: 2px;
     }
 
     .vx_rt_header_section {
@@ -130,6 +144,17 @@
       box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
     }
 
+    .vx_rt_step_circle.completed::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 16px;
+      border: 3px solid #ffffff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-2px);
+    }
+
     .vx_rt_step_circle.pending {
       background: rgba(71, 85, 105, 0.4);
       color: #64748b;
@@ -175,7 +200,7 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 2rem;
-      max-width: 900px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
@@ -230,6 +255,27 @@
       justify-content: center;
       font-size: 1.75rem;
       border: 1px solid rgba(59, 130, 246, 0.3);
+      position: relative;
+    }
+
+    .vx_rt_card_icon_box::before {
+      content: '';
+      position: absolute;
+      width: 24px;
+      height: 16px;
+      background: #3b82f6;
+      border-radius: 4px;
+      bottom: 14px;
+    }
+
+    .vx_rt_card_icon_box::after {
+      content: '';
+      position: absolute;
+      width: 28px;
+      height: 20px;
+      border: 3px solid #3b82f6;
+      border-radius: 6px;
+      top: 12px;
     }
 
     .vx_rt_card_title_text h2 {
@@ -273,6 +319,17 @@
       color: #3b82f6;
     }
 
+    .vx_rt_badge_icon {
+      width: 14px;
+      height: 14px;
+      background: currentColor;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
     .vx_rt_amount_section {
       background: rgba(59, 130, 246, 0.08);
       border: 2px solid rgba(59, 130, 246, 0.2);
@@ -312,6 +369,24 @@
       z-index: 1;
     }
 
+    .vx_rt_amount_icon {
+      width: 20px;
+      height: 20px;
+      background: #3b82f6;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .vx_rt_amount_icon::before {
+      content: '$';
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+
     .vx_rt_amount_value {
       font-size: 3.5rem;
       font-weight: 700;
@@ -346,7 +421,21 @@
     }
 
     .vx_rt_warning_icon {
-      font-size: 1.125rem;
+      width: 20px;
+      height: 20px;
+      background: #eab308;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 0.875rem;
+    }
+
+    .vx_rt_warning_icon::before {
+      content: '!';
     }
 
     .vx_rt_instructions_section {
@@ -375,6 +464,11 @@
       color: #3b82f6;
       font-size: 1.125rem;
       font-weight: 700;
+      border: 2px solid #3b82f6;
+    }
+
+    .vx_rt_info_icon::before {
+      content: 'i';
     }
 
     .vx_rt_instructions_title {
@@ -430,7 +524,7 @@
 
     .vx_rt_payment_methods_grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
       margin-bottom: 2rem;
     }
@@ -457,7 +551,14 @@
     }
 
     .vx_rt_section_icon {
-      font-size: 1.5rem;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
     }
 
     .vx_rt_section_title {
@@ -498,9 +599,30 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 1.25rem;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+      position: relative;
+    }
+
+    .vx_rt_download_icon::before {
+      content: '';
+      position: absolute;
+      width: 3px;
+      height: 14px;
+      background: #ffffff;
+      top: 8px;
+    }
+
+    .vx_rt_download_icon::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border: 2px solid #ffffff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+      top: 16px;
     }
 
     .vx_rt_download_icon:hover {
@@ -549,6 +671,43 @@
       gap: 0.5rem;
       transition: all 0.3s ease;
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_rt_copy_button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .vx_rt_copy_button:hover::before {
+      left: 100%;
+    }
+
+    .vx_rt_copy_icon {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 3px;
+      position: relative;
+    }
+
+    .vx_rt_copy_icon::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 3px;
+      top: 3px;
+      left: 3px;
+      background: #3b82f6;
     }
 
     .vx_rt_copy_button:hover {
@@ -606,11 +765,36 @@
     }
 
     .vx_rt_upload_icon {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      opacity: 0.6;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 1rem;
+      background: rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
       z-index: 1;
+    }
+
+    .vx_rt_upload_icon::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 20px;
+      background: #3b82f6;
+    }
+
+    .vx_rt_upload_icon::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 3px solid #3b82f6;
+      border-bottom: none;
+      border-right: none;
+      transform: rotate(45deg);
+      top: 18px;
     }
 
     .vx_rt_upload_text {
@@ -661,6 +845,26 @@
       align-items: center;
       justify-content: center;
       font-size: 1.5rem;
+      position: relative;
+    }
+
+    .vx_rt_file_icon::before {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 24px;
+      background: #3b82f6;
+      border-radius: 2px;
+    }
+
+    .vx_rt_file_icon::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 8px;
+      background: rgba(15, 23, 42, 0.8);
+      border-radius: 1px;
+      bottom: 14px;
     }
 
     .vx_rt_file_details h4 {
@@ -725,6 +929,36 @@
       height: 400px;
     }
 
+    .vx_rt_submit_icon {
+      width: 20px;
+      height: 20px;
+      position: relative;
+    }
+
+    .vx_rt_submit_icon::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 3px;
+      background: #ffffff;
+      transform: rotate(-45deg);
+      top: 4px;
+      left: 0;
+    }
+
+    .vx_rt_submit_icon::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border: 3px solid #ffffff;
+      border-left: none;
+      border-bottom: none;
+      transform: rotate(45deg);
+      top: 0;
+      right: 0;
+    }
+
     .vx_rt_submit_button:hover {
       transform: translateY(-2px);
       box-shadow: 0 12px 32px rgba(16, 185, 129, 0.5);
@@ -758,8 +992,24 @@
     }
 
     .vx_rt_shield_icon {
-      color: #10b981;
-      font-size: 1rem;
+      width: 18px;
+      height: 18px;
+      background: #10b981;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: relative;
+    }
+
+    .vx_rt_shield_icon::before {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 8px;
+      border: 2px solid #ffffff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+      top: 3px;
+      left: 4px;
     }
 
     .vx_rt_toast {
@@ -793,7 +1043,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.875rem;
+      position: relative;
+    }
+
+    .vx_rt_toast_icon::before {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 10px;
+      border: 2px solid #ffffff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
     }
 
     .vx_rt_toast_message {
@@ -880,7 +1141,7 @@
         <div class="vx_rt_header_section">
           <div style="display: flex; justify-content: center;">
             <div class="vx_rt_secure_badge">
-              <div class="vx_rt_secure_icon">🔒</div>
+              <div class="vx_rt_secure_icon"></div>
               <span>Secure Payment Gateway</span>
             </div>
           </div>
@@ -893,7 +1154,7 @@
 
         <div class="vx_rt_progress_stepper">
           <div class="vx_rt_step">
-            <div class="vx_rt_step_circle completed">✓</div>
+            <div class="vx_rt_step_circle completed"></div>
             <span class="vx_rt_step_label">Payment Method</span>
           </div>
           <div class="vx_rt_step_connector completed"></div>
@@ -913,7 +1174,7 @@
 
             <div class="vx_rt_card_header">
               <div class="vx_rt_card_title_group">
-                <div class="vx_rt_card_icon_box">💳</div>
+                <div class="vx_rt_card_icon_box"></div>
                 <div class="vx_rt_card_title_text">
                   <h2>Payment Details</h2>
                   <div class="vx_rt_card_subtitle"><%= method %> Deposit</div>
@@ -921,11 +1182,11 @@
               </div>
               <div class="vx_rt_badge_group">
                 <div class="vx_rt_badge ssl">
-                  <span>🔒</span>
+                  <span class="vx_rt_badge_icon"></span>
                   <span>SSL Secured</span>
                 </div>
                 <div class="vx_rt_badge support">
-                  <span>⏰</span>
+                  <span class="vx_rt_badge_icon"></span>
                   <span>24/7 Support</span>
                 </div>
               </div>
@@ -933,7 +1194,7 @@
 
             <div class="vx_rt_amount_section">
               <div class="vx_rt_amount_label">
-                <span>💵</span>
+                <span class="vx_rt_amount_icon"></span>
                 <span>Amount to Deposit</span>
               </div>
               <div class="vx_rt_amount_value">
@@ -941,14 +1202,14 @@
                 <span class="vx_rt_currency_symbol">$</span>
               </div>
               <div class="vx_rt_warning_banner">
-                <div class="vx_rt_warning_icon">⚠️</div>
+                <div class="vx_rt_warning_icon"></div>
                 <div>Send exact amount to avoid delays</div>
               </div>
             </div>
 
             <div class="vx_rt_instructions_section">
               <div class="vx_rt_instructions_header">
-                <div class="vx_rt_info_icon">ℹ️</div>
+                <div class="vx_rt_info_icon"></div>
                 <h3 class="vx_rt_instructions_title">How to Complete Your Payment</h3>
               </div>
               <div class="vx_rt_steps_grid">
@@ -979,24 +1240,24 @@
             <div class="vx_rt_payment_methods_grid">
               <div class="vx_rt_method_section">
                 <div class="vx_rt_section_header">
-                  <div class="vx_rt_section_icon">📱</div>
+                  <div class="vx_rt_section_icon"></div>
                   <h3 class="vx_rt_section_title">QR Code Payment</h3>
                 </div>
                 <div class="vx_rt_qr_container">
                   <img src="<%= qrUrl %>" alt="QR Code" class="vx_rt_qr_image">
-                  <div class="vx_rt_download_icon" onclick="vxDownloadQR()">⬇️</div>
+                  <div class="vx_rt_download_icon" onclick="vxDownloadQR()"></div>
                 </div>
                 <p class="vx_rt_qr_caption">Scan with your wallet app to send payment instantly</p>
               </div>
 
               <div class="vx_rt_method_section">
                 <div class="vx_rt_section_header">
-                  <div class="vx_rt_section_icon">🔐</div>
+                  <div class="vx_rt_section_icon"></div>
                   <h3 class="vx_rt_section_title">Wallet Address</h3>
                 </div>
                 <div class="vx_rt_wallet_address_box" id="vxWalletAddress"><%= address %></div>
                 <button class="vx_rt_copy_button" id="vxCopyBtn">
-                  <span>📋</span>
+                  <span class="vx_rt_copy_icon"></span>
                   <span id="vxCopyBtnText">Copy Address</span>
                 </button>
               </div>
@@ -1004,11 +1265,11 @@
 
             <div class="vx_rt_upload_section">
               <div class="vx_rt_section_header">
-                <div class="vx_rt_section_icon">📤</div>
+                <div class="vx_rt_section_icon"></div>
                 <h3 class="vx_rt_section_title">Upload Payment Proof</h3>
               </div>
               <div class="vx_rt_upload_area" id="vxUploadArea" onclick="document.getElementById('vxFileInput').click()">
-                <div class="vx_rt_upload_icon">☁️</div>
+                <div class="vx_rt_upload_icon"></div>
                 <div class="vx_rt_upload_text">Choose file or drag & drop</div>
                 <div class="vx_rt_upload_hint">PNG, JPG, GIF up to 10MB</div>
               </div>
@@ -1017,12 +1278,12 @@
             </div>
 
             <button class="vx_rt_submit_button" id="vxSubmitBtn" disabled>
-              <span>✈️</span>
+              <span class="vx_rt_submit_icon"></span>
               <span>Submit Payment Proof</span>
             </button>
 
             <div class="vx_rt_security_footer">
-              <div class="vx_rt_shield_icon">🛡️</div>
+              <div class="vx_rt_shield_icon"></div>
               <span>Protected by 256-bit SSL encryption</span>
             </div>
 
@@ -1034,7 +1295,7 @@
   </div>
 
   <div class="vx_rt_toast" id="vxToast">
-    <div class="vx_rt_toast_icon">✓</div>
+    <div class="vx_rt_toast_icon"></div>
     <div class="vx_rt_toast_message" id="vxToastMessage"></div>
   </div>
 
@@ -1046,7 +1307,7 @@
       const vxFilePreview = document.getElementById('vxFilePreview');
       const vxSubmitBtn = document.getElementById('vxSubmitBtn');
 
-      ['dragenter','dragover','dragleave','drop'].forEach(evt => {
+      ['dragenter','dragover','dragleave','drop'].forEach(function(evt) {
         vxUploadArea.addEventListener(evt, vxPreventDefaults, false);
       });
 
@@ -1055,24 +1316,24 @@
         e.stopPropagation();
       }
 
-      ['dragenter','dragover'].forEach(evt => {
-        vxUploadArea.addEventListener(evt, () => {
+      ['dragenter','dragover'].forEach(function(evt) {
+        vxUploadArea.addEventListener(evt, function() {
           vxUploadArea.classList.add('dragover');
         });
       });
 
-      ['dragleave','drop'].forEach(evt => {
-        vxUploadArea.addEventListener(evt, () => {
+      ['dragleave','drop'].forEach(function(evt) {
+        vxUploadArea.addEventListener(evt, function() {
           vxUploadArea.classList.remove('dragover');
         });
       });
 
-      vxUploadArea.addEventListener('drop', (e) => {
+      vxUploadArea.addEventListener('drop', function(e) {
         const files = e.dataTransfer.files;
         if(files.length) vxHandleFile(files[0]);
       });
 
-      vxFileInput.addEventListener('change', (e) => {
+      vxFileInput.addEventListener('change', function(e) {
         if(e.target.files.length) vxHandleFile(e.target.files[0]);
       });
 
@@ -1092,7 +1353,7 @@
 
       function vxDisplayFilePreview(file) {
         const fileSize = (file.size / 1024).toFixed(2);
-        vxFilePreview.innerHTML = '\n        <div class="vx_rt_file_preview">\n          <div class="vx_rt_file_info">\n            <div class="vx_rt_file_icon">📄</div>\n            <div class="vx_rt_file_details">\n              <h4>' + file.name + '</h4>\n              <div class="vx_rt_file_size">' + fileSize + ' KB</div>\n            </div>\n          </div>\n          <div class="vx_rt_remove_file" onclick="vxRemoveFile()">Remove file</div>\n        </div>\n      ';
+        vxFilePreview.innerHTML = '<div class="vx_rt_file_preview"><div class="vx_rt_file_info"><div class="vx_rt_file_icon"></div><div class="vx_rt_file_details"><h4>' + file.name + '</h4><div class="vx_rt_file_size">' + fileSize + ' KB</div></div></div><div class="vx_rt_remove_file" onclick="vxRemoveFile()">Remove file</div></div>';
         vxFilePreview.style.display = 'block';
         vxUploadArea.style.display = 'none';
       }
@@ -1107,13 +1368,13 @@
 
       function vxCopyAddress() {
         const address = document.getElementById('vxWalletAddress').textContent;
-        navigator.clipboard.writeText(address).then(() => {
+        navigator.clipboard.writeText(address).then(function() {
           document.getElementById('vxCopyBtnText').textContent = 'Copied!';
           vxShowToast('Wallet address copied to clipboard');
-          setTimeout(() => {
+          setTimeout(function() {
             document.getElementById('vxCopyBtnText').textContent = 'Copy Address';
           }, 2000);
-        }).catch(() => {
+        }).catch(function() {
           vxShowToast('Failed to copy address');
         });
       }
@@ -1131,14 +1392,14 @@
         vxShowToast('QR code downloaded successfully');
       };
 
-      vxSubmitBtn.addEventListener('click', () => {
+      vxSubmitBtn.addEventListener('click', function() {
         if(!vxUploadedFile) {
           vxShowToast('Please upload payment proof');
           return;
         }
 
         vxSubmitBtn.disabled = true;
-        vxSubmitBtn.innerHTML = '<span>⏳</span><span>Processing...</span>';
+        vxSubmitBtn.innerHTML = '<span class="vx_rt_submit_icon"></span><span>Processing...</span>';
 
         const payload = {
           amount: '<%= amount %>',
@@ -1151,35 +1412,35 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         })
-        .then(r => r.json())
-        .then(data => {
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
           if(!data || !data.success) {
-            vxShowToast(data && data.message ? data.message : 'Submission failed', 'error');
+            vxShowToast(data && data.message ? data.message : 'Submission failed');
             vxSubmitBtn.disabled = false;
-            vxSubmitBtn.innerHTML = '<span>✈️</span><span>Submit Payment Proof</span>';
+            vxSubmitBtn.innerHTML = '<span class="vx_rt_submit_icon"></span><span>Submit Payment Proof</span>';
             return;
           }
           vxShowToast('Payment proof submitted successfully. Admin will review shortly.');
-          vxSubmitBtn.innerHTML = '<span>✓</span><span>Submitted Successfully</span>';
+          vxSubmitBtn.innerHTML = '<span class="vx_rt_submit_icon"></span><span>Submitted Successfully</span>';
           vxSubmitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-          setTimeout(() => {
+          setTimeout(function() {
             window.location.href = (data.redirect || '/user/dashboard');
           }, 1800);
         })
-        .catch(err => {
+        .catch(function(err) {
           console.error(err);
-          vxShowToast('Network error occurred', 'error');
+          vxShowToast('Network error occurred');
           vxSubmitBtn.disabled = false;
-          vxSubmitBtn.innerHTML = '<span>✈️</span><span>Submit Payment Proof</span>';
+          vxSubmitBtn.innerHTML = '<span class="vx_rt_submit_icon"></span><span>Submit Payment Proof</span>';
         });
       });
 
-      function vxShowToast(msg, type) {
+      function vxShowToast(msg) {
         const toast = document.getElementById('vxToast');
         const message = document.getElementById('vxToastMessage');
         message.textContent = msg;
         toast.classList.add('show');
-        setTimeout(() => {
+        setTimeout(function() {
           toast.classList.remove('show');
         }, 3000);
       }
@@ -1187,3 +1448,52 @@
   </script>
 </body>
 </html>
+
+<!--
+HOW TO ADD MORE CRYPTOCURRENCIES:
+================================
+
+1. In the DEPOSIT page (deposit-redesigned.ejs):
+   - Add a new <option> in the payment method <select> dropdown:
+     <option value="CURRENCY_CODE">Currency Name</option>
+
+   - Add a new payment method item in the sidebar:
+     <div class="vx_payment_method_item">
+       <div class="vx_method_icon"></div>
+       <div class="vx_method_name">Currency Name</div>
+     </div>
+
+   - Update the JavaScript map in the click handler:
+     const map = {
+       'Currency Name': 'CURRENCY_CODE',
+       // ... existing mappings
+     };
+
+2. In your BACKEND/SERVER CODE:
+   - Add the wallet address for the new cryptocurrency
+   - Make sure the address is correctly mapped to the CURRENCY_CODE
+   - Update your payment processing logic to handle the new currency
+
+3. IMPORTANT MAPPING:
+   - The 'value' attribute in <option> MUST match your backend currency code
+   - Example: If backend expects "ETH", use value="ETH"
+   - The JavaScript map ensures sidebar clicks select the correct option
+
+4. FOR QR CODES:
+   - Generate a QR code for the new wallet address
+   - Store it in your backend
+   - The payment page will automatically display it using <%= qrUrl %>
+
+EXAMPLE:
+To add Ethereum:
+<option value="ETH">Ethereum</option>
+
+Sidebar:
+<div class="vx_payment_method_item">
+  <div class="vx_method_icon"></div>
+  <div class="vx_method_name">Ethereum</div>
+</div>
+
+JavaScript map:
+const map = { 'Ethereum': 'ETH', ... };
+-->

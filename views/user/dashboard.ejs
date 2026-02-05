@@ -6,16 +6,22 @@
   <title>Dashboard - Trading Platform</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
 :root {
-  --primary-bg: #0a0f1f;
-  --secondary-bg: #1a2332;
-  --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
+  --primary-bg: #0a0e1a;
+  --secondary-bg: #151b2b;
+  --card-bg: #1a2332;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
   --text-muted: #6b7280;
   --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
   --success-green: #10b981;
+  --success-green-hover: #059669;
   --danger-red: #ef4444;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-hover: rgba(255, 255, 255, 0.15);
 }
 
 * {
@@ -25,10 +31,12 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   background: var(--primary-bg);
   color: var(--text-primary);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .dashboard-container {
@@ -41,6 +49,7 @@ body {
   flex: 1;
   padding: 2rem;
   overflow-y: auto;
+  max-width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -55,7 +64,7 @@ body {
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .vx_header_title h1 {
@@ -63,11 +72,13 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 0.25rem;
+  letter-spacing: -0.025em;
 }
 
 .vx_header_title p {
   color: var(--text-secondary);
   font-size: 0.875rem;
+  font-weight: 400;
 }
 
 .vx_btn_invest_now {
@@ -84,11 +95,18 @@ body {
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: fit-content !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .vx_btn_invest_now:hover {
-  background: #059669;
+  background: var(--success-green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+}
+
+.vx_btn_invest_now svg {
+  width: 18px;
+  height: 18px;
 }
 
 @media (max-width: 768px) {
@@ -109,26 +127,52 @@ body {
 }
 
 .vx_account_balance_card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: linear-gradient(135deg, var(--card-bg) 0%, #1e2a3f 100%);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   padding: 2rem;
   margin-bottom: 2rem;
   text-align: center;
-  max-width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.vx_account_balance_card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-blue), var(--success-green));
 }
 
 .vx_balance_icon {
   font-size: 2rem;
   margin-bottom: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 50%;
+}
+
+.vx_balance_icon svg {
+  width: 32px;
+  height: 32px;
+  color: var(--accent-blue);
 }
 
 .vx_balance_title {
   font-size: 0.875rem;
   color: var(--text-secondary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
   margin-bottom: 0.25rem;
+  font-weight: 600;
 }
 
 .vx_balance_subtitle {
@@ -138,39 +182,59 @@ body {
 }
 
 .vx_balance_amount {
-  font-size: 2.5rem;
+  font-size: 2.75rem;
   font-weight: 900;
   color: var(--text-primary);
   margin-bottom: 1rem;
+  letter-spacing: -0.02em;
 }
 
 .vx_balance_status {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
   font-size: 0.875rem;
-  margin-bottom: 0.5rem;
+  margin: 0.25rem 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.vx_balance_status svg {
+  width: 16px;
+  height: 16px;
 }
 
 .vx_balance_status.success {
   color: var(--success-green);
+  background: rgba(16, 185, 129, 0.1);
 }
 
 .vx_balance_status.unverified {
   color: var(--danger-red);
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .vx_balance_updated {
   font-size: 0.75rem;
   color: var(--text-muted);
   margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.vx_balance_updated svg {
+  width: 14px;
+  height: 14px;
 }
 
 .vx_balance_actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .vx_btn_deposit,
@@ -188,23 +252,34 @@ body {
   gap: 0.5rem;
 }
 
+.vx_btn_deposit svg,
+.vx_btn_withdraw svg {
+  width: 18px;
+  height: 18px;
+}
+
 .vx_btn_deposit {
   background: var(--success-green);
   color: white;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
 }
 
 .vx_btn_deposit:hover {
-  background: #059669;
+  background: var(--success-green-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
 }
 
 .vx_btn_withdraw {
-  background: rgba(59, 130, 246, 0.15);
+  background: rgba(59, 130, 246, 0.1);
   color: var(--accent-blue);
   border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
 .vx_btn_withdraw:hover {
-  background: rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 768px) {
@@ -225,15 +300,35 @@ body {
 }
 
 .vx_stat_card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vx_stat_card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--accent-blue);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.vx_stat_card:hover::before {
+  transform: scaleX(1);
 }
 
 .vx_stat_card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .vx_stat_header {
@@ -244,27 +339,48 @@ body {
 }
 
 .vx_stat_icon {
-  font-size: 1.25rem;
-  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.vx_stat_icon svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-blue);
 }
 
 .vx_stat_label {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .vx_stat_value {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
 .vx_stat_subtitle {
   font-size: 0.7rem;
   color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.vx_stat_subtitle svg {
+  width: 12px;
+  height: 12px;
 }
 
 @media (max-width: 1024px) {
@@ -284,27 +400,56 @@ body {
   .vx_stat_card {
     padding: 1rem;
   }
+
+  .vx_stat_value {
+    font-size: 1.5rem;
+  }
 }
 
 .vx_verification_section {
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 12px;
   padding: 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.vx_verification_section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-blue);
 }
 
 .vx_verification_content {
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-left: 0.5rem;
 }
 
 .vx_verification_icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 50%;
+}
+
+.vx_verification_icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-blue);
 }
 
 .vx_verification_text h3 {
@@ -320,7 +465,7 @@ body {
 }
 
 .vx_btn_view_details {
-  padding: 0.75rem 1.25rem;
+  padding: 0.75rem 1.5rem;
   background: var(--accent-blue);
   color: white;
   border: none;
@@ -330,10 +475,21 @@ body {
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+}
+
+.vx_btn_view_details svg {
+  width: 16px;
+  height: 16px;
 }
 
 .vx_btn_view_details:hover {
-  background: #2563eb;
+  background: var(--accent-blue-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -341,6 +497,10 @@ body {
     flex-direction: column;
     gap: 1rem;
     text-align: center;
+  }
+
+  .vx_verification_content {
+    flex-direction: column;
   }
 }
 
@@ -359,17 +519,32 @@ body {
 
 .vx_section_trades,
 .vx_section_referrals {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.vx_section_trades:hover,
+.vx_section_referrals:hover {
+  border-color: var(--border-hover);
 }
 
 .vx_section_title {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vx_section_title svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-blue);
 }
 
 .vx_trades_table {
@@ -391,7 +566,7 @@ body {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .vx_trades_table td {
@@ -407,10 +582,19 @@ body {
   font-weight: 600;
   font-size: 0.875rem;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.vx_link_view_all svg {
+  width: 16px;
+  height: 16px;
 }
 
 .vx_link_view_all:hover {
-  color: #2563eb;
+  color: var(--accent-blue-hover);
+  gap: 0.5rem;
 }
 
 .vx_referral_text {
@@ -421,7 +605,9 @@ body {
 }
 
 .vx_btn_learn_more {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   padding: 0.75rem 1.25rem;
   background: var(--accent-blue);
   color: white;
@@ -435,12 +621,18 @@ body {
   margin-bottom: 1.5rem;
 }
 
+.vx_btn_learn_more svg {
+  width: 16px;
+  height: 16px;
+}
+
 .vx_btn_learn_more:hover {
-  background: #2563eb;
+  background: var(--accent-blue-hover);
+  transform: translateY(-1px);
 }
 
 .vx_referral_link_box {
-  background: rgba(59, 130, 246, 0.08);
+  background: rgba(59, 130, 246, 0.05);
   border: 1px solid rgba(59, 130, 246, 0.15);
   border-radius: 8px;
   padding: 1rem;
@@ -451,6 +643,14 @@ body {
   font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.vx_referral_label svg {
+  width: 14px;
+  height: 14px;
 }
 
 .vx_referral_link_input {
@@ -460,12 +660,20 @@ body {
 
 .vx_referral_link_input input {
   flex: 1;
-  background: rgba(10, 15, 31, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--primary-bg);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   padding: 0.75rem;
   color: var(--text-primary);
   font-size: 0.8rem;
+  font-family: monospace;
+  transition: all 0.2s ease;
+}
+
+.vx_referral_link_input input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .vx_referral_link_input input::placeholder {
@@ -482,10 +690,19 @@ body {
   cursor: pointer;
   transition: all 0.2s ease;
   font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.vx_btn_copy svg {
+  width: 16px;
+  height: 16px;
 }
 
 .vx_btn_copy:hover {
-  background: #2563eb;
+  background: var(--accent-blue-hover);
+  transform: translateY(-1px);
 }
 
 .vx_market_tickers_section {
@@ -494,25 +711,29 @@ body {
 
 .vx_market_tickers {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
 }
 
 .vx_ticker_card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.25rem;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   display: block;
+  position: relative;
+  overflow: hidden;
 }
 
 .vx_ticker_card:hover {
-  border-color: rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-hover);
+  background: linear-gradient(135deg, var(--card-bg) 0%, #1e2a3f 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .vx_ticker_header {
@@ -523,10 +744,11 @@ body {
 }
 
 .vx_ticker_logo {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .vx_ticker_info {
@@ -537,7 +759,8 @@ body {
 .vx_ticker_pair {
   font-weight: 700;
   color: var(--text-primary);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
 }
 
 .vx_ticker_exchange {
@@ -545,13 +768,15 @@ body {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  font-weight: 600;
 }
 
 .vx_ticker_price {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
 }
 
 .vx_ticker_change {
@@ -565,6 +790,11 @@ body {
   width: fit-content;
 }
 
+.vx_ticker_change svg {
+  width: 14px;
+  height: 14px;
+}
+
 .vx_ticker_change.up {
   background: rgba(16, 185, 129, 0.15);
   color: var(--success-green);
@@ -575,12 +805,23 @@ body {
   color: var(--danger-red);
 }
 
+.vx_ticker_chart {
+  margin-top: 0.75rem;
+  height: 40px;
+  position: relative;
+}
+
 .market-overview-section {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   margin-bottom: 2rem;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.market-overview-section:hover {
+  border-color: var(--border-hover);
 }
 
 .market-overview-header {
@@ -588,13 +829,23 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.02);
 }
 
 .market-overview-title {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.market-overview-title svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-blue);
 }
 
 .market-overview-link {
@@ -603,19 +854,25 @@ body {
   font-size: 0.875rem;
   font-weight: 600;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.market-overview-link svg {
+  width: 16px;
+  height: 16px;
 }
 
 .market-overview-link:hover {
-  color: #2563eb;
+  color: var(--accent-blue-hover);
+  gap: 0.5rem;
 }
 
 .trading-chart-container {
   height: 400px;
   background: linear-gradient(180deg, #0a0e1a, #0f1724);
-  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.03);
-  margin: 1rem;
 }
 
 .chart-widget {
@@ -630,25 +887,39 @@ body {
 }
 
 .vx_table_section {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   margin-bottom: 2rem;
   overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.vx_table_section:hover {
+  border-color: var(--border-hover);
 }
 
 .vx_table_header {
   background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
   padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vx_table_header svg {
+  width: 18px;
+  height: 18px;
+  color: var(--accent-blue);
 }
 
 .vx_table_header h3 {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .vx_data_table {
@@ -669,7 +940,7 @@ body {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .vx_data_table tbody tr {
@@ -678,13 +949,14 @@ body {
 }
 
 .vx_data_table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .vx_data_table td {
   padding: 0.875rem 1.25rem;
   color: var(--text-primary);
   font-size: 0.875rem;
+  font-weight: 500;
 }
 
 .vx_coin_info {
@@ -694,10 +966,11 @@ body {
 }
 
 .vx_coin_logo {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .vx_coin_name {
@@ -705,23 +978,37 @@ body {
 }
 
 .vx_stories_section {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.vx_stories_section:hover {
+  border-color: var(--border-hover);
 }
 
 .vx_stories_header {
   margin-bottom: 1.5rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .vx_stories_header h3 {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 700;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vx_stories_header svg {
+  width: 20px;
+  height: 20px;
+  color: var(--accent-blue);
 }
 
 .vx_stories_list {
@@ -732,30 +1019,39 @@ body {
 
 .vx_story_item {
   padding: 1rem;
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   transition: all 0.2s ease;
   cursor: pointer;
 }
 
 .vx_story_item:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--border-hover);
+  transform: translateX(4px);
 }
 
 .vx_story_time {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 0.75rem;
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
   font-weight: 600;
 }
 
+.vx_story_time svg {
+  width: 14px;
+  height: 14px;
+}
+
 .vx_story_title {
   font-size: 0.95rem;
   color: var(--text-primary);
   line-height: 1.5;
+  font-weight: 500;
 }
 
 .modal {
@@ -766,8 +1062,8 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
 }
 
 .modal.show {
@@ -777,13 +1073,13 @@ body {
 }
 
 .modal-content {
-  background: var(--secondary-bg);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
   padding: 2rem;
-  max-width: 400px;
+  max-width: 420px;
   width: 90%;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.8);
   animation: slideUp 0.3s ease;
 }
 
@@ -803,11 +1099,21 @@ body {
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modal-content h3 svg {
+  width: 24px;
+  height: 24px;
+  color: var(--danger-red);
 }
 
 .modal-content p {
   color: var(--text-secondary);
   margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 .modal-buttons {
@@ -824,6 +1130,15 @@ body {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
 }
 
 .btn-danger {
@@ -833,16 +1148,18 @@ body {
 
 .btn-danger:hover {
   background: #dc2626;
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
   color: var(--text-primary);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--border-hover);
 }
 
 .dashboard-content::-webkit-scrollbar {
@@ -854,12 +1171,29 @@ body {
 }
 
 .dashboard-content::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 4px;
 }
 
 .dashboard-content::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vx_stat_card,
+.vx_ticker_card,
+.vx_story_item {
+  animation: fadeIn 0.5s ease;
 }
   </style>
 </head>
@@ -870,28 +1204,42 @@ body {
     <main class="dashboard-content">
       <div class="vx_dashboard_header_section">
         <div class="vx_header_title">
-          <h1>Welcome back, <%= user.fullName.toUpperCase() %>!</h1>
+          <h1>Welcome back, <%= user.fullName %>!</h1>
           <p>Your investment dashboard overview</p>
         </div>
         <a href="/user/real-estate-plans" class="vx_btn_invest_now">
-          📈 Invest Now
+          <i data-lucide="trending-up"></i>
+          Invest Now
         </a>
       </div>
 
       <div class="vx_account_balance_card">
-        <div class="vx_balance_icon">💳</div>
+        <div class="vx_balance_icon">
+          <i data-lucide="credit-card"></i>
+        </div>
         <div class="vx_balance_title">Account Balance</div>
         <div class="vx_balance_subtitle">Your available funds</div>
         <div class="vx_balance_amount">$<%= user.balance.toFixed(2) %></div>
-        <div class="vx_balance_status success">✓ Available for Withdrawal</div>
-        <div class="vx_balance_status unverified">⚠ Unverified</div>
-        <div class="vx_balance_updated">Last updated: <%= new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) %></div>
+        <div class="vx_balance_status success">
+          <i data-lucide="check-circle"></i>
+          Available for Withdrawal
+        </div>
+        <div class="vx_balance_status unverified">
+          <i data-lucide="alert-triangle"></i>
+          Unverified
+        </div>
+        <div class="vx_balance_updated">
+          <i data-lucide="clock"></i>
+          Last updated: <%= new Date().toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', hour12: true }) %>
+        </div>
         <div class="vx_balance_actions">
           <button class="vx_btn_deposit" onclick="window.location.href='/user/deposit'">
-            ⊕ Deposit
+            <i data-lucide="arrow-down-circle"></i>
+            Deposit
           </button>
           <button class="vx_btn_withdraw" onclick="window.location.href='/user/withdraw'">
-            ↗ Withdraw
+            <i data-lucide="arrow-up-circle"></i>
+            Withdraw
           </button>
         </div>
       </div>
@@ -899,53 +1247,81 @@ body {
       <div class="vx_stats_row">
         <div class="vx_stat_card">
           <div class="vx_stat_header">
-            <span class="vx_stat_icon">💵</span>
+            <div class="vx_stat_icon">
+              <i data-lucide="dollar-sign"></i>
+            </div>
             <span class="vx_stat_label">Total Profit</span>
           </div>
           <div class="vx_stat_value">$0.00</div>
-          <div class="vx_stat_subtitle">Last period</div>
+          <div class="vx_stat_subtitle">
+            <i data-lucide="calendar"></i>
+            Last period
+          </div>
         </div>
         <div class="vx_stat_card">
           <div class="vx_stat_header">
-            <span class="vx_stat_icon">⬇</span>
+            <div class="vx_stat_icon">
+              <i data-lucide="arrow-down"></i>
+            </div>
             <span class="vx_stat_label">Total Deposit</span>
           </div>
           <div class="vx_stat_value">$0.00</div>
-          <div class="vx_stat_subtitle">All time</div>
+          <div class="vx_stat_subtitle">
+            <i data-lucide="infinity"></i>
+            All time
+          </div>
         </div>
         <div class="vx_stat_card">
           <div class="vx_stat_header">
-            <span class="vx_stat_icon">⬆</span>
+            <div class="vx_stat_icon">
+              <i data-lucide="arrow-up"></i>
+            </div>
             <span class="vx_stat_label">Total Withdrawal</span>
           </div>
           <div class="vx_stat_value">$0.00</div>
-          <div class="vx_stat_subtitle">All time</div>
+          <div class="vx_stat_subtitle">
+            <i data-lucide="infinity"></i>
+            All time
+          </div>
         </div>
         <div class="vx_stat_card">
           <div class="vx_stat_header">
-            <span class="vx_stat_icon">🎁</span>
+            <div class="vx_stat_icon">
+              <i data-lucide="gift"></i>
+            </div>
             <span class="vx_stat_label">Bonus</span>
           </div>
           <div class="vx_stat_value">$0.00</div>
-          <div class="vx_stat_subtitle">All time</div>
+          <div class="vx_stat_subtitle">
+            <i data-lucide="infinity"></i>
+            All time
+          </div>
         </div>
       </div>
 
       <div class="vx_verification_section">
         <div class="vx_verification_content">
-          <div class="vx_verification_icon">🛡️</div>
+          <div class="vx_verification_icon">
+            <i data-lucide="shield-check"></i>
+          </div>
           <div class="vx_verification_text">
             <h3>Identity Verification</h3>
             <p>Complete verification to access all features</p>
           </div>
         </div>
-        <a href="/user/identity-verification" class="vx_btn_view_details">View Details</a>
+        <a href="/user/identity-verification" class="vx_btn_view_details">
+          View Details
+          <i data-lucide="arrow-right"></i>
+        </a>
       </div>
 
       <div class="vx_layout_two_col">
         <div class="vx_col_left">
           <div class="vx_section_trades">
-            <h3 class="vx_section_title">Latest Trades</h3>
+            <h3 class="vx_section_title">
+              <i data-lucide="activity"></i>
+              Latest Trades
+            </h3>
             <table class="vx_trades_table">
               <thead>
                 <tr>
@@ -956,25 +1332,40 @@ body {
               </thead>
               <tbody>
                 <tr>
-                  <td colspan="3" style="text-align: center; color: #9ca3af; padding: 2rem;">No trades yet</td>
+                  <td colspan="3" style="text-align: center; color: #6b7280; padding: 2rem;">No trades yet</td>
                 </tr>
               </tbody>
             </table>
-            <a href="#" class="vx_link_view_all">View All</a>
+            <a href="#" class="vx_link_view_all">
+              View All
+              <i data-lucide="arrow-right"></i>
+            </a>
           </div>
         </div>
 
         <div class="vx_col_right">
           <div class="vx_section_referrals">
-            <h3 class="vx_section_title">Referrals</h3>
+            <h3 class="vx_section_title">
+              <i data-lucide="users"></i>
+              Referrals
+            </h3>
             <p class="vx_referral_text">Present our project to your network and enjoy financial benefits. You don't need an active deposit to earn affiliate commissions.</p>
-            <a href="#" class="vx_btn_learn_more">Learn More</a>
+            <a href="#" class="vx_btn_learn_more">
+              <i data-lucide="info"></i>
+              Learn More
+            </a>
 
             <div class="vx_referral_link_box">
-              <p class="vx_referral_label">Personal Referral Link</p>
+              <p class="vx_referral_label">
+                <i data-lucide="link"></i>
+                Personal Referral Link
+              </p>
               <div class="vx_referral_link_input">
                 <input type="text" value="https://velocityx-ai.com/ref/babatunde@20." readonly>
-                <button class="vx_btn_copy">Copy</button>
+                <button class="vx_btn_copy">
+                  <i data-lucide="copy"></i>
+                  Copy
+                </button>
               </div>
             </div>
           </div>
@@ -988,8 +1379,14 @@ body {
 
       <div class="market-overview-section">
         <div class="market-overview-header">
-          <h3 class="market-overview-title">Market Overview</h3>
-          <a href="#" class="market-overview-link">Open Markets</a>
+          <h3 class="market-overview-title">
+            <i data-lucide="bar-chart-3"></i>
+            Market Overview
+          </h3>
+          <a href="#" class="market-overview-link">
+            Open Markets
+            <i data-lucide="external-link"></i>
+          </a>
         </div>
         <div style="padding:0;">
           <div class="trading-chart-container">
@@ -1000,6 +1397,7 @@ body {
 
       <div class="vx_table_section">
         <div class="vx_table_header">
+          <i data-lucide="bitcoin"></i>
           <h3>CRYPTO</h3>
         </div>
         <table class="vx_data_table">
@@ -1067,6 +1465,7 @@ body {
 
       <div class="vx_table_section">
         <div class="vx_table_header">
+          <i data-lucide="trending-up"></i>
           <h3>FOREX</h3>
         </div>
         <table class="vx_data_table">
@@ -1134,23 +1533,38 @@ body {
 
       <div class="vx_stories_section">
         <div class="vx_stories_header">
-          <h3>Top Stories</h3>
+          <h3>
+            <i data-lucide="newspaper"></i>
+            Top Stories
+          </h3>
         </div>
         <div class="vx_stories_list">
           <div class="vx_story_item">
-            <span class="vx_story_time">🟡 7 hours ago</span>
+            <span class="vx_story_time">
+              <i data-lucide="clock" style="color: #f59e0b;"></i>
+              7 hours ago
+            </span>
             <p class="vx_story_title">XAU/USD: Gold Goes Vertical as Prices Slice Through $5,300 on Global Rush to Safety</p>
           </div>
           <div class="vx_story_item">
-            <span class="vx_story_time">🟢 8 hours ago</span>
+            <span class="vx_story_time">
+              <i data-lucide="clock" style="color: #10b981;"></i>
+              8 hours ago
+            </span>
             <p class="vx_story_title">DXY: Dollar Hits Four-Year Low After Trump Says US Currency is "Doing Great"</p>
           </div>
           <div class="vx_story_item">
-            <span class="vx_story_time">🔴 8 hours ago</span>
+            <span class="vx_story_time">
+              <i data-lucide="clock" style="color: #ef4444;"></i>
+              8 hours ago
+            </span>
             <p class="vx_story_title">SPX: S&P 500 Breaks Into Record High as Magnificent Seven Rallies (with One Exception)</p>
           </div>
           <div class="vx_story_item">
-            <span class="vx_story_time">⚫ yesterday</span>
+            <span class="vx_story_time">
+              <i data-lucide="clock" style="color: #6b7280;"></i>
+              yesterday
+            </span>
             <p class="vx_story_title">GME: GameStop Adds to Strong Start of Year After Michael Burry Reveals Stake</p>
           </div>
         </div>
@@ -1160,19 +1574,23 @@ body {
 
   <div id="logoutModal" class="modal">
     <div class="modal-content">
-      <h3>Confirm Logout</h3>
-      <p>Are you sure you want to log out?</p>
+      <h3>
+        <i data-lucide="alert-circle"></i>
+        Confirm Logout
+      </h3>
+      <p>Are you sure you want to log out of your account?</p>
       <div class="modal-buttons">
-        <button id="confirmLogout" class="btn btn-danger">Yes</button>
-        <button id="cancelLogout" class="btn btn-secondary">No</button>
+        <button id="confirmLogout" class="btn btn-danger">
+          <i data-lucide="log-out"></i>
+          Yes, Logout
+        </button>
+        <button id="cancelLogout" class="btn btn-secondary">
+          <i data-lucide="x"></i>
+          Cancel
+        </button>
       </div>
     </div>
   </div>
-
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script>
-    lucide.createIcons();
-  </script>
 
   <script>
 function initTradingViewWidgetDash() {
@@ -1214,34 +1632,34 @@ const marketPairs = [
     symbol: 'BTCUSDT',
     name: 'BTC/USDT',
     logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
-    price: 84496.20,
-    change: -5.38,
+    price: 69398.91,
+    change: -5.15,
     exchange: 'Binance',
     tvLink: 'https://www.tradingview.com/symbols/BTCUSDT/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
   },
   {
     symbol: 'ETHUSDT',
-    name: 'ETHUSDT',
+    name: 'ETH/USDT',
     logo: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
-    price: 2816.16,
-    change: -6.47,
+    price: 2054.20,
+    change: -4.38,
     exchange: 'Binance',
     tvLink: 'https://www.tradingview.com/symbols/ETHUSDT/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
   },
   {
     symbol: 'EURUSD',
-    name: 'EURUSD',
+    name: 'EUR/USD',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b7/Flag_of_Europe.svg',
-    price: 1.19703,
-    change: -0.92,
+    price: 1.18048,
+    change: -0.02,
     exchange: 'Forex',
     tvLink: 'https://www.tradingview.com/symbols/EURUSD/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
   },
   {
     symbol: 'GBPUSD',
-    name: 'GBPUSD',
+    name: 'GBP/USD',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Flag_of_the_United_Kingdom_%281-2%29.svg',
-    price: 1.38081,
+    price: 1.35762,
     change: -0.50,
     exchange: 'Forex',
     tvLink: 'https://www.tradingview.com/symbols/GBPUSD/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
@@ -1250,7 +1668,7 @@ const marketPairs = [
     symbol: 'AAPL',
     name: 'AAPL',
     logo: 'https://logo.clearbit.com/apple.com',
-    price: 258.28,
+    price: 276.49,
     change: 1.24,
     exchange: 'NASDAQ',
     tvLink: 'https://www.tradingview.com/symbols/AAPL/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
@@ -1259,12 +1677,65 @@ const marketPairs = [
     symbol: 'XAUUSD',
     name: 'GOLD',
     logo: 'https://img.icons8.com/color/96/000000/gold-bars.png',
-    price: 5393.746,
+    price: 4832.830,
     change: 2.85,
     exchange: 'Commodities',
     tvLink: 'https://www.tradingview.com/symbols/XAUUSD/?utm_campaign=mini-symbol-overview&utm_medium=widget&utm_source=velocityx-ai.com'
   }
 ];
+
+function createSparklineCanvas(change) {
+  const canvas = document.createElement('canvas');
+  canvas.width = 120;
+  canvas.height = 40;
+  const ctx = canvas.getContext('2d');
+
+  const points = 20;
+  const data = [];
+  let value = 50;
+
+  for (let i = 0; i < points; i++) {
+    value += (Math.random() - 0.5) * 10;
+    value = Math.max(10, Math.min(90, value));
+    data.push(value);
+  }
+
+  if (change > 0) {
+    data[data.length - 1] = Math.max(...data);
+  } else {
+    data[data.length - 1] = Math.min(...data);
+  }
+
+  ctx.strokeStyle = change > 0 ? '#10b981' : '#ef4444';
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  ctx.beginPath();
+  for (let i = 0; i < data.length; i++) {
+    const x = (i / (data.length - 1)) * canvas.width;
+    const y = canvas.height - (data[i] / 100) * canvas.height;
+
+    if (i === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+  ctx.stroke();
+
+  const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+  gradient.addColorStop(0, change > 0 ? 'rgba(16, 185, 129, 0.2)' : 'rgba(239, 68, 68, 0.2)');
+  gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+  ctx.lineTo(canvas.width, canvas.height);
+  ctx.lineTo(0, canvas.height);
+  ctx.closePath();
+  ctx.fillStyle = gradient;
+  ctx.fill();
+
+  return canvas;
+}
 
 function renderMarketTickers() {
   const container = document.getElementById('marketTickersContainer');
@@ -1293,12 +1764,20 @@ function renderMarketTickers() {
       </div>
       <div class="vx_ticker_price">$${pair.price.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}</div>
       <div class="vx_ticker_change ${changeClass}">
+        <i data-lucide="${pair.change > 0 ? 'trending-up' : 'trending-down'}"></i>
         ${changeSign}${pair.change.toFixed(2)}%
       </div>
+      <div class="vx_ticker_chart"></div>
     `;
+
+    const chartContainer = card.querySelector('.vx_ticker_chart');
+    const sparkline = createSparklineCanvas(pair.change);
+    chartContainer.appendChild(sparkline);
 
     container.appendChild(card);
   });
+
+  lucide.createIcons();
 }
 
 function updateMarketTickers() {
@@ -1320,10 +1799,19 @@ function initializeCopyButton() {
       input.select();
       document.execCommand('copy');
 
-      const originalText = this.textContent;
-      this.textContent = 'Copied!';
+      const icon = this.querySelector('i');
+      const originalIcon = icon.getAttribute('data-lucide');
+
+      icon.setAttribute('data-lucide', 'check');
+      lucide.createIcons();
+
+      const originalText = this.childNodes[1].textContent;
+      this.childNodes[1].textContent = 'Copied!';
+
       setTimeout(() => {
-        this.textContent = originalText;
+        icon.setAttribute('data-lucide', originalIcon);
+        lucide.createIcons();
+        this.childNodes[1].textContent = originalText;
       }, 2000);
     }
   });
@@ -1364,9 +1852,12 @@ function initializeModal() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+  lucide.createIcons();
+
   renderMarketTickers();
   updateMarketTickers();
-  setInterval(updateMarketTickers, 5000);
+  setInterval(updateMarketTickers, 8000);
+
   initializeCopyButton();
   initializeModal();
 });

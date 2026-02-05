@@ -6,442 +6,556 @@
   <title>Deposit - Trading Platform</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=local_atm" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background: #0a0e1a;
-        color: #e2e8f0;
-        min-height: 100vh;
-        line-height: 1.6;
-        display: flex;
-  
-    }
-
     .vx_deposit_page_wrapper {
-  max-width: 1400px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-}
-
+      max-width: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 2rem 2rem;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: transparent;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
 
     .vx_deposit_page_header {
-        text-align: center;
-        margin-bottom: 3rem;
-        padding-top: 2rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      padding-top: 1rem;
     }
 
     .vx_deposit_page_header h1 {
-        font-size: clamp(2rem, 4vw, 2.8rem);
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 0.5rem;
-        letter-spacing: -0.02em;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
     }
 
     .vx_deposit_page_header p {
-        font-size: clamp(1rem, 2vw, 1.1rem);
-        color: #94a3b8;
-        font-weight: 400;
+      font-size: clamp(1rem, 2vw, 1.1rem);
+      color: #94a3b8;
+      font-weight: 400;
     }
 
     .vx_quick_amounts_section {
-        text-align: center;
-        margin-bottom: 3rem;
+      text-align: center;
+      margin-bottom: 3rem;
     }
 
     .vx_quick_amounts_label {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #cbd5e1;
-        margin-bottom: 1.5rem;
-        display: block;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+      display: block;
     }
 
     .vx_quick_amounts_grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 1rem;
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 0 1rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
     }
 
     .vx_amount_button {
-        padding: 1.2rem 1.5rem;
-        border-radius: 12px;
-        border: 2px solid #334155;
-        background: rgba(30, 41, 59, 0.8);
-        color: #cbd5e1;
-        font-weight: 600;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
+      padding: 1.2rem 1.5rem;
+      border-radius: 12px;
+      border: 2px solid #334155;
+      background: rgba(30, 41, 59, 0.8);
+      color: #cbd5e1;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_amount_button::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(59, 130, 246, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .vx_amount_button:hover::before {
+      width: 300px;
+      height: 300px;
     }
 
     .vx_amount_button:hover {
-        border-color: #3b82f6;
-        background: rgba(59, 130, 246, 0.15);
-        color: #3b82f6;
-        transform: translateY(-3px);
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.15);
+      color: #3b82f6;
+      transform: translateY(-3px);
     }
 
     .vx_deposit_main_grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        margin-bottom: 3rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
     }
 
     @media (min-width: 1024px) {
-        .vx_deposit_main_grid {
-            grid-template-columns: 1fr 380px;
-        }
+      .vx_deposit_main_grid {
+        grid-template-columns: 1fr 380px;
+      }
     }
 
     .vx_make_deposit_card {
-        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-        border-radius: 20px;
-        padding: 2.5rem;
-        border: 1px solid #334155;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        transition: all 0.3s ease;
-        height: fit-content;
+      background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 20px;
+      padding: 2.5rem;
+      border: 1px solid #334155;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      height: fit-content;
     }
 
     .vx_make_deposit_card:hover {
-        border-color: #3b82f6;
-        box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+      border-color: #3b82f6;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
     }
 
     .vx_card_section_title {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 2rem;
     }
 
     .vx_card_section_icon {
-        font-size: 1.5rem;
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .vx_card_section_icon::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 10px;
+      background: #ffffff;
+      border-radius: 2px;
+      bottom: 8px;
+    }
+
+    .vx_card_section_icon::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 14px;
+      border: 2px solid #ffffff;
+      border-radius: 4px;
+      top: 7px;
     }
 
     .vx_form_container {
-        display: grid;
-        gap: 2rem;
+      display: grid;
+      gap: 2rem;
     }
 
     .vx_form_group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
     }
 
     .vx_form_label {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #cbd5e1;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #cbd5e1;
     }
 
     .vx_form_label span {
-        color: #ef4444;
+      color: #ef4444;
     }
 
     .vx_form_select,
     .vx_form_input {
-        padding: 1.2rem;
-        border-radius: 12px;
-        border: 1px solid #334155;
-        background: rgba(15, 23, 42, 0.8);
-        color: #e2e8f0;
-        font-size: 1rem;
-        font-family: inherit;
-        transition: all 0.3s ease;
+      padding: 1.2rem;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: rgba(15, 23, 42, 0.8);
+      color: #e2e8f0;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
     }
 
     .vx_form_select:hover,
     .vx_form_input:hover {
-        border-color: #475569;
+      border-color: #475569;
     }
 
     .vx_form_select:focus,
     .vx_form_input:focus {
-        outline: none;
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        background: rgba(15, 23, 42, 0.9);
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      background: rgba(15, 23, 42, 0.9);
     }
 
     .vx_form_select option {
-        background: #0f172a;
-        color: #e2e8f0;
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem;
     }
 
     .vx_input_prefix {
-        font-size: 1.1rem;
-        color: #64748b;
-        font-weight: 600;
+      font-size: 1.1rem;
+      color: #64748b;
+      font-weight: 600;
     }
 
     .vx_amount_input_group {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.2rem;
-        background: rgba(15, 23, 42, 0.8);
-        border: 1px solid #334155;
-        border-radius: 12px;
-        transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.2rem;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      transition: all 0.3s ease;
     }
 
     .vx_amount_input_group:focus-within {
-        border-color: #3b82f6;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
     }
 
     .vx_amount_input_group input {
-        flex: 1;
-        padding: 1rem;
-        border: none;
-        background: transparent;
-        color: #e2e8f0;
-        font-size: 1rem;
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      background: transparent;
+      color: #e2e8f0;
+      font-size: 1rem;
     }
 
     .vx_amount_input_group input:focus {
-        outline: none;
+      outline: none;
     }
 
     .vx_helper_text {
-        font-size: 0.85rem;
-        color: #64748b;
-        margin-top: 0.3rem;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 0.3rem;
     }
 
     .vx_proceed_button {
-        width: 100%;
-        padding: 1.3rem;
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        border: none;
-        border-radius: 12px;
-        color: #ffffff;
-        font-weight: 700;
-        font-size: 1.1rem;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-top: 1rem;
+      width: 100%;
+      padding: 1.3rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      border: none;
+      border-radius: 12px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vx_proceed_button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .vx_proceed_button:hover::before {
+      left: 100%;
     }
 
     .vx_proceed_button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
     }
 
     .vx_proceed_button:active {
-        transform: translateY(-1px);
+      transform: translateY(-1px);
     }
 
     .vx_security_badge {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        margin-top: 1.5rem;
-        padding-top: 1.5rem;
-        border-top: 1px solid #334155;
-        font-size: 0.85rem;
-        color: #64748b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #334155;
+      font-size: 0.85rem;
+      color: #64748b;
     }
 
     .vx_security_icon {
-        color: #10b981;
-        font-size: 1rem;
+      width: 18px;
+      height: 18px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .vx_security_icon::before {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 10px;
+      border: 2px solid #ffffff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-2px);
     }
 
     .vx_sidebar {
-        display: flex;
-        flex-direction: column;
-        gap: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
     .vx_payment_methods_card,
     .vx_how_to_deposit_card {
-        background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
-        border-radius: 20px;
-        padding: 2rem;
-        border: 1px solid #334155;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
-        transition: all 0.3s ease;
+      background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 1px solid #334155;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
     }
 
     .vx_payment_methods_card:hover,
     .vx_how_to_deposit_card:hover {
-        border-color: #3b82f6;
-        transform: translateY(-3px);
+      border-color: #3b82f6;
+      transform: translateY(-3px);
     }
 
     .vx_sidebar_title {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        font-size: 1.2rem;
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 1.5rem;
     }
 
     .vx_sidebar_icon {
-        font-size: 1.3rem;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .vx_sidebar_icon::after {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
     }
 
     .vx_payment_method_list {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
     }
 
     .vx_payment_method_item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1.2rem;
-        background: rgba(30, 41, 59, 0.6);
-        border: 1px solid #334155;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
     .vx_payment_method_item:hover {
-        border-color: #3b82f6;
-        background: rgba(59, 130, 246, 0.1);
-        transform: translateX(5px);
+      border-color: #3b82f6;
+      background: rgba(59, 130, 246, 0.1);
+      transform: translateX(5px);
     }
 
     .vx_method_icon {
-        width: 40px;
-        height: 40px;
-        background: rgba(59, 130, 246, 0.2);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        color: #3b82f6;
+      width: 40px;
+      height: 40px;
+      background: rgba(59, 130, 246, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #3b82f6;
+      flex-shrink: 0;
     }
 
     .vx_method_name {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #cbd5e1;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #cbd5e1;
     }
 
     .vx_deposit_steps {
-        display: flex;
-        flex-direction: column;
-        gap: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
     }
 
     .vx_deposit_step {
-        display: flex;
-        gap: 1rem;
-        align-items: flex-start;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
     }
 
     .vx_step_circle {
-        min-width: 32px;
-        height: 32px;
-        background: rgba(59, 130, 246, 0.2);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 0.9rem;
-        color: #3b82f6;
-        flex-shrink: 0;
+      min-width: 32px;
+      height: 32px;
+      background: rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #3b82f6;
+      flex-shrink: 0;
+      border: 2px solid #3b82f6;
     }
 
     .vx_step_text {
-        font-size: 0.9rem;
-        color: #94a3b8;
-        line-height: 1.6;
+      font-size: 0.9rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      padding-top: 0.3rem;
     }
 
     .vx_toast {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        color: #ffffff;
-        padding: 1.2rem 2rem;
-        border-radius: 12px;
-        font-weight: 600;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        transform: translateY(150px);
-        opacity: 0;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 9999;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: #ffffff;
+      padding: 1.2rem 2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      transform: translateY(150px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
     }
 
     .vx_toast.show {
-        transform: translateY(0);
-        opacity: 1;
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .vx_toast_check {
+      width: 20px;
+      height: 20px;
+      background: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .vx_toast_check::before {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 10px;
+      border: 2px solid #3b82f6;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translateY(-1px);
     }
 
     @media (max-width: 1024px) {
-        .vx_deposit_main_grid {
-            grid-template-columns: 1fr;
-        }
+      .vx_deposit_main_grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 768px) {
-        .vx_quick_amounts_grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
+      .vx_deposit_page_wrapper {
+        padding: 1.5rem 1rem;
+      }
 
-        .vx_make_deposit_card {
-            padding: 1.5rem;
-        }
+      .vx_quick_amounts_grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
 
-        .vx_sidebar {
-            flex-direction: column;
-        }
+      .vx_make_deposit_card {
+        padding: 1.5rem;
+      }
+
+      .vx_sidebar {
+        flex-direction: column;
+      }
     }
 
     @media (max-width: 480px) {
-        .vx_deposit_page_wrapper {
-            padding: 1rem 0.5rem;
-        }
+      .vx_deposit_page_wrapper {
+        padding: 1rem 0.5rem;
+      }
 
-        .vx_make_deposit_card,
-        .vx_payment_methods_card,
-        .vx_how_to_deposit_card {
-            padding: 1.5rem;
-            border-radius: 16px;
-        }
+      .vx_make_deposit_card,
+      .vx_payment_methods_card,
+      .vx_how_to_deposit_card {
+        padding: 1.5rem;
+        border-radius: 16px;
+      }
 
-        .vx_toast {
-            left: 1rem;
-            right: 1rem;
-            bottom: 1rem;
-        }
+      .vx_toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+      }
     }
   </style>
 </head>
@@ -469,7 +583,9 @@
         <div class="vx_deposit_main_grid">
           <div class="vx_make_deposit_card">
             <h2 class="vx_card_section_title">
-              <span class="vx_card_section_icon">💳</span>
+              <span class="material-symbols-outlined">
+local_atm
+</span>
               Make a Deposit
             </h2>
 
@@ -508,7 +624,7 @@
                 <button type="submit" class="vx_proceed_button">Proceed with Deposit</button>
 
                 <div class="vx_security_badge">
-                  <span class="vx_security_icon">🔒</span>
+                  <span class="vx_security_icon"></span>
                   <span>Protected by 256-bit SSL encryption</span>
                 </div>
               </div>
@@ -518,32 +634,32 @@
           <div class="vx_sidebar">
             <div class="vx_payment_methods_card">
               <h3 class="vx_sidebar_title">
-                <span class="vx_sidebar_icon">💰</span>
+                <span class="vx_sidebar_icon"></span>
                 Payment Methods
               </h3>
               <div class="vx_payment_method_list">
                 <div class="vx_payment_method_item">
-                  <div class="vx_method_icon">💎</div>
+                  <div class="vx_method_icon"></div>
                   <div class="vx_method_name">XRP</div>
                 </div>
                 <div class="vx_payment_method_item">
-                  <div class="vx_method_icon">🐕</div>
+                  <div class="vx_method_icon"></div>
                   <div class="vx_method_name">DOGE COIN</div>
                 </div>
                 <div class="vx_payment_method_item">
-                  <div class="vx_method_icon">💵</div>
+                  <div class="vx_method_icon"></div>
                   <div class="vx_method_name">USDT ERC20</div>
                 </div>
                 <div class="vx_payment_method_item">
-                  <div class="vx_method_icon">☀️</div>
+                  <div class="vx_method_icon"></div>
                   <div class="vx_method_name">Solana</div>
                 </div>
                 <div class="vx_payment_method_item">
-                  <div class="vx_method_icon">💵</div>
+                  <div class="vx_method_icon"></div>
                   <div class="vx_method_name">USDT</div>
                 </div>
                 <div class="vx_payment_method_item">
-                  <div class="vx_method_icon">₿</div>
+                  <div class="vx_method_icon"></div>
                   <div class="vx_method_name">Bitcoin</div>
                 </div>
               </div>
@@ -551,7 +667,7 @@
 
             <div class="vx_how_to_deposit_card">
               <h3 class="vx_sidebar_title">
-                <span class="vx_sidebar_icon">📖</span>
+                <span class="vx_sidebar_icon"></span>
                 How to Deposit
               </h3>
               <div class="vx_deposit_steps">
@@ -584,14 +700,14 @@
   </div>
 
   <div class="vx_toast" id="toast">
-    <span id="toastIcon">ℹ️</span>
+    <span class="vx_toast_check"></span>
     <span id="toastMessage"></span>
   </div>
 
   <script>
     function setAmount(amount) {
       document.getElementById('amount').value = amount;
-      showToast(`Amount set to $${amount}`);
+      showToast('Amount set to $' + amount);
     }
 
     function handleDeposit(event) {
@@ -601,64 +717,53 @@
       const amount = document.getElementById('amount').value;
 
       if (!paymentMethod) {
-        showToast('Please select a payment method', 'error');
+        showToast('Please select a payment method');
         return;
       }
 
       if (!amount || amount < 10) {
-        showToast('Amount must be at least $10', 'error');
+        showToast('Amount must be at least $10');
         return;
       }
 
       showToast('Proceeding to payment...');
 
-      setTimeout(() => {
-        const payload = { paymentMethod, amount };
+      setTimeout(function() {
+        const payload = { paymentMethod: paymentMethod, amount: amount };
 
         fetch('/user/payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         })
-        .then(response => response.json())
-        .then(data => {
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
           if (data.success && data.redirect) {
             window.location.href = data.redirect;
           } else if (data.success) {
-            window.location.href = `/user/payment?method=${encodeURIComponent(paymentMethod)}&amount=${encodeURIComponent(amount)}`;
+            window.location.href = '/user/payment?method=' + encodeURIComponent(paymentMethod) + '&amount=' + encodeURIComponent(amount);
           } else {
-            showToast(data.message || 'An error occurred', 'error');
+            showToast(data.message || 'An error occurred');
           }
         })
-        .catch(error => {
+        .catch(function(error) {
           console.error('Error:', error);
-          showToast('Failed to process deposit', 'error');
+          showToast('Failed to process deposit');
         });
       }, 800);
     }
 
-    function showToast(message, type = 'success') {
+    function showToast(message) {
       const toast = document.getElementById('toast');
       const toastMessage = document.getElementById('toastMessage');
-      const toastIcon = document.getElementById('toastIcon');
-
       toastMessage.textContent = message;
-
-      if (type === 'error') {
-        toastIcon.textContent = '❌';
-        toast.style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
-      } else {
-        toastIcon.textContent = '✓';
-        toast.style.background = 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)';
-      }
-
       toast.classList.add('show');
-      setTimeout(() => {
+      setTimeout(function() {
         toast.classList.remove('show');
       }, 3000);
     }
 
-    document.getElementById('amount').addEventListener('input', (e) => {
+    document.getElementById('amount').addEventListener('input', function(e) {
       if (e.target.value && e.target.value < 10) {
         e.target.style.borderColor = '#ef4444';
       } else {
@@ -666,13 +771,13 @@
       }
     });
 
-    document.querySelectorAll('.vx_payment_method_item').forEach(item => {
-      item.addEventListener('click', () => {
+    document.querySelectorAll('.vx_payment_method_item').forEach(function(item) {
+      item.addEventListener('click', function() {
         const methodName = item.querySelector('.vx_method_name').textContent.trim();
         const map = { 'DOGE COIN': 'DOGE', 'USDT ERC20': 'USDT_ERC20', 'Solana': 'SOL', 'USDT': 'USDT', 'Bitcoin': 'BTC', 'XRP': 'XRP' };
         const val = map[methodName] || methodName;
         document.getElementById('paymentMethod').value = val;
-        showToast(`Selected: ${methodName}`);
+        showToast('Selected: ' + methodName);
       });
     });
   </script>
