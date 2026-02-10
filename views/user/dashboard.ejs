@@ -835,13 +835,33 @@ body {
   background: linear-gradient(135deg, var(--card-bg) 0%, var(--secondary-bg) 100%);
   border: 1px solid var(--border-color);
   border-radius: 20px;
-  padding: 2rem;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-lg);
-  animation: fadeInUp 0.8s ease backwards;
-  width: fit-content !important;
-  width: 100% !important;
+  padding: 16px;
+
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+
+  overflow: hidden;
 }
+* {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+@media (max-width: 480px) {
+  .vx_section_trades,
+  .vx_section_referrals {
+    padding: 12px;
+    border-radius: 14px;
+  }
+}
+.vx_section_trades * ,
+.vx_section_referrals * {
+  max-width: 100%;
+  word-break: break-word;
+  flex-wrap: wrap;
+}
+
+
 
 .vx_section_trades {
   animation-delay: 0.6s;
