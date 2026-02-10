@@ -102,6 +102,51 @@
       font-weight: 600;
     }
 
+    .vx_rt_crypto_logo_display {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .vx_rt_crypto_logo {
+      width: 80px;
+      height: 80px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: vx_logoGlow 3s ease-in-out infinite;
+      padding: 8px;
+    }
+
+    .vx_rt_crypto_logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.4));
+      animation: vx_logoFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes vx_logoGlow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        transform: scale(1);
+      }
+      50% {
+        box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes vx_logoFloat {
+      0%, 100% { transform: translateY(0px) rotateY(0deg); }
+      50% { transform: translateY(-8px) rotateY(180deg); }
+    }
+
     .vx_rt_progress_stepper {
       display: flex;
       align-items: center;
@@ -288,6 +333,23 @@
     .vx_rt_card_subtitle {
       font-size: 0.875rem;
       color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .vx_rt_card_subtitle_logo {
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vx_rt_card_subtitle_logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .vx_rt_badge_group {
@@ -522,22 +584,16 @@
       margin-left: 2.5rem;
     }
 
-    .vx_rt_payment_methods_grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    .vx_rt_method_section {
+    .vx_rt_wallet_section {
       background: rgba(15, 23, 42, 0.6);
       border: 1px solid rgba(51, 65, 85, 0.5);
       border-radius: 16px;
       padding: 1.5rem;
+      margin-bottom: 2rem;
       transition: all 0.3s ease;
     }
 
-    .vx_rt_method_section:hover {
+    .vx_rt_wallet_section:hover {
       border-color: rgba(59, 130, 246, 0.5);
       box-shadow: 0 8px 32px rgba(59, 130, 246, 0.15);
       transform: translateY(-2px);
@@ -565,76 +621,29 @@
       font-size: 1.125rem;
       font-weight: 600;
       color: #ffffff;
-    }
-
-    .vx_rt_qr_container {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 1.5rem;
       display: flex;
       align-items: center;
-      justify-content: center;
-      position: relative;
-      margin-bottom: 1rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      gap: 0.5rem;
     }
 
-    .vx_rt_qr_image {
+    .vx_rt_section_title_logo {
+      width: 24px;
+      height: 24px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vx_rt_section_title_logo img {
       width: 100%;
-      max-width: 240px;
-      height: auto;
-      display: block;
-      border-radius: 8px;
+      height: 100%;
+      object-fit: contain;
+      animation: vx_logoSpin 4s linear infinite;
     }
 
-    .vx_rt_download_icon {
-      position: absolute;
-      bottom: 1rem;
-      right: 1rem;
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-      position: relative;
-    }
-
-    .vx_rt_download_icon::before {
-      content: '';
-      position: absolute;
-      width: 3px;
-      height: 14px;
-      background: #ffffff;
-      top: 8px;
-    }
-
-    .vx_rt_download_icon::after {
-      content: '';
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border: 2px solid #ffffff;
-      border-top: none;
-      border-left: none;
-      transform: rotate(45deg);
-      top: 16px;
-    }
-
-    .vx_rt_download_icon:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.6);
-    }
-
-    .vx_rt_qr_caption {
-      font-size: 0.875rem;
-      color: #64748b;
-      text-align: center;
-      line-height: 1.4;
+    @keyframes vx_logoSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     .vx_rt_wallet_address_box {
@@ -1097,10 +1106,6 @@
         font-size: 2.5rem;
       }
 
-      .vx_rt_payment_methods_grid {
-        grid-template-columns: 1fr;
-      }
-
       .vx_rt_steps_grid {
         grid-template-columns: 1fr;
       }
@@ -1115,6 +1120,11 @@
         left: 1rem;
         bottom: 1rem;
       }
+
+      .vx_rt_crypto_logo {
+        width: 60px;
+        height: 60px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -1128,6 +1138,11 @@
 
       .vx_rt_upload_area {
         padding: 2rem 1rem;
+      }
+
+      .vx_rt_crypto_logo {
+        width: 50px;
+        height: 50px;
       }
     }
   </style>
@@ -1148,8 +1163,14 @@
 
           <h1 class="vx_rt_main_heading">Complete Your Deposit</h1>
           <p class="vx_rt_sub_heading">
-            Securely deposit funds using <span class="vx_rt_crypto_name"><%= method %></span> to start trading immediately
+            Securely deposit funds using <span class="vx_rt_crypto_name" id="cryptoDisplayName"></span> to start trading immediately
           </p>
+
+          <div class="vx_rt_crypto_logo_display">
+            <div class="vx_rt_crypto_logo">
+              <img src="" alt="Crypto Logo" id="cryptoLogoImage">
+            </div>
+          </div>
         </div>
 
         <div class="vx_rt_progress_stepper">
@@ -1177,7 +1198,12 @@
                 <div class="vx_rt_card_icon_box"></div>
                 <div class="vx_rt_card_title_text">
                   <h2>Payment Details</h2>
-                  <div class="vx_rt_card_subtitle"><%= method %> Deposit</div>
+                  <div class="vx_rt_card_subtitle">
+                    <span class="vx_rt_card_subtitle_logo">
+                      <img src="" alt="Crypto Logo" id="cryptoLogoSmall">
+                    </span>
+                    <span id="cryptoSubtitle"></span>
+                  </div>
                 </div>
               </div>
               <div class="vx_rt_badge_group">
@@ -1198,7 +1224,7 @@
                 <span>Amount to Deposit</span>
               </div>
               <div class="vx_rt_amount_value">
-                <span><%= amount %></span>
+                <span id="depositAmount"><%= amount %></span>
                 <span class="vx_rt_currency_symbol">$</span>
               </div>
               <div class="vx_rt_warning_banner">
@@ -1218,7 +1244,7 @@
                     <div class="vx_rt_step_num_circle">1</div>
                     <div class="vx_rt_step_title">Send Payment</div>
                   </div>
-                  <p class="vx_rt_step_description">Transfer <%= amount %>$ to the wallet address</p>
+                  <p class="vx_rt_step_description">Transfer $<%= amount %> to the wallet address</p>
                 </div>
                 <div class="vx_rt_instruction_step">
                   <div class="vx_rt_step_number">
@@ -1237,30 +1263,21 @@
               </div>
             </div>
 
-            <div class="vx_rt_payment_methods_grid">
-              <div class="vx_rt_method_section">
-                <div class="vx_rt_section_header">
-                  <div class="vx_rt_section_icon"></div>
-                  <h3 class="vx_rt_section_title">QR Code Payment</h3>
-                </div>
-                <div class="vx_rt_qr_container">
-                  <img src="<%= qrUrl %>" alt="QR Code" class="vx_rt_qr_image">
-                  <div class="vx_rt_download_icon" onclick="vxDownloadQR()"></div>
-                </div>
-                <p class="vx_rt_qr_caption">Scan with your wallet app to send payment instantly</p>
+            <div class="vx_rt_wallet_section">
+              <div class="vx_rt_section_header">
+                <div class="vx_rt_section_icon"></div>
+                <h3 class="vx_rt_section_title">
+                  <span class="vx_rt_section_title_logo">
+                    <img src="" alt="Crypto Logo" id="cryptoLogoWallet">
+                  </span>
+                  <span>Wallet Address</span>
+                </h3>
               </div>
-
-              <div class="vx_rt_method_section">
-                <div class="vx_rt_section_header">
-                  <div class="vx_rt_section_icon"></div>
-                  <h3 class="vx_rt_section_title">Wallet Address</h3>
-                </div>
-                <div class="vx_rt_wallet_address_box" id="vxWalletAddress"><%= address %></div>
-                <button class="vx_rt_copy_button" id="vxCopyBtn">
-                  <span class="vx_rt_copy_icon"></span>
-                  <span id="vxCopyBtnText">Copy Address</span>
-                </button>
-              </div>
+              <div class="vx_rt_wallet_address_box" id="vxWalletAddress"></div>
+              <button class="vx_rt_copy_button" id="vxCopyBtn">
+                <span class="vx_rt_copy_icon"></span>
+                <span id="vxCopyBtnText">Copy Address</span>
+              </button>
             </div>
 
             <div class="vx_rt_upload_section">
@@ -1306,6 +1323,45 @@
       const vxFileInput = document.getElementById('vxFileInput');
       const vxFilePreview = document.getElementById('vxFilePreview');
       const vxSubmitBtn = document.getElementById('vxSubmitBtn');
+
+      const cryptoData = {
+        'BTC': {
+          name: 'Btc (Bitcoin)',
+          logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
+          address: '1HunL6nu6ZLqrgXPzPvLcb3Lc6JviMDy9c'
+        },
+        'USDT': {
+          name: 'USDT (ERC20)',
+          logo: 'https://cryptologos.cc/logos/tether-usdt-logo.png',
+          address: '0x54070e979527310b8f959a3532058813b1d664b7'
+        },
+        'DOGE': {
+          name: 'DOGE COIN',
+          logo: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png',
+          address: 'DUT9fVWy5hMPkuNXVF1qJ5TVFmFAhVAdDP'
+        },
+        'SOL': {
+          name: 'Solana',
+          logo: 'https://cryptologos.cc/logos/solana-sol-logo.png',
+          address: '28LeFukWAwCmKCdQF4Rjvr9PR353TF5bBRzZRVMdkYbz'
+        },
+        'BNB': {
+          name: 'BNB (BEP20)',
+          logo: 'https://cryptologos.cc/logos/bnb-bnb-logo.png',
+          address: '0x54070e979527310b8f959a3532058813b1d664b7'
+        }
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const method = urlParams.get('method') || '<%= typeof method !== "undefined" ? method : "BTC" %>';
+      const crypto = cryptoData[method] || cryptoData['BTC'];
+
+      document.getElementById('cryptoDisplayName').textContent = crypto.name;
+      document.getElementById('cryptoSubtitle').textContent = crypto.name + ' Deposit';
+      document.getElementById('cryptoLogoImage').src = crypto.logo;
+      document.getElementById('cryptoLogoSmall').src = crypto.logo;
+      document.getElementById('cryptoLogoWallet').src = crypto.logo;
+      document.getElementById('vxWalletAddress').textContent = crypto.address;
 
       ['dragenter','dragover','dragleave','drop'].forEach(function(evt) {
         vxUploadArea.addEventListener(evt, vxPreventDefaults, false);
@@ -1381,17 +1437,6 @@
 
       document.getElementById('vxCopyBtn').addEventListener('click', vxCopyAddress);
 
-      window.vxDownloadQR = function() {
-        const qrImage = document.querySelector('.vx_rt_qr_image');
-        const link = document.createElement('a');
-        link.href = qrImage.src;
-        link.download = 'payment-qr-code.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        vxShowToast('QR code downloaded successfully');
-      };
-
       vxSubmitBtn.addEventListener('click', function() {
         if(!vxUploadedFile) {
           vxShowToast('Please upload payment proof');
@@ -1401,9 +1446,10 @@
         vxSubmitBtn.disabled = true;
         vxSubmitBtn.innerHTML = '<span class="vx_rt_submit_icon"></span><span>Processing...</span>';
 
+        const amount = document.getElementById('depositAmount').textContent;
         const payload = {
-          amount: '<%= amount %>',
-          cryptocurrency: '<%= method %>',
+          amount: amount,
+          cryptocurrency: method,
           proof: (vxUploadedFile && vxUploadedFile.name) ? vxUploadedFile.name : 'proof'
         };
 
@@ -1448,52 +1494,3 @@
   </script>
 </body>
 </html>
-
-<!--
-HOW TO ADD MORE CRYPTOCURRENCIES:
-================================
-
-1. In the DEPOSIT page (deposit-redesigned.ejs):
-   - Add a new <option> in the payment method <select> dropdown:
-     <option value="CURRENCY_CODE">Currency Name</option>
-
-   - Add a new payment method item in the sidebar:
-     <div class="vx_payment_method_item">
-       <div class="vx_method_icon"></div>
-       <div class="vx_method_name">Currency Name</div>
-     </div>
-
-   - Update the JavaScript map in the click handler:
-     const map = {
-       'Currency Name': 'CURRENCY_CODE',
-       // ... existing mappings
-     };
-
-2. In your BACKEND/SERVER CODE:
-   - Add the wallet address for the new cryptocurrency
-   - Make sure the address is correctly mapped to the CURRENCY_CODE
-   - Update your payment processing logic to handle the new currency
-
-3. IMPORTANT MAPPING:
-   - The 'value' attribute in <option> MUST match your backend currency code
-   - Example: If backend expects "ETH", use value="ETH"
-   - The JavaScript map ensures sidebar clicks select the correct option
-
-4. FOR QR CODES:
-   - Generate a QR code for the new wallet address
-   - Store it in your backend
-   - The payment page will automatically display it using <%= qrUrl %>
-
-EXAMPLE:
-To add Ethereum:
-<option value="ETH">Ethereum</option>
-
-Sidebar:
-<div class="vx_payment_method_item">
-  <div class="vx_method_icon"></div>
-  <div class="vx_method_name">Ethereum</div>
-</div>
-
-JavaScript map:
-const map = { 'Ethereum': 'ETH', ... };
--->
