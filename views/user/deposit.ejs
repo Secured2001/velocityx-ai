@@ -6,7 +6,6 @@
   <title>Deposit - Trading Platform</title>
   <link rel="stylesheet" href="/css/styles.css">
   <link href="https://i.imgur.com/xnzyBi9.png" rel="shortcut icon"/>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=local_atm" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
@@ -192,7 +191,64 @@
       color: #ef4444;
     }
 
-    .vx_form_select,
+    .vx_form_select_wrapper {
+      position: relative;
+      display: block;
+    }
+
+    .vx_form_select {
+      width: 100%;
+      padding: 1.2rem 3.5rem 1.2rem 1.2rem;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: rgba(15, 23, 42, 0.8);
+      color: #e2e8f0;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .vx_form_select:hover {
+      border-color: #475569;
+    }
+
+    .vx_form_select:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    .vx_form_select option {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1rem;
+    }
+
+    .vx_select_arrow {
+      position: absolute;
+      right: 1.2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vx_select_arrow::after {
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #64748b;
+    }
+
     .vx_form_input {
       padding: 1.2rem;
       border-radius: 12px;
@@ -204,23 +260,15 @@
       transition: all 0.3s ease;
     }
 
-    .vx_form_select:hover,
     .vx_form_input:hover {
       border-color: #475569;
     }
 
-    .vx_form_select:focus,
     .vx_form_input:focus {
       outline: none;
       border-color: #3b82f6;
       box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
       background: rgba(15, 23, 42, 0.9);
-    }
-
-    .vx_form_select option {
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 1rem;
     }
 
     .vx_input_prefix {
@@ -417,16 +465,35 @@
     }
 
     .vx_method_icon {
-      width: 40px;
-      height: 40px;
-      background: rgba(59, 130, 246, 0.2);
+      width: 48px;
+      height: 48px;
+      background: rgba(59, 130, 246, 0.1);
       border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.2rem;
-      color: #3b82f6;
       flex-shrink: 0;
+      overflow: hidden;
+      animation: vx_logoFloat 3s ease-in-out infinite;
+      padding: 4px;
+    }
+
+    .vx_method_icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
+      transition: transform 0.3s ease;
+    }
+
+    .vx_payment_method_item:hover .vx_method_icon img {
+      transform: scale(1.1) rotateY(15deg);
+    }
+
+    @keyframes vx_logoFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
     }
 
     .vx_method_name {
@@ -537,6 +604,11 @@
       .vx_sidebar {
         flex-direction: column;
       }
+
+      .vx_method_icon {
+        width: 40px;
+        height: 40px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -555,6 +627,14 @@
         left: 1rem;
         right: 1rem;
         bottom: 1rem;
+      }
+
+      .vx_form_select {
+        padding-right: 3rem;
+      }
+
+      .vx_select_arrow {
+        right: 0.9rem;
       }
     }
   </style>
@@ -583,9 +663,7 @@
         <div class="vx_deposit_main_grid">
           <div class="vx_make_deposit_card">
             <h2 class="vx_card_section_title">
-              <span class="material-symbols-outlined">
-local_atm
-</span>
+              <span class="vx_card_section_icon"></span>
               Make a Deposit
             </h2>
 
@@ -593,15 +671,17 @@ local_atm
               <div class="vx_form_container">
                 <div class="vx_form_group">
                   <label class="vx_form_label">Payment Method <span>*</span></label>
-                  <select id="paymentMethod" class="vx_form_select" required>
-                    <option value="">Select payment method</option>
-                    <option value="XRP">XRP</option>
-                    <option value="DOGE">DOGE COIN</option>
-                    <option value="USDT_ERC20">USDT ERC20</option>
-                    <option value="SOL">Solana</option>
-                    <option value="USDT">USDT</option>
-                    <option value="BTC">Bitcoin</option>
-                  </select>
+                  <div class="vx_form_select_wrapper">
+                    <select id="paymentMethod" class="vx_form_select" required>
+                      <option value="">Select payment method</option>
+                      <option value="BTC">Btc (Bitcoin)</option>
+                      <option value="USDT">USDT (ERC20)</option>
+                      <option value="DOGE">DOGE COIN</option>
+                      <option value="SOL">Solana</option>
+                      <option value="BNB">BNB (BEP20)</option>
+                    </select>
+                    <div class="vx_select_arrow"></div>
+                  </div>
                 </div>
 
                 <div class="vx_form_group">
@@ -638,29 +718,35 @@ local_atm
                 Payment Methods
               </h3>
               <div class="vx_payment_method_list">
-                <div class="vx_payment_method_item">
-                  <div class="vx_method_icon"></div>
-                  <div class="vx_method_name">XRP</div>
+                <div class="vx_payment_method_item" data-currency="BTC">
+                  <div class="vx_method_icon">
+                    <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" alt="Bitcoin Logo">
+                  </div>
+                  <div class="vx_method_name">Btc (Bitcoin)</div>
                 </div>
-                <div class="vx_payment_method_item">
-                  <div class="vx_method_icon"></div>
+                <div class="vx_payment_method_item" data-currency="USDT">
+                  <div class="vx_method_icon">
+                    <img src="https://cryptologos.cc/logos/tether-usdt-logo.png" alt="USDT Logo">
+                  </div>
+                  <div class="vx_method_name">USDT (ERC20)</div>
+                </div>
+                <div class="vx_payment_method_item" data-currency="DOGE">
+                  <div class="vx_method_icon">
+                    <img src="https://cryptologos.cc/logos/dogecoin-doge-logo.png" alt="Dogecoin Logo">
+                  </div>
                   <div class="vx_method_name">DOGE COIN</div>
                 </div>
-                <div class="vx_payment_method_item">
-                  <div class="vx_method_icon"></div>
-                  <div class="vx_method_name">USDT ERC20</div>
-                </div>
-                <div class="vx_payment_method_item">
-                  <div class="vx_method_icon"></div>
+                <div class="vx_payment_method_item" data-currency="SOL">
+                  <div class="vx_method_icon">
+                    <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="Solana Logo">
+                  </div>
                   <div class="vx_method_name">Solana</div>
                 </div>
-                <div class="vx_payment_method_item">
-                  <div class="vx_method_icon"></div>
-                  <div class="vx_method_name">USDT</div>
-                </div>
-                <div class="vx_payment_method_item">
-                  <div class="vx_method_icon"></div>
-                  <div class="vx_method_name">Bitcoin</div>
+                <div class="vx_payment_method_item" data-currency="BNB">
+                  <div class="vx_method_icon">
+                    <img src="https://cryptologos.cc/logos/bnb-bnb-logo.png" alt="BNB Logo">
+                  </div>
+                  <div class="vx_method_name">BNB (BEP20)</div>
                 </div>
               </div>
             </div>
@@ -773,10 +859,9 @@ local_atm
 
     document.querySelectorAll('.vx_payment_method_item').forEach(function(item) {
       item.addEventListener('click', function() {
+        const currency = item.getAttribute('data-currency');
         const methodName = item.querySelector('.vx_method_name').textContent.trim();
-        const map = { 'DOGE COIN': 'DOGE', 'USDT ERC20': 'USDT_ERC20', 'Solana': 'SOL', 'USDT': 'USDT', 'Bitcoin': 'BTC', 'XRP': 'XRP' };
-        const val = map[methodName] || methodName;
-        document.getElementById('paymentMethod').value = val;
+        document.getElementById('paymentMethod').value = currency;
         showToast('Selected: ' + methodName);
       });
     });
